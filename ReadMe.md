@@ -48,3 +48,81 @@ The entire process of building a software is broken down into multiple steps.
 Finally, the monitoring metrics and user feedback are incorporated into making a new planning phase and all the steps happens again.
 
 <br>
+
+# Day 2 of 100 Days Of DevOps
+
+## DevOps from the perspective of Engineer / three Pillars of DevOps Engineer
+
+<br>
+
+A personal with the title of “DevOps engineer” has very little to do with planning or coding and more to do with the 3 pillars :
+
+- Pull Request Automation
+- Deployment Automation
+- Application Performance Monitoring Automation
+
+The main purpose of a devops engineer is to incorporate practices that helps to ship high quality bug free software quickly.
+
+<br>
+
+## Pillar 1: Pull Request Automation
+
+<br>
+
+The main purpose of pull request automation is to make sure the proposed code gets tested, reviewed and merged as fast as possible. The code goes through a process called “Code Review”. It is done to review the proposed code to make sure the proposed code fulfills its main business objective and the code aligns with the standards set by the organization such as code formatting,best practices etc. The person who does the code review might be
+
+- Developers who know the areas of code being changed (also called as “code owners”)
+- Engineering Managers or Product Mangers in charge of the functionality.
+- For Visual Changes: The Designers who created the original specification to make sure the change aligns with the specifications
+- Other Non-Technical Stakeholders.
+
+<br>
+
+### What are the tasks that can be automated?
+
+<br>
+
+The main goal of a devops engineer working on pull request automation is to increase the speed of the review process, from the moment code gets pushed till code gets reviewed. Some of the automation functionality that can be built are:
+
+- Automated test running with a CI Provider: This gives developer confidence that their code changes does not break any existing functionality.
+- Per-Change Ephemeral Environment: Creation of Temporary Environments per code change helps interested parties interact with the proposed change and make sure it solves all the required business goals.
+- Automated security scanning: This makes sure that the proposed change do not introduce any security vulnerabilities in the product.
+- Notifications to reviewers: Automatic notifications to reviewers to notify them for code review so that the reviewers can quickly request new changes to the pull request.
+
+<br>
+
+## Pillar 2: Deployment Automation
+
+<br>
+The main purpose of deployment automation is to simplify the deployment strategies to reduce error prone steps. Using proper tools and configuring them to support our business needs, we can make sure that there is zero to very little custom code required for every deployment.
+
+<br>
+
+### What are the tasks that can be automated?
+
+<br>
+
+- Cannary Deployment: Deploying a feature to only a certain set of users as a final test before rolling the feature to all the users.
+- Blue/Green deployment: Starting a new version of a service without causing any downtime.
+- Roll Back: Rolling back to previous version in case something goes wrong.
+
+This step is particularly important as it is very easy to over complicate deployment. Companies have internal platforms to make complex deployments possible.
+
+<br>
+
+## Pillar 3: Application Performance Management
+
+The main purpose of application performance management is to make sure that the application is performing well in production.
+
+<br>
+
+### What are the tasks that can be automated?
+
+<br>
+
+- Logging: We should log all the details of how a process is happening. This might include data like the source IP, time of the request, time taken to response, etc.
+- Metrics: We should keep track of key numbers affecting our application in production. This includes average response time, time taken to process a certain task, finite resources such as Memory usage (RAM), Available Storage etc.
+- Monitoring: By analyzing data from logging and metrics, we create health reports. Based on the health reports, we need to find out if the application is down, is performing slower, if all the features are working etc.
+- Alerting: If monitoring detects a issue, associated personal should be notified automatically. In case of feature errors or performance issues, tickets are created automatically.
+
+<br>
