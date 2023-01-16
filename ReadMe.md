@@ -19,7 +19,15 @@
 
 <br>
 
-# Day 1 of 100 Days Of DevOps
+# Note
+
+DevOps is a more theoretial as compared to programming. So, all these devops notes will just be a summary of my understanding of devops concepts.
+
+I will include code snippets whenever necessary.
+
+<hr>
+<br>
+<br>
 
 ## DevOps Introduction
 
@@ -47,9 +55,8 @@ The entire process of building a software is broken down into multiple steps.
 
 Finally, the monitoring metrics and user feedback are incorporated into making a new planning phase and all the steps happens again.
 
+<hr>
 <br>
-
-# Day 2 of 100 Days Of DevOps
 
 ## DevOps from the perspective of Engineer / three Pillars of DevOps Engineer
 
@@ -67,16 +74,128 @@ The main purpose of a devops engineer is to incorporate practices that helps to 
 
 ## Pillar 1: Pull Request Automation
 
+The main purpose of pull request automation is to make sure the proposed code gets merged as fast as possible.
+
+## Pillar 2: Deployment Automation
+
+The main purpose of deployment automation is to simplify the deployment strategies to reduce error prone steps.
+
+Using proper tools and configuring them to support our business needs, we can make sure that there is zero to very little custom code required for every deployment.
+
+## Pillar 3: Application Performance Management
+
+The main purpose of application performance management is to make sure that the application is performing well in production.
+
+<hr>
 <br>
 
-The main purpose of pull request automation is to make sure the proposed code gets tested, reviewed and merged as fast as possible. The code goes through a process called “Code Review”. It is done to review the proposed code to make sure the proposed code fulfills its main business objective and the code aligns with the standards set by the organization such as code formatting,best practices etc. The person who does the code review might be
+# Pillar 1: Pull Request Automation
 
-- Developers who know the areas of code being changed (also called as “code owners”)
-- Engineering Managers or Product Mangers in charge of the functionality.
-- For Visual Changes: The Designers who created the original specification to make sure the change aligns with the specifications
-- Other Non-Technical Stakeholders.
+Pull Request Automation consists of running automated tests, performing code review and conducting creating ephemeral environments.
+
+## Running Automated tests
+
+Automated tests are tests that runs whenever a new pull request is submitted.
+
+### Why do we need automated tests?
+
+Whenever a developer proposes a new change i.e. files a pull request, the new change might create some problem to existing code base.
+
+So, we run automated tests on the new proposed change to make sure there arent any problems.
+
+### What if the automated test fails?
+
+If the test fails, the pull request gets rejected. The script will automatically notify the developer.
+
+### What does this tests contain?
+
+This tests are noting but unit/integration/end-to-end tests which are written to test the project's functionality.
+
+### Can't we run these tests locally?
+
+Yes, a developer can run all the tests in their local development environment first. If all the test passes, then they can submit a pull request.
+
+However, we can't be sure if all developer will do that. So it is better to set up automated tests.
+
+### What are other tests that we can do?
+
+We can also set up linting, formatting and security checks.
+
+By Setting Linting Checks, we can reject those changes which contain any linting errors.
+
+By Setting Formatting Checks, we can reject those changes which donot follow the predefined format.
+
+By Setting Security Checks, we can reject those changes which may potentially introduce security issues.
+
+<hr>
 
 <br>
+
+## Code Review
+
+Code Review is a process of reviewing someone elses code.
+
+### Why is Code Review Done?
+
+Code Review is done to make sure the new changes complies with standards set by the organization.
+
+### When is Code Review Done?
+
+It is generally done when a developer submits a pull request.
+
+### Who does Code Review?
+
+The person reviewing the code in pull request is called `Code Reviewer`.
+
+### Who can be a Code Reviewer?
+
+Code Reviewer is usually another developer who has the knowledge of the codebase which has been changed.
+
+For Visual Changes, the code also has to be approved by the designer who made the design specification.
+
+However, In large Organizations other individuals are also involved in code review, such as product manager/engineering managers who are charge of the functionlality.
+
+Sometimes, management also has to approve the changes. However, management people cannot understand code, so we create ephimeral environments.
+
+<hr>
+
+## Ephemeral Environments
+
+Ephemeral environment is a temporary environment created to interact with the changes in the pull request.
+
+### Why do we need Ephemeral Environment?
+
+Whenever we review a pull request, we can only see the changes occurred in the pull request. We cannot interact with the application.
+
+To interact with the appliation, we need to pull down the changes and run the application in the local server.
+
+So, instead whenever user submits a pull request, we build the application from the latest commit of the pull request.
+
+### How does Ephemeral Environment help?
+
+Ephemeral environments lets us interact with the application which is built from the changed code.
+
+We can then share the URL of the ephemeral environment and let the code reviewer see the application.
+
+This saves time for the developer as we no longer need any kind of meeting to showcase the latest changes.
+
+This also helps non-technical people understand what our code change did to the application.
+
+We can also have QA Engineers do manual testing in this ephemeral environment.
+
+### When should we close the ephemeral environment?
+
+There are mulitple strategies one can use. But generaly, ephemeral environments should be closed once the pull Request has been merged.
+
+The code Reviewer checks the application in our ephimeral environment and when satisfied merges the pull request.
+
+### Drawbacks of ephemeral environment
+
+Creation of each ephemeral environment costs money.
+
+So, if we are taking a lot of time to merge a pull request, then creation of ephemeral environment will increase the deployment cost of the company multiple times.
+
+<!-- <br>
 
 ### What are the tasks that can be automated?
 
@@ -89,9 +208,9 @@ The main goal of a devops engineer working on pull request automation is to incr
 - Automated security scanning: This makes sure that the proposed change do not introduce any security vulnerabilities in the product.
 - Notifications to reviewers: Automatic notifications to reviewers to notify them for code review so that the reviewers can quickly request new changes to the pull request.
 
-<br>
+<br> -->
 
-## Pillar 2: Deployment Automation
+<!-- ## Pillar 2: Deployment Automation
 
 <br>
 The main purpose of deployment automation is to simplify the deployment strategies to reduce error prone steps. Using proper tools and configuring them to support our business needs, we can make sure that there is zero to very little custom code required for every deployment.
@@ -158,4 +277,4 @@ These kind of organization have to worry about all 3 pillars of devops engineeri
 
 DevOps engineering is absolutely crucial for a organization to ensure delivery of high quality applications. Without having a strong idea of all 3 pillars, your application might face multiple issues resulting in the end user being disappointed.
 
-There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering.
+There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering. -->
