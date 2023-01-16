@@ -126,3 +126,36 @@ The main purpose of application performance management is to make sure that the 
 - Alerting: If monitoring detects a issue, associated personal should be notified automatically. In case of feature errors or performance issues, tickets are created automatically.
 
 <br>
+
+# Day 3 of 100 Days Of DevOps
+
+## Does Every Product Follow all 3 Pillars of DevOps Engineering?
+
+<br>
+
+Not all products require all 3 pillars of devops engineering. Here is more detailed breakdown for 3 kinds of products.
+
+**A new startup with no users**
+
+The first pillar is needed as it speeds up the development time. They don’t require Pillar 2 and 3. This is because even if the application goes down, there are not much users to be affected. Users are less so we don’t need to worry about region specific deployment or downtime issues.
+
+**Medium Organization which have few Enterprise Customers**
+
+The first pillar is needed as it speeds up the development time. Some parts of Pillar 2 and 3 are also required. Enterprise users cannot afford any downtime with new versions of application (Pillar 2).
+
+You also need to constantly monitor the application to make sure there are no performance issues as you have enterprise users and alert enterprise users if some problem occurs (Pillar 3).
+
+**Large Organizations with millions of users**
+
+These kind of organization have to worry about all 3 pillars of devops engineering.
+
+<hr>
+<br>
+
+## Conclusion
+
+<br>
+
+DevOps engineering is absolutely crucial for a organization to ensure delivery of high quality applications. Without having a strong idea of all 3 pillars, your application might face multiple issues resulting in the end user being disappointed.
+
+There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering.
