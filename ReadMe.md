@@ -91,7 +91,11 @@ The main purpose of application performance management is to make sure that the 
 
 # Pillar 1: Pull Request Automation
 
-Pull Request Automation consists of running automated tests, performing code review and conducting creating ephemeral environments.
+Pull Request Automation consists of
+
+- running automated tests
+- performing code review
+- creating ephemeral environments.
 
 ## Running Automated tests
 
