@@ -16,6 +16,18 @@ DevOps is a more theoretial as compared to programming. So, all these devops not
 
 I will include all the learning resources, code snippets and command whenever necessary.
 
+<br>
+
+# Directory Structure
+
+All the root-level folders contain `ReadMe` file and `notes` folder.
+
+notes directory contains multiple files. Each file is a detailed note on a particular topic.
+
+ReadMe file arranges those files in a sequential manner.
+
+It is advised to go through ReadMe instead of going through individual notes.
+
 <hr>
 <br>
 
