@@ -19,4 +19,4 @@ I will include all the learning resources, code snippets and command whenever ne
 <hr>
 <br>
 
-[Devops Overview](./devops-overview)
+[Devops Introduction](./devops-overview)
