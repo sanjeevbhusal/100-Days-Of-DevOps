@@ -366,9 +366,59 @@ This will cause some downtime. Instead if we had other clusters available, we ca
 
 - We have more clusters available. This can help in scenarios where we want to preserve the previous version of application but also want to deploy the new version without causing downtime.
 
+<br>
+
 ### Disadvantage over Blue / Green Deployment
 
 - More cluster means more cost.
+
+<hr>
+<br>
+
+## Cannary Deployment
+
+We do cannary deplpyment to deploy our application to only few users.
+
+<br>
+
+## Why we deploy to only few users?
+
+Deploying the application to only few users is done while we are still testing the application.
+
+Whenever we create a new feature in the application, the feature might contain a lot of bugs.By deploying it to only few users, we aim to collect feedback to improve the feature.
+
+<br>
+
+## So, why not just release to all users and collect more feedback
+
+Most of the user donot care about giving feedback. They just want the application bug free.
+
+If we deploy the application to all users, we will receive a lot of complains as our feature might have a lot of bugs.
+
+Its better not to add any feature to the application as compared to adding buggy feature.
+
+So, we only deploy the application to few users, collect feedback, improve the application and release to all users.
+
+This way, only few users experience isssues.
+
+<br>
+
+## How do we select the users to release the feature?
+
+We can either create a signup form where intrested users will signup.
+
+We can also release the application in a few specific countries.
+
+<br>
+
+## What does user gets from testing application and submitting feedback ?
+
+The user gets to experience the feature before eveyone else.
+
+We can also create a reward system to reward those users who submit feedback about the new feature.
+
+<hr>
+<br>
 
 <!-- ## Pillar 2: Deployment Automation
 
