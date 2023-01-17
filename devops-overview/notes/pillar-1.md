@@ -11,6 +11,8 @@ Pull Request Automation consists of
 
 ## Running Automated tests
 
+<br>
+
 Automated tests are tests that runs whenever a new pull request is submitted.
 
 <br>
@@ -58,6 +60,8 @@ By Setting Security Checks, we can reject those changes which may potentially in
 
 ## Code Review
 
+<br>
+
 Code Review is a process of reviewing someone elses code.
 
 <br>
@@ -95,17 +99,21 @@ Sometimes, management also has to approve the changes. However, management peopl
 
 ## Ephemeral Environments
 
+<br>
+
 Ephemeral environment is a temporary environment created by building the application from the changes in pull request.
 
 Its main purpose is to let other stakeholders interact with the application.
 
 <br>
 
-### Problens in Current Approach
+### Problems in Current Approach
 
 Whenever we review a pull request, we can see the changes done in the pull request. But we cannot interact with the application. To do so, we have to pull the change locally and run the application.
 
 This is a tiresome process. This is where Ephemeral Environments help.
+
+<br>
 
 ### How does Ephemeral Environment solve the issue?
 
@@ -114,6 +122,8 @@ Ephemeral environments lets us interact with the application which is built from
 We can then share the URL of the ephemeral environment and let the code reviewer see the application.
 
 This saves time for the developer as we no longer need any kind of meeting to showcase the latest changes.
+
+<br>
 
 ### Other Advantages of Ephemeral Environments
 
