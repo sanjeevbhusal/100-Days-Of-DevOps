@@ -1,7 +1,6 @@
 # Table of Contents
 
-1. [Pull Request Automation](#pull-request-automation) Environment
-
+1. [Pull Request Automation](#pull-request-automation)
    - [Running Automated tests](#automated-tests)
    - [Code Review](#code-review)
    - [Ephimeral Environment](#ephimeral-environment)

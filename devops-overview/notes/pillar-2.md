@@ -1,4 +1,18 @@
-# Pillar 2: Deployment Automation
+# Table of Contents
+
+1. [Deployment Automation](#deployment-automation)
+
+   - [multiple deployment strategies](#multiple-deployment-strategies)
+
+     - [Green/Blue Deployment](#green-blue-deployment)
+     - [Rainbow Deployment](#rainbow-deployment)
+     - [Cannary Deployment](#cannary-deployment)
+
+   - [Revert Strategies](#revert-strategies)
+
+<br>
+
+# Pillar 2: Deployment Automation <a name="deployment-automation"></a>
 
 The main purpose of deployment automation is to simplify the deployment strategies to reduce error prone steps.
 
@@ -9,7 +23,9 @@ Deployment Automation consists of
 - making multiple deployment strategies
 - making revert strategies in case something goes wrong
 
-## Making multiple deployment strategies
+<br>
+
+## Making multiple deployment strategies <a name="multiple-deployment-strategies"></a>
 
 Organizations use multiple deployment strategies to deploy their application.
 
@@ -23,7 +39,7 @@ Here are some of the deployment strategies organizations use
 
 <br>
 
-## Green/Blue Deployment
+## Green/Blue Deployment <a name="green-blue-deployment"></a>
 
 In this deployment, organizations keep 2 seperate clusters of servers. The same application is deployed in both clusters. These 2 clusters are called green and blue environments.
 
@@ -69,7 +85,7 @@ This is because, even if we upgrade the version of the application, both version
 <hr>
 <br>
 
-## Rainbow Deployment
+## Rainbow Deployment <a name="rainbow-deployment"></a>
 
 This is the extended version of Blue Green Deployment.
 
@@ -116,7 +132,7 @@ This will cause some downtime. Instead if we had other clusters available, we ca
 <hr>
 <br>
 
-## Cannary Deployment
+## Cannary Deployment <a name="cannary-deployment"></a>
 
 We do cannary deplpyment to deploy our application to only few users.
 
@@ -161,7 +177,7 @@ We can also create a reward system to reward those users who submit feedback abo
 <hr>
 <br>
 
-## Making revert strategies
+## Making revert strategies <a name="revert-strategies"></a>
 
 We also need to make revert strategies in case something goes wrong with the application.
 
