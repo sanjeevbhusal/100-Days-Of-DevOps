@@ -261,6 +261,70 @@ We can fasten the process by automatically sending notification to the code revi
 <br>
 <hr>
 
+# Pillar 2: Deployment Automation
+
+Deployment Automation consists of
+
+- making multiple deployment strategies
+- making revert strategies in case something goes wrong
+
+## Making multiple deployment strategies
+
+Organizations use multiple deployment strategies to deploy their application.
+
+The main factor that changes deployment strategies is the total users of the application.
+
+Here are some of the deployment strategies organizations use
+
+- Green/Blue Deployment
+- Rainbow Deployment
+- Canary Deployment
+
+<br>
+
+## Green/Blue Deployment
+
+In this deployment, organizations keep 2 seperate clusters of servers. The same application is deployed in both clusters. These 2 clusters are called green and blue environments.
+
+The difference is that both clusters contains different version of the application.
+
+<br>
+
+### Why 2 clusters are used ?
+
+Using 2 clusters make deployment fairly easy.
+
+One of the cluster is used in production wheras another cluster is used to deploy new version.
+
+Whenever we deploy a new version of the application, we deploy it in the secondary cluster.
+
+So, we end up with 2 clusters, one containing the old version (production server) and one containing the new version (upcoming production server).
+
+<br>
+
+### How does user routing works ?
+
+All the user request goes to the web server. the web server routes the request to the current production cluster.
+
+When we deploy a new version of the application in another cluster, we want that cluster to become the new production cluster.
+
+So, we just change the route from the web server to instead go to the cluster containing new version.
+
+<br>
+
+### What about database ?
+
+Both servers will connect to the same database.
+
+This is because, even if we upgrade the version of the application, both version will use the same user data.
+
+<br>
+
+### Advantage of Blue / Green Deployment
+
+- Very easy to understand and set up.
+- There is almost neglible downtime while upgrading the application.
+
 <!-- ## Pillar 2: Deployment Automation
 
 <br>
