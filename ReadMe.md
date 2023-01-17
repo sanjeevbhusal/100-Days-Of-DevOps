@@ -325,6 +325,51 @@ This is because, even if we upgrade the version of the application, both version
 - Very easy to understand and set up.
 - There is almost neglible downtime while upgrading the application.
 
+<hr>
+<br>
+
+## Rainbow Deployment
+
+This is the extended version of Blue Green Deployment.
+
+<br>
+
+### So, what is the difference ?
+
+Instead of only 2 clusters, we create multiple clusters.
+
+Rainbow has 7 colors. In this scenario, rainbow represents multiple clusters.
+
+<br>
+
+### Why do we need more clusters ?
+
+When we have more clusters we can deploy multiple version of our application at once.
+
+One of the clusters will be used for production and other might be used for various scenarios.
+
+### What kind of scenario might need multiple clusters ?
+
+Lets say 1 cluster has the previous version of application and another cluster has the current version of application i.e. the production version.
+
+If the production version has some issues, we want to fix that issue and deploy another version of application.
+
+What if we dont want to remove the previous version for any reason ?
+
+In such scenario, we would have to deploy the new version in the production cluster. For that, we need to shut the production cluster for some time untill we deploy the new version.
+
+This will cause some downtime. Instead if we had other clusters available, we can solve this problem without causing downtime.
+
+<br>
+
+### Advantage over Blue / Green Deployment
+
+- We have more clusters available. This can help in scenarios where we want to preserve the previous version of application but also want to deploy the new version without causing downtime.
+
+### Disadvantage over Blue / Green Deployment
+
+- More cluster means more cost.
+
 <!-- ## Pillar 2: Deployment Automation
 
 <br>
