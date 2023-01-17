@@ -9,18 +9,45 @@
 
 <br>
 
-DevOps is a methodology that helps engineering teams to build software by continuously integrating user feedback. DevOps as a term defines a way of building software. “DevOps Engineer” role includes tasks which involves a lot of automation, with the end goal being building high quality software faster.
+DevOps is a methodology that helps engineering teams to build software by continuously integrating user feedback.
+
+However, whenever a company says they need a "DevOps Engineer", it means they need someone who knows how to automate multiple steps of software development/deployment life cycle. The ultimate goal of a devops enginner is to help build high quality software **faster**.
 
 <hr>
 <br>
 
-## [DevOps at the Organization level](./notes/organization-level.md)
+## DevOps at the Organization level
 
-## [DevOps from the perspective of Engineer / three Pillars of DevOps Engineer](./notes/engineer-perspective.md)
+<br>
 
-# [Pillar 1: Pull Request Automation](./notes/pillar-1.md)
+The entire process of building a software is broken down into multiple steps.
 
-# [Pillar 2: Deployment Automation](./notes/pillar-2.md)
+This step include taking requirements, making a plan, coding, testing, deployment, monitoring and feedback.
+
+[Click here for detailed information](./notes/organization-level.md)
+
+<hr>
+<br>
+
+## DevOps from the perspective of Engineer / three Pillars of DevOps Engineer
+
+<br>
+
+A personal with the title of “DevOps engineer” has very little to do with planning or coding.
+
+The main purpose of a devops engineer is to incorporate practices that helps to ship high quality bug free software quickly.
+
+They achieve this goal by using these 3 pillars :
+
+- Pull Request Automation
+- Deployment Automation
+- Application Performance Monitoring Automation
+
+[Click here for more information on Pillar 1 : Pull Request Automation](./notes/pillar-1.md)
+
+[Click here for more information on Pillar 2 : Deployment Automation](./notes/pillar-2.md)
+
+<hr>
 
 <!-- ## Pillar 2: Deployment Automation
 
