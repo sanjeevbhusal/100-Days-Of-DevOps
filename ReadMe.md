@@ -27,9 +27,10 @@ I will include code snippets whenever necessary.
 
 <hr>
 <br>
-<br>
 
 ## DevOps Introduction
+
+<br>
 
 DevOps is a methodology that helps engineering teams to build software by continuously integrating user feedback. DevOps as a term defines a way of building software. “DevOps Engineer” role includes tasks which involves a lot of automation, with the end goal being building high quality software faster.
 
@@ -62,13 +63,15 @@ Finally, the monitoring metrics and user feedback are incorporated into making a
 
 <br>
 
-A personal with the title of “DevOps engineer” has very little to do with planning or coding and more to do with the 3 pillars :
+A personal with the title of “DevOps engineer” has very little to do with planning or coding.
+
+The main purpose of a devops engineer is to incorporate practices that helps to ship high quality bug free software quickly.
+
+They achieve this goal by using these 3 pillars :
 
 - Pull Request Automation
 - Deployment Automation
 - Application Performance Monitoring Automation
-
-The main purpose of a devops engineer is to incorporate practices that helps to ship high quality bug free software quickly.
 
 <br>
 
@@ -76,11 +79,15 @@ The main purpose of a devops engineer is to incorporate practices that helps to 
 
 The main purpose of pull request automation is to make sure the proposed code gets merged as fast as possible.
 
+<br>
+
 ## Pillar 2: Deployment Automation
 
 The main purpose of deployment automation is to simplify the deployment strategies to reduce error prone steps.
 
 Using proper tools and configuring them to support our business needs, we can make sure that there is zero to very little custom code required for every deployment.
+
+<br>
 
 ## Pillar 3: Application Performance Management
 
@@ -96,10 +103,13 @@ Pull Request Automation consists of
 - running automated tests
 - performing code review
 - creating ephemeral environments.
+- sending automatic notifications.
 
 ## Running Automated tests
 
 Automated tests are tests that runs whenever a new pull request is submitted.
+
+<br>
 
 ### Why do we need automated tests?
 
@@ -107,19 +117,27 @@ Whenever a developer proposes a new change i.e. files a pull request, the new ch
 
 So, we run automated tests on the new proposed change to make sure there arent any problems.
 
+<br>
+
 ### What if the automated test fails?
 
 If the test fails, the pull request gets rejected. The script will automatically notify the developer.
 
+<br>
+
 ### What does this tests contain?
 
 This tests are noting but unit/integration/end-to-end tests which are written to test the project's functionality.
+
+<br>
 
 ### Can't we run these tests locally?
 
 Yes, a developer can run all the tests in their local development environment first. If all the test passes, then they can submit a pull request.
 
 However, we can't be sure if all developer will do that. So it is better to set up automated tests.
+
+<br>
 
 ### What are other tests that we can do?
 
@@ -132,24 +150,31 @@ By Setting Formatting Checks, we can reject those changes which donot follow the
 By Setting Security Checks, we can reject those changes which may potentially introduce security issues.
 
 <hr>
-
 <br>
 
 ## Code Review
 
 Code Review is a process of reviewing someone elses code.
 
+<br>
+
 ### Why is Code Review Done?
 
 Code Review is done to make sure the new changes complies with standards set by the organization.
+
+<br>
 
 ### When is Code Review Done?
 
 It is generally done when a developer submits a pull request.
 
+<br>
+
 ### Who does Code Review?
 
 The person reviewing the code in pull request is called `Code Reviewer`.
+
+<br>
 
 ### Who can be a Code Reviewer?
 
@@ -162,10 +187,13 @@ However, In large Organizations other individuals are also involved in code revi
 Sometimes, management also has to approve the changes. However, management people cannot understand code, so we create ephimeral environments.
 
 <hr>
+<br>
 
 ## Ephemeral Environments
 
 Ephemeral environment is a temporary environment created to interact with the changes in the pull request.
+
+<br>
 
 ### Why do we need Ephemeral Environment?
 
@@ -174,6 +202,8 @@ Whenever we review a pull request, we can only see the changes occurred in the p
 To interact with the appliation, we need to pull down the changes and run the application in the local server.
 
 So, instead whenever user submits a pull request, we build the application from the latest commit of the pull request.
+
+<br>
 
 ### How does Ephemeral Environment help?
 
@@ -187,11 +217,15 @@ This also helps non-technical people understand what our code change did to the 
 
 We can also have QA Engineers do manual testing in this ephemeral environment.
 
+<br>
+
 ### When should we close the ephemeral environment?
 
 There are mulitple strategies one can use. But generaly, ephemeral environments should be closed once the pull Request has been merged.
 
 The code Reviewer checks the application in our ephimeral environment and when satisfied merges the pull request.
+
+<br>
 
 ### Drawbacks of ephemeral environment
 
@@ -199,20 +233,33 @@ Creation of each ephemeral environment costs money.
 
 So, if we are taking a lot of time to merge a pull request, then creation of ephemeral environment will increase the deployment cost of the company multiple times.
 
-<!-- <br>
+<hr>
+<br>
 
-### What are the tasks that can be automated?
+## Auto Notification
 
 <br>
 
-The main goal of a devops engineer working on pull request automation is to increase the speed of the review process, from the moment code gets pushed till code gets reviewed. Some of the automation functionality that can be built are:
+We have to automatically notify the code reviewer to review the new pull request.
 
-- Automated test running with a CI Provider: This gives developer confidence that their code changes does not break any existing functionality.
-- Per-Change Ephemeral Environment: Creation of Temporary Environments per code change helps interested parties interact with the proposed change and make sure it solves all the required business goals.
-- Automated security scanning: This makes sure that the proposed change do not introduce any security vulnerabilities in the product.
-- Notifications to reviewers: Automatic notifications to reviewers to notify them for code review so that the reviewers can quickly request new changes to the pull request.
+<br>
 
-<br> -->
+### When should we notify code reviewer?
+
+Whenever a pull request passes all the automatic tests, we have to notify the code reviewer.
+
+<br>
+
+### What is the benefit of sending auto notification?
+
+Auto notification is sent to fasten the process of reviewing the pull request.
+
+The biggest reason why softwares are shipped slowly is due to time taken in code review.
+
+We can fasten the process by automatically sending notification to the code reviewer.
+
+<br>
+<hr>
 
 <!-- ## Pillar 2: Deployment Automation
 
