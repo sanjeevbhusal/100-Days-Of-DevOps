@@ -1,4 +1,15 @@
-# Pillar 1: Pull Request Automation
+# Table of Contents
+
+1. [Pull Request Automation](#pull-request-automation) Environment
+
+   - [Running Automated tests](#automated-tests)
+   - [Code Review](#code-review)
+   - [Ephimeral Environment](#ephimeral-environment)
+   - [Auto Notification](#auto-notification)
+
+<br>
+
+# Pillar 1: Pull Request Automation <a name="pull-request-automation"></a>
 
 The main purpose of pull request automation is to make sure the proposed code gets merged as fast as possible.
 
@@ -9,9 +20,7 @@ Pull Request Automation consists of
 - creating ephemeral environments.
 - sending automatic notifications.
 
-## Running Automated tests
-
-<br>
+## Running Automated tests <a name="automated-tests"></a>
 
 Automated tests are tests that runs whenever a new pull request is submitted.
 
@@ -58,9 +67,7 @@ By Setting Security Checks, we can reject those changes which may potentially in
 <hr>
 <br>
 
-## Code Review
-
-<br>
+## Code Review <a name="code-review"></a>
 
 Code Review is a process of reviewing someone elses code.
 
@@ -97,9 +104,7 @@ Sometimes, management also has to approve the changes. However, management peopl
 <hr>
 <br>
 
-## Ephemeral Environments
-
-<br>
+## Ephemeral Environments <a name="ephimeral-environment"></a>
 
 Ephemeral environment is a temporary environment created by building the application from the changes in pull request.
 
@@ -107,13 +112,11 @@ Its main purpose is to let other stakeholders interact with the application.
 
 <br>
 
-### Problems in Current Approach
+### Problens in Current Approach
 
 Whenever we review a pull request, we can see the changes done in the pull request. But we cannot interact with the application. To do so, we have to pull the change locally and run the application.
 
 This is a tiresome process. This is where Ephemeral Environments help.
-
-<br>
 
 ### How does Ephemeral Environment solve the issue?
 
@@ -122,8 +125,6 @@ Ephemeral environments lets us interact with the application which is built from
 We can then share the URL of the ephemeral environment and let the code reviewer see the application.
 
 This saves time for the developer as we no longer need any kind of meeting to showcase the latest changes.
-
-<br>
 
 ### Other Advantages of Ephemeral Environments
 
@@ -150,7 +151,7 @@ So, if we are taking a lot of time to merge a pull request, then creation of eph
 <hr>
 <br>
 
-## Auto Notification
+## Auto Notification <a name="auto-notification"></a>
 
 <br>
 
