@@ -381,7 +381,7 @@ We do cannary deplpyment to deploy our application to only few users.
 
 <br>
 
-## Why we deploy to only few users?
+##3# Why we deploy to only few users?
 
 Deploying the application to only few users is done while we are still testing the application.
 
@@ -389,7 +389,7 @@ Whenever we create a new feature in the application, the feature might contain a
 
 <br>
 
-## So, why not just release to all users and collect more feedback
+### So, why not just release to all users and collect more feedback
 
 Most of the user donot care about giving feedback. They just want the application bug free.
 
@@ -403,7 +403,7 @@ This way, only few users experience isssues.
 
 <br>
 
-## How do we select the users to release the feature?
+### How do we select the users to release the feature?
 
 We can either create a signup form where intrested users will signup.
 
@@ -411,7 +411,7 @@ We can also release the application in a few specific countries.
 
 <br>
 
-## What does user gets from testing application and submitting feedback ?
+### What does user gets from testing application and submitting feedback ?
 
 The user gets to experience the feature before eveyone else.
 
@@ -419,6 +419,22 @@ We can also create a reward system to reward those users who submit feedback abo
 
 <hr>
 <br>
+
+## Making revert strategies
+
+We also need to make revert strategies in case something goes wrong with the application.
+
+This applies to all kind of deployment strategies.
+
+In case of Green/Blue and Rainbow Deployments, we always keep the old version of the application running in one of the clusters.
+
+If new version experiences issues, we route users to old version. As both versions use the same database, we dont need to perform any database syncing.
+
+In case of canary deployment, we want the user to report issues in the new version. But for some reason if the new version becomes really buggy, we can also perform blue green deployment i.e. route the user to old version.
+
+Then we can fix the new version and again route those users to try new version.
+
+<hr>
 
 <!-- ## Pillar 2: Deployment Automation
 
