@@ -37,4 +37,6 @@ It is advised to go through ReadMe instead of going through individual notes.
 
 [Continuous Deployment](./Continuous-Deployment)
 
+[Auto Scaling](./AutoScaling/)
+
 [Serverless Deployment](./Serverless-Deployment/)
