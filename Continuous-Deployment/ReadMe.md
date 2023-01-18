@@ -1,6 +1,6 @@
 # Note
 
-**This documetation refereneces some concepts discussed in [Deployment Automation](../devops-overview/notes/pillar-2.md)**.
+**This documetation refereneces some concepts discussed in [Deployment Automation](../devops-overview/notes/pillar-2.md), [Continuous Integration](../Continuous-Integration)**.
 
 <br>
 
@@ -51,3 +51,15 @@ Either way, you will create Virtual Machines to utilize your hardware resource i
 ### Which kind of deployment strategy we use with Continuous Development ?
 
 We can use any kind of deployment strategy with continuous deployment. Of course, the script will differ for different deployment strategies.
+
+<br>
+
+# Explain the working of CI/CD Pipeline with real example
+
+First, a developer pushes some changes to a feature branch and creates a pull request to the main branch.
+
+All the automated tests on the CI system run. If all the test passes, we create an ephemeral environment and build the project in the environment. Then we notify the reviewer to review the changes.
+
+The reviewer will review the files changed and will also look at the ephemeral environment. If the reviewer is satisfied, then they will merge the pull request.
+
+Now, a continuous deployment process will run. We will have a pre-written script that will build the project from a production point of view and then deploy the project to the production server.
