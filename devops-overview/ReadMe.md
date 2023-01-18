@@ -50,8 +50,7 @@ They achieve this goal by using these 3 pillars :
 [Click here for more information on Pillar 3 : Application Performance Management](./notes/pillar-3.md)
 
 <hr>
-<!-- 
-# Day 3 of 100 Days Of DevOps
+<br>
 
 ## Does Every Product Follow all 3 Pillars of DevOps Engineering?
 
@@ -80,6 +79,8 @@ These kind of organization have to worry about all 3 pillars of devops engineeri
 
 <br>
 
-DevOps engineering is absolutely crucial for a organization to ensure delivery of high quality applications. Without having a strong idea of all 3 pillars, your application might face multiple issues resulting in the end user being disappointed.
+DevOps engineering is absolutely crucial for a organization to ensure delivery of high quality applications **faster**.
 
-There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering. --> -->
+Without having a strong idea of all 3 pillars, your application might face multiple issues resulting in the end user being disappointed.
+
+There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering.
