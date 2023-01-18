@@ -35,4 +35,6 @@ It is advised to go through ReadMe instead of going through individual notes.
 
 [Continuous Integrtion](./Continuous-Integration)
 
-[Continuous Deeployment](./Continuous-Deployment)
+[Continuous Deployment](./Continuous-Deployment)
+
+[Serverless Deployment](./Serverless-Deployment/)
