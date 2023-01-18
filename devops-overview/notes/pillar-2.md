@@ -4,6 +4,7 @@
 
    - [multiple deployment strategies](#multiple-deployment-strategies)
 
+     - [Rolling Deployment](#rolling-deployment)
      - [Green/Blue Deployment](#green-blue-deployment)
      - [Rainbow Deployment](#rainbow-deployment)
      - [Cannary Deployment](#cannary-deployment)
@@ -33,11 +34,41 @@ The main factor that changes deployment strategies is the total users of the app
 
 Here are some of the deployment strategies organizations use
 
+- Rolling Deployment
 - Green/Blue Deployment
 - Rainbow Deployment
 - Canary Deployment
 
 <br>
+
+## Rolling Deployment <a name="rolling-deployment"></a>
+
+In this deployment strategy, whenever we have to upgrade the application, we first shut the current application and then install and configure the upgraded application.
+
+We do this one application at a time. Meaning, if our application is deployed in multiple servers, we first upgrade the application in one server, then upgrade the application in another server and so on untill all our applications are upgraded.
+
+### Why one application at a time?
+
+We configure one application at a time to reduce downtime. If we stopped all applications at the same time, our users wont be able to use the application for the replacement period.
+
+### What about database
+
+We dont perform any actions on database. Both the version have to use the same data. So, both versions connect to the same database.
+
+### Advantage
+
+This approach has few advantages such as :
+
+- This method of deployment is supported from all cloud providers.
+- Less Connections to database at a time. Database can only support limited number of connections at a time. Here, while upgrading, we configure a new database connection for the upgraded application but also remove the existing connection from the old application. This way we dont increase the database connections.
+
+### Disadvantage
+
+This apporoach has few disadvantages such as :
+
+- Longer Deployment Time: This approach takes some time to completely upgrade applications in all servers, as we are doing replacement one at a time.
+- Compatibility issues: This approach might result in inconsistent data. As we are deploying one application at a time, we might still have a version 1 frontend consuming data from a version 2 backend. In such scenarios, frontend wont be able to consume the appropriate data as the backend API output schema has been updated. We can get around this issue if the backend is backward compatable.
+- Rollback strategies: If something wrong occurs with the newly upgraded application and we want to go back to previous version, it will take some time as we have to change application on all the servers.
 
 ## Green/Blue Deployment <a name="green-blue-deployment"></a>
 
@@ -81,6 +112,16 @@ This is because, even if we upgrade the version of the application, both version
 
 - Very easy to understand and set up.
 - There is almost neglible downtime while upgrading the application.
+- Extremely Scalable.
+
+<br>
+
+## Disadvantage of Blue/Green Deployment
+
+- Only 2 version of applicationa are maintained. We will struggle if we want to maintain other version as well.
+- We might face issues if our application uses Auto Scaling Strategies. When you first deploy a new version of your application, there won't be much load as the traffic is still being routed to the previous version. So, the auto-scaling strategy will deploy only a fixed amount of instances.
+
+  Once you route all the traffic to this new version, the load will increase at once and the server might not be able to handle all the traffic at once. Spinning the new servers will take some time.
 
 <hr>
 <br>
