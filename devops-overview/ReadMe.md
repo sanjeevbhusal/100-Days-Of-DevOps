@@ -49,25 +49,6 @@ They achieve this goal by using these 3 pillars :
 
 <hr>
 
-<!-- ## Pillar 2: Deployment Automation
-
-<br>
-The main purpose of deployment automation is to simplify the deployment strategies to reduce error prone steps. Using proper tools and configuring them to support our business needs, we can make sure that there is zero to very little custom code required for every deployment.
-
-<br>
-
-### What are the tasks that can be automated?
-
-<br>
-
-- Cannary Deployment: Deploying a feature to only a certain set of users as a final test before rolling the feature to all the users.
-- Blue/Green deployment: Starting a new version of a service without causing any downtime.
-- Roll Back: Rolling back to previous version in case something goes wrong.
-
-This step is particularly important as it is very easy to over complicate deployment. Companies have internal platforms to make complex deployments possible.
-
-<br>
-
 ## Pillar 3: Application Performance Management
 
 The main purpose of application performance management is to make sure that the application is performing well in production.
