@@ -1,3 +1,9 @@
+# Note
+
+**This documetation refereneces some concepts discussed in [overview of DevOps](../devops-overview/ReadMe.md)**.
+
+<br>
+
 # Continuous Integration (CI)
 
 When a codebase uses Continuous Integration, it means that all the new changes can only me merged if it satisfies some standards.
