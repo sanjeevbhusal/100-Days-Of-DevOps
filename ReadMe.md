@@ -33,4 +33,4 @@ It is advised to go through ReadMe instead of going through individual notes.
 
 [Devops Introduction](./devops-overview)
 
-[Continuous Integrtaion](<./Continuous-Integration(CI))
+[Continuous Integrtion](./Continuous-Integration/ReadMe.md)
