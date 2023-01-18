@@ -47,25 +47,10 @@ They achieve this goal by using these 3 pillars :
 
 [Click here for more information on Pillar 2 : Deployment Automation](./notes/pillar-2.md)
 
+[Click here for more information on Pillar 3 : Application Performance Management](./notes/pillar-3.md)
+
 <hr>
-
-## Pillar 3: Application Performance Management
-
-The main purpose of application performance management is to make sure that the application is performing well in production.
-
-<br>
-
-### What are the tasks that can be automated?
-
-<br>
-
-- Logging: We should log all the details of how a process is happening. This might include data like the source IP, time of the request, time taken to response, etc.
-- Metrics: We should keep track of key numbers affecting our application in production. This includes average response time, time taken to process a certain task, finite resources such as Memory usage (RAM), Available Storage etc.
-- Monitoring: By analyzing data from logging and metrics, we create health reports. Based on the health reports, we need to find out if the application is down, is performing slower, if all the features are working etc.
-- Alerting: If monitoring detects a issue, associated personal should be notified automatically. In case of feature errors or performance issues, tickets are created automatically.
-
-<br>
-
+<!-- 
 # Day 3 of 100 Days Of DevOps
 
 ## Does Every Product Follow all 3 Pillars of DevOps Engineering?
@@ -97,4 +82,4 @@ These kind of organization have to worry about all 3 pillars of devops engineeri
 
 DevOps engineering is absolutely crucial for a organization to ensure delivery of high quality applications. Without having a strong idea of all 3 pillars, your application might face multiple issues resulting in the end user being disappointed.
 
-There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering. -->
+There is no fixed answer for whether you need 1, 2 or 3 pillars of devops engineering. Mostly, as the product’s size grows, you will feel the need for investing in DevOps Engineering. --> -->
