@@ -36,3 +36,5 @@ It is advised to go through ReadMe instead of going through individual notes.
 [Auto Scaling](./AutoScaling/)
 
 [Serverless Deployment](./Serverless-Deployment/)
+
+[Gitlab CI/CD Pipeline](./gitlab-ci-cd/)
