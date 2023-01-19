@@ -2,12 +2,6 @@
 
 [![devops picture](./assets/images/devops-software-development-concept-179685898.jpg)](https://thumbs.dreamstime.com/b/devops-software-development-concept-179685898.jpg)
 
-                                                            |
-
-<!-- | [DevOps Bootcamp](https://www.techworld-with-nana.com/devops-bootcamp)                                                    | 🚧                   |
-| [AWS Cloud Practioner](https://digitalcloud.training/aws-certified-cloud-practitioner/)                                   | 🚧                   |
-| [VPC Detailed Course](https://www.youtube.com/watch?v=g2JOHLHh4rI&t=1802s)                                                | ✔️                   | -->
-
 <br>
 
 # Note
@@ -32,6 +26,8 @@ It is advised to go through ReadMe instead of going through individual notes.
 <br>
 
 [Devops Introduction](./devops-overview)
+
+[Networking](./Networking/)
 
 [Continuous Integrtion](./Continuous-Integration)
 
