@@ -51,3 +51,46 @@ ansible uses yaml syntax wheras puppet and chef use ruby.
 ansible is agentless whereas puppet and chef require agent installtion on remote machine.
 
 ansible is generally either installed on the local machine or is installed on one of the remote machines. if your servers are not connected to the internet and are in a private network, then you will need to install ansible in that same network. you would then manage this server through your local machine. the machine where you install ansible is called control node. control node will manage other servers known as managed nodes. managed nodes will need to install python to run ansible code.
+
+Workflow
+
+1. Create a hosts file and store the IP address of the servers.
+
+   - The host file can be called anything you like.
+   - You can categorize IP addresses in multiple groups.
+   - You can also use domain name instead of IP addresses.
+
+2. Specify the private key file to use for performing ssh into servers.
+
+   - Each server might need a different ssh prvate key.
+   - So, specify private key file path for each server.
+   - The key to specify the file path is ansible_ssh_private_key_file=<filepath>
+
+3. Specify the user to login to servers.
+
+   - Each server might have different users configured.
+   - So, specify user for each server.
+   - The key to specify user is ansible_user=<username>
+
+4. Use ansible cli to perform some commands on servers.
+
+   - The pattern for command is `ansible -i [hostfile] [pattern] -m [module] -a "[module options]"`
+   - `[hostfile]` means the file which contains inventory information.
+   - `[pattern]` means the hosts against which command will be run.
+     - You should always target a group.
+     - If you donot have any explicit groups, use `all`.
+     - `all` group targets all IP addresses within a host file.
+   - `[module]` refers to code files which perform a single task.
+     - You can built your custom module or use prebuilt ones.
+     - `ping` is a module which performs a ping command on the remote server.
+
+5. Execution example.
+   - The command used is `ansible all -i hosts.txt -m ping`.
+   - Ansible will first search for a file called hosts.txt.
+   - Then, ansible will identify the IP address to be targeted using pattern.
+   - Then, ansible will search for a module called ping.
+   - Then, ansible will ssh into the IP addresses and
+     - find the python interpreter.
+     - run the ping command code using interpreter.
+
+You can group inventory using their location such as region/avaiability zone etc, server-type such as database server, web server etc and type such as dev, test, prod etc.

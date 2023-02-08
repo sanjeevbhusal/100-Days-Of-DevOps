@@ -347,7 +347,9 @@ Workflow
 
 3. View the containers/processes inside the service
 
-   - You can view ID, name, image, node, state and other properties for a container.
+   - You can view ID, name, image, node, state and other properties for a container.14 package(s) needed for security, out of 14 available
+     Run "sudo yum update" to apply all updates.
+
    - docker service ps <service ID / service name>
 
 4. Update a service
