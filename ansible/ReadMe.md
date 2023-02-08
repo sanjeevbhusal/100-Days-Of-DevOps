@@ -117,3 +117,5 @@ for authentication, ssh has a concept of public-private key. The remote server s
 You also have the option to login to your remote machine with password instead of ssh private-public key. But you have to authenticate yourself each time. So, in this case, you could generae a private-public ssh key on your host machine and copy public key to remote machine. This will allow you to use ssh without password. You can use a cli tool called ssh-copy-id
 
 `ssh-copy-id [user]@[IP address]`
+
+There is a option called `StrictHostKeyChecking` that you can use to ssh into a remote machine without adding it to known_hosts. This method is less secure but can be used when you are creating and destroying servers frequently.
