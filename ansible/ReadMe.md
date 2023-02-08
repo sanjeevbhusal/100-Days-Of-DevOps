@@ -33,3 +33,13 @@ you can also define multiple variables inside ansible scripts and use them insid
 
 the combination of which task, which host and which user formes a term called play. In a single YAML file, you can have multiple play, hence the file is also known as playbook.
 ![playbook image](./assets/playbook.png)
+
+ansible has a file called hosts file. this file lists all the IP address of the server. The server are arranged in groups. We then refer to this group in a play. Tasks in a play gets executed in all the servers listed under the group.
+
+You can either use IP addresses or DNS name to refer to the server. The server could be a database server, web server or any other server.
+
+All the servers listed in this file are also called Inventory.
+
+![ansible-inventory](./assets/ansible-inventory.png)
+
+Ansible can manage both the application (dockerized/with-out dockerized) and host.
