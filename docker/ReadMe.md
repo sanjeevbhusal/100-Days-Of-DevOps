@@ -375,3 +375,9 @@ Workflow
 A orchestration service like docker swarm's one of the responsibilities is to recover from such disasters.
 
 we can add other nodes in the swarm as manager or worker through manager join token or worker join token.
+
+perform docker node ls to see the updated notes.
+
+workers are not allowed to view or change containers in the swarm. So, commands such as docker node ls will not work on worker nodes.
+
+the token to join the swarm either as manager or worker is stored safely in the Leader Node. You can also change this keys if you dont want anyother node to join the swarm using this key.
