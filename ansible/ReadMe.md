@@ -43,3 +43,11 @@ All the servers listed in this file are also called Inventory.
 ![ansible-inventory](./assets/ansible-inventory.png)
 
 Ansible can manage both the application (dockerized/with-out dockerized) and host.
+
+Ansible has a GUI interface called Ansible Tower created by Redhat. This interface is used to centrally locate all the automation tasks across all the teams, manage permissions to team members, manage inventory etc.
+
+There are other alternatives of ansible such as Puppet or Chef.
+ansible uses yaml syntax wheras puppet and chef use ruby.
+ansible is agentless whereas puppet and chef require agent installtion on remote machine.
+
+ansible is generally either installed on the local machine or is installed on one of the remote machines. if your servers are not connected to the internet and are in a private network, then you will need to install ansible in that same network. you would then manage this server through your local machine. the machine where you install ansible is called control node. control node will manage other servers known as managed nodes. managed nodes will need to install python to run ansible code.
