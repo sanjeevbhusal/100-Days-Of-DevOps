@@ -119,3 +119,17 @@ You also have the option to login to your remote machine with password instead o
 `ssh-copy-id [user]@[IP address]`
 
 There is a option called `StrictHostKeyChecking` that you can use to ssh into a remote machine without adding it to known_hosts. This method is less secure but can be used when you are creating and destroying servers frequently.
+
+ansible looks for a configuration file in one of 2 locations
+
+- /etc/ansible/ansible.cfg
+- ~/.ansible.cfg
+
+In one of the files, you need to add the following
+
+```vim
+[defaults]
+host_key_checking=False
+```
+
+You can also set this configuration based upon projects. In the directory where you execute ansible commands, create `ansible.cfg` file and paste the above contents.
