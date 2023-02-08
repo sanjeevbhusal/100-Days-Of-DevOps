@@ -77,14 +77,14 @@ Workflow
    - The pattern for command is `ansible -i [hostfile] [pattern] -m [module] -a "[module options]"`
    - `[hostfile]` means the file which contains inventory information.
    - `[pattern]` means the hosts against which command will be run.
-     - You should always target a group.
-     - If you donot have any explicit groups, use `all`.
-     - `all` group targets all IP addresses within a host file.
+     - You can either supply a single IP address or a group.
+     - If you want to target all IP addresses, use `all`.
    - `[module]` refers to code files which perform a single task.
      - You can built your custom module or use prebuilt ones.
      - `ping` is a module which performs a ping command on the remote server.
 
 5. Execution example.
+
    - The command used is `ansible all -i hosts.txt -m ping`.
    - Ansible will first search for a file called hosts.txt.
    - Then, ansible will identify the IP address to be targeted using pattern.
@@ -93,4 +93,27 @@ Workflow
      - find the python interpreter.
      - run the ping command code using interpreter.
 
+6. Using variables to address redundency
+   - Instead of using keys such as `ansible_ssh_private_key`, `ansible_user` etc for each hosts, you can create variables.
+   - For a group called `ec2-instance`, you can create another group called `ec2-instance:vars`.
+   - You can supply all the redundant variables in this group.
+
 You can group inventory using their location such as region/avaiability zone etc, server-type such as database server, web server etc and type such as dev, test, prod etc.
+
+In order to have communication between 2 servers, both server should give permission to each ohter. Giving permission means identifying the server you are trying to communicate with. When you perform ssh into a remote server, remote server needs to identify you and you also need to identify remote server. all this identification is done in a file called known_hosts located under ~/.ssh.
+
+So, your physical machine needs to add the remote machine under ~/.ssh/known_hosts file to communicate with the remote machine. If you dont add the remote machine under known_hosts file, you will get a prompt while you try to ssh in the remote machine.
+
+If you are trying to run the remote machine for a long time, you can simply perform a manual ssh and accept the prompt. This will add remote machine to kown_hosts. So, all other subsequent ssh wont require this prompt. So, you can run your automation script with ansible without any issues.
+
+But if you are creating ephemeral/temporary servers for quick testing purposes, performing the manual ssh first will create a trouble. So, we need to somehow add the remote machine to known_hosts through automation first before we try to ssh.
+
+The identification is not as simple as pasting the server's IP address inside known_hosts file. ssh uses a different format for indentifying known hosts. We need to use a cli tool called ssh-keyscan that comes bundled with ssh.
+
+ssh-keyscan <Remote IP address> >> ~/.ssh/known_hosts
+
+for authentication, ssh has a concept of public-private key. The remote server should have a public key under ~/.ssh/authorized_keys. The machine trying to ssh should send the private key. The remote machine will try to match the private key with the public key under ~/.ssh/authorized_keys.
+
+You also have the option to login to your remote machine with password instead of ssh private-public key. But you have to authenticate yourself each time. So, in this case, you could generae a private-public ssh key on your host machine and copy public key to remote machine. This will allow you to use ssh without password. You can use a cli tool called ssh-copy-id
+
+`ssh-copy-id [user]@[IP address]`
