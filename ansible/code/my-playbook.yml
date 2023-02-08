@@ -10,4 +10,4 @@
     - name: configure nginx web server
       service:
         name: nginx
-        state: stopped
+        state: started
