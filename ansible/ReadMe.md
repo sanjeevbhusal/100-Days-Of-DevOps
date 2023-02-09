@@ -133,3 +133,21 @@ host_key_checking=False
 ```
 
 You can also set this configuration based upon projects. In the directory where you execute ansible commands, create `ansible.cfg` file and paste the above contents.
+5b47d40
+
+When we create ansible playbook, we will use a different syntax to execute playbook.
+
+The command is :
+
+`ansible-playbook -i [host_file_path] [playbook_file_path]`
+
+It will execute all the plays inside the playbook file.
+Each play will always contain a default task called `Gathering Facts`. This task will verify if the server address is correct and also collect a lot of information regarding the server such as its Operating System, networking info etc.
+
+a lot of modules inside ansible are idempotent. This means they will run if necessary. If a task specifies to install nginx, and if nginx is already installed, this task will not run.
+
+Ansible has a conept of plugins. A plugin extends the functionality of ansible core or modules. You can create a plugin that extend the functionality of aws-ec2 module.
+
+The combination of all the plugins, modules, documentation etc is called a collection. ansible has a builtin collection that includes a lot of builtin modules such as apt, yum etc.
+
+all the collections are available on `ansible-galaxy` and you can install them using a cli called `ansible-galaxy`
