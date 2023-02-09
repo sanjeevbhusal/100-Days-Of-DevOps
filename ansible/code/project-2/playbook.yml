@@ -1,0 +1,52 @@
+# command module doesnot execute commands in shell. So, Pipe(|), redirect (<, >,), boolean (&&, ||), environment variables ($HOME) will not be available.
+# In such case, you should you shell module.
+
+# shell module can do all the task that command can. So, should you use shell instead of command all the time?
+# shell module is more vulnerable because of shell injection. So, command is more secure.
+
+# modules return the result of command execution. To store those result in a variable, we use register keyword.
+# We can use another module called debug to print the value in the variable.
+
+# command and shell modules are not idempotent i.e. they are stateless. they will execute the task even if the result of the task execution already exists on the machine. both modules dont need python to run. In other modules, where we needed python, we always checked for some condition before executing the command. If the condition didnt exist, we might get an error. Example: what if we are running a command to create a directory but the directory already exist. we will get an error. Ansible can't differentiate the reason of error, so the execution of tasks simply stops.
+
+# become allows you to execute a task as a different user. You need to specify `become=True` to let ansible know that you are going to change the user. You need to then specify user's name using `become_user=my-user` attribute. the default is root.
+
+# a very common approach in ansible is to create a variable from the output of a task. You then use that variable as a input to another task. You can either create variables inside the playbook by hardcoding them or you can pass them as cli variables when you run the playbook. passing multiple variables through cli is really inconvinient. Instead, we create a variable file with yaml syntax and refer the file in all the task that requires those variables.
+
+# there are few keywords which are reserved in playbook file such as environment, async etc. You also need to follow the variable naming standard of python for defining variable names.
+
+- name: Install Nodejs
+  hosts: 15.206.93.156
+  tasks:
+    - name: Update the repo and cache
+      become: true
+      command: yum update -y
+
+    - name: Install nvm
+      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+    - name: Install Nodejs
+      shell: |
+        . ~/.nvm/nvm.sh
+        nvm install lts/erbium
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/versions/node/v12.22.12"
+
+    - name: Copy Package.json file
+      copy:
+        src: ./package.json
+        dest: /home/ec2-user/package.json
+
+    - name: Copy Package-lock.json file
+      copy:
+        src: ./package-lock.json
+        dest: /home/ec2-user/package-lock.json
+
+    - name: Install package.json dependencies
+      npm:
+        path: /home/ec2-user
+      register: install_dependencies_status
+
+    - debug: msg="{{install_dependencies_status}}"
