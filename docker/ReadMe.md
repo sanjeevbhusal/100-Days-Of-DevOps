@@ -383,3 +383,79 @@ perform docker node ls to see the updated notes.
 workers are not allowed to view or change containers in the swarm. So, commands such as docker node ls will not work on worker nodes.
 
 the token to join the swarm either as manager or worker is stored safely in the Leader Node. You can also change this keys if you dont want anyother node to join the swarm using this key.
+
+You can also connect dockerhub registry to github/bitbucket. On every commit, docker hub will automatically build a new image and keep it in image registry.
+
+There is a concept of webhook in docker. web hooks are useful in setting up a continuous pipeline where we build a image from a commit and then also deploy it to a server.
+
+Docker has a open source project called docker registry. you can use this project to host your images privately. This registry forms the base for all other registries such as docker hub, gitlab registry, github registry etc. You can configure the registry to either use local storage or cloud providers to save your images.
+
+by default, docker will only communicate with those registries which have https enabled. docker wants to make sure that the authentication is properly encrypted. This phenomenon is called `Secure by default`.
+
+So, if you host your registry on the Internet, you need to create your tls certificate first. But for running registry on localhost, docker doesnot need tls certificate. If you really want docker to talk to remote registry without tls certificate, you need to turn on a feature called `insecure-registry` in docker engine.
+
+If you want to push a image to any other registry other than docker hub then you need to tag the image with the IP address and port number of that registry.
+
+The format of the image should be like: `[IP/DNS]:[port]/[image_name]:[tag]`
+
+Steps:
+
+1. First tag a already existing source image pulled from docker hub including a IP address and Port number
+
+   - `docker tag nginx latest:127.0.0.0.0:70/my-nginx:my-tag`
+
+2. Second, push the image using docker push command
+   - `docker push 127.0.0.0.0:70/my-nginx:my-tag`
+
+Docker will see the tag of the image and push it to 127.0.0.0.0:70. This communication happens via a Https API.
+
+In order to pull the image from other registry than dockerhub, you need to
+
+1. Identify the image name along with IP address and port number of the registry.
+
+   - Here the IP address is `127.0.0.0.0`, port number is `70`, and image name is `my-nginx:latest`
+
+2. Perform a docker pull command
+   - `docker pull 127.0.0.0.0:70/my-nginx:my-tag`
+
+Docker will see the tag of the image and pull it from 127.0.0.0.0:70. This communication happens via a Https API.
+
+In both pull and push cases, you might need to authenticate with the registry.
+
+This registry is actually available as a docker image. These are the steps you need to follow.
+
+1. Pull this image from dockerhub
+
+   - `docker pull registry:latest`
+
+2. Start the registry contianer.
+
+   - You need to bind the registry at port 5000 as the API is listening to port 5000.
+   - `docker container run --name registry -p 5000:5000 -d registry`
+
+3. Tag a Image with this Registry's IP address and Port number
+
+   - `docker pull nginx`
+   - `docker tag nginx 127.0.0.0:5000/my-nginx:my-version`
+
+4. Perform a push command of a image to this registry
+
+   - `docker push 127.0.0.0:5000/my-nginx:my-version`
+
+5. Start the container with volumes
+
+   - If the `registry` container is removed, all the images are also removed.
+   - So, we can mount a volume to persist the images.
+   - `docker container run --name registry -p 5000:5000 -d -v "$(pwd)"/images:/var/lib/registry registry`
+
+Now, we can push and pull images from this registry instead of dockerhub. By default, anyone can pull and push images to this registry. So, you should set up TLS certificate and authentication.
+
+Lets say we have 5 manager nodes in a swarm. The name of the nodes are Manager1, Manager2, Manager3, Manager4 and Manager5. Manager1 is the leader of the swarm.
+
+Lets say we create a service using registry image on Manager1. The service runs on 127.0.0.1:5000. The information of this service is advertised to all the nodes in the swarm. So, all other Managers know about the service running on Manager1. All the managers can also communicate with each other.
+
+Now, i will create a custom nginx image on Manager1 and push it to the private registry on 127.0.0.1:5000. Now, i will create a service using this custom nginx image on Manager1 with 5 replicas. So, docker swarm will try make 1 replica for each Manager.
+
+But the problem is how does other Managers pull this image ? This image doesnot belong to dockerhub. It belongs to a registry located on 127.0.0.1:5000.
+
+So, when other managers starts pulling the image, they should get an error as nothing is running on their network's 127.0.0.1:5000. But all the managers will be able to pull the image succesfully. This is because all manager have a way to know that 127.0.0.1:5000 actually belongs to Manager1 container.
