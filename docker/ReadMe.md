@@ -337,7 +337,7 @@ Workflow
 1. Create a service.
 
    - The service takes a image name and a command.
-   - docker swarm create alpine ping 8.8.8.8
+   - docker service create alpine ping 8.8.8.8
 
 2. View the service
 
@@ -450,6 +450,8 @@ This registry is actually available as a docker image. These are the steps you n
 
 Now, we can push and pull images from this registry instead of dockerhub. By default, anyone can pull and push images to this registry. So, you should set up TLS certificate and authentication.
 
+**Problem: Running docker swarm with private registries**
+
 Lets say we have 5 manager nodes in a swarm. The name of the nodes are Manager1, Manager2, Manager3, Manager4 and Manager5. Manager1 is the leader of the swarm.
 
 Lets say we create a service using registry image on Manager1. The service runs on 127.0.0.1:5000. The information of this service is advertised to all the nodes in the swarm. So, all other Managers know about the service running on Manager1. All the managers can also communicate with each other.
@@ -459,3 +461,13 @@ Now, i will create a custom nginx image on Manager1 and push it to the private r
 But the problem is how does other Managers pull this image ? This image doesnot belong to dockerhub. It belongs to a registry located on 127.0.0.1:5000.
 
 So, when other managers starts pulling the image, they should get an error as nothing is running on their network's 127.0.0.1:5000. But all the managers will be able to pull the image succesfully. This is because all manager have a way to know that 127.0.0.1:5000 actually belongs to Manager1 container.
+
+**Docker Best Practises**
+
+- Use specific version of Base Image instead of latest.
+- Use specific version of core dependencies of your appliation like node version, php version, php-mysql version etc. This prevents any driver issues everytime you build the image.
+- Specify the version of main application you are using such as nginx as a environment variable on top. This is helpful as it makes easy to find the version of nginx you are running.
+- You should not copy any environment specific configuration file inside your Dockerfile. You should only add the defaults in the Dockerfile and modify other environment specific variables through Entrypoint commands.
+- Get the latest docker version from docker store instead of package manager.
+- Dont go for alpine images just because they are small. Make good Dockerfile, go to production and then worry about image sizes.
+- The performance of Docker differs in multiple linux distros. Choose the one which suits you the most. If you donot have paticular preference, go for Ubuntu 16.
