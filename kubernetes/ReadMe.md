@@ -168,3 +168,28 @@ current state measn the total pods that are currently available in the replica s
 ### Which is faster? Swarm or Kubernetes
 
 Swarm is faster than kubernetes as everything is happening under a single process. With kubernetes we have all these additional abstraction layers that might be running in seperate processes. But in most of the cases this speed difference is negligible.
+
+### Networking in kubernetes
+
+By default, pods in a cluster donot get assigned any IP address. We can however assign IP address to pods through `kubectl expose` command. This command creates a service for existing pods. Service in kubernetes is a stable IP address for pods.
+
+If we want to resolve IP address through their name, we also need a DNS server. We can allow DNS server inside kubernetes using `CoreDNS` feture.
+
+There are different kinds of services.
+
+- ClusterIP
+- NodePort
+- LoadBalancer
+- ExternamName
+
+ClusterIP is the default service available when you create a kubernetes cluster. This creates a virtual network in the cluster. So, you can only reach any nodes from within the cluster.
+
+NodePort is designed for communication betwen your cluster and outside world. Nodeport will assign high ports to nodes. High ports means port numbers that are above the well known port range (0-1023).
+
+These both services are always available in all kubernetes version.
+
+LoadBalancer is mostly used in the cloud. The idea is to control a external load balancer through kubernetes command line. This service, in the background automatically creates ClusterIP and NodePort service. This service is provided by the cloud vendor . This service is attached to other cloud specific service such as AWS Elastic Load Balancer. This service tells AWS Elastic Load Balancer on how to route traffic to nodes in the cluster. this is basically just automation provided by cloud providers.
+
+ExternalName is used when we need to change how my traffic is getting out of my cluster to some external service when i dont have a way to control DNS of that external thing remotely. We dont use it to assign to Pods but for giving pods a DNS name that will be used outside of kubernetes.
+
+There is another way traffic can get inside of kubernetes and i.e through Kubernetes Ingress. This is specifically desgined for HTTP Traffic.
