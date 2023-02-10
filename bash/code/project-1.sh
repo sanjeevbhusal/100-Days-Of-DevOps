@@ -1,9 +1,22 @@
 #!/bin/bash
 
 # This bash script is used to clone a github repository and start the application.
-# 
 
-echo -e "This script is used to download a git repository.\n"
+# Set default value for the variable  
+PROJECT_NAME="pythonApp"
+
+# Check if a command line argument was supplied
+if [ $# -gt 1 ]; then
+    # If command line argument was supplied, use the first one to override default value for variable  
+    PROJECT_NAME=$1
+fi
+
+# Check if the directory already exists
+if [ -d $PROJECT_NAME ]; then
+    # If directory already exists, exit the script 
+    echo "Directory '$PROJECT_NAME' already exists. Aborting the operation..."
+    exit 1
+fi
 
 # Get the URL of the repository to clone 
 echo -n "Step 1: Enter the Url of the repository: "
@@ -11,7 +24,7 @@ read URL
 
 # Cloning the repository
 echo -e "\nStep 2: Cloning the repository\n"
-git clone $URL
+git clone $URL $PROJECT_NAME
 
 # Check if the repository is installed correctly
 if [ $? -eq 0 ]; then
@@ -22,7 +35,7 @@ else
 fi
 
 # Move inside projects directory
-cd blogAPI
+cd $PROJECT_NAME
 
 # Create a virtual environment
 echo -e "Step 3: Creating the virtual environment\n"
