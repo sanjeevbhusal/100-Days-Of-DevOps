@@ -1,6 +1,13 @@
 #!/bin/bash
 
-# This bash script is used to download a github repository.
+# This bash script is used to clone a github repository.
 
-echo -e "Downloading the repository\n"
-git clone https://github.com/sanjeevbhusal/100-Days-Of-DevOps.gits
+echo -e "This script is used to download a git repository.\n"
+
+# Get the URL of the repository to clone 
+echo -n "Step 1: Enter the Url of the repository.: "
+read URL
+
+# Cloning the repository
+echo -e "\nStep 2: Cloning the repository\n"
+git clone $URL
