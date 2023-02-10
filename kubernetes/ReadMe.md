@@ -32,3 +32,20 @@ Kubernetes exposes APIs/CLI that can be used to manage containers.
 You can install kubernetes on your local machine directly from Github's Repository. You can also install kubernetes provided by other vendors such as Rancher, Openshift, Vmware or cloud companies.
 
 You should prefer to use vendors provided options rather that using the raw github's option. This is because you need to configure kubernetes with additional configurations, plugins etc to really make the best of it. With vendor specific version, a lot of these configurations are simplified.
+
+### Swarm vs Kubernetes
+
+- Swarm is easy to setup.
+- Swarm makes it really easy to deploy/manage containers.
+- Swarm is packed with docker so it works really well with docker and has a very mimimal size.
+- It has support for networking.
+- It follows a good security practice.
+- It runs anywhere docker runs i.e. Windows, Linux, Rasperry Pi etc.
+
+Swarm works prefect for 80% of the use cases but there are few scenarios where swarm doesnot solve all the issues. Thats where Kubernetes comes.
+
+- Kubernetes is relatively hard to setup.
+- Kubernetes is more complex to use as compared to swarm.
+- Kubernetes provides more flexilibity to accomplish the same task.
+- Kubernetes has more features in terms of managing containers.
+- Kubernetes also has a wider adoption as compared to swarm.
