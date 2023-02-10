@@ -136,7 +136,15 @@ current state measn the total pods that are currently available in the replica s
      - service.
    - To view only pods, you can use `kubectl get pods`.
 
-4. Delete a pod
+4. Inspect the pod
+
+   - `kubectl logs pod/my-nginx`
+   - this command will print all the logs regarding my-nginx pod's container.
+   - if you want more details regarding any object, you should use another command
+   - `kubectl describe pod/my-nginx`
+   - this command will print all the information along with events happening in the container.
+
+5. Delete a pod
    - `kubectl delete pod my-nginx`
    - This command will delete the pod.
    - If you have fault tolerance configuration set up, new pod will be created for replacement.
