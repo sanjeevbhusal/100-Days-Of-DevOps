@@ -5,16 +5,19 @@
 # Set default value for the variable  
 PROJECT_NAME="pythonApp"
 
-# Check if a command line argument was supplied
-if [ $# -gt 1 ]; then
-    # If command line argument was supplied, use the first one to override default value for variable  
-    PROJECT_NAME=$1
-fi
 
-# Check if the directory already exists
+# Check if command line argument was supplied
+while getopts "n:" argument; do
+    case $argument in 
+        n) PROJECT_NAME="$OPTARG" ;;
+        \?)  exit 1 ;;
+    esac
+done
+
+
 if [ -d $PROJECT_NAME ]; then
     # If directory already exists, exit the script 
-    echo "Directory '$PROJECT_NAME' already exists. Aborting the operation..."
+    echo -e "Directory '$PROJECT_NAME' already exists. Pass a different name to the script using -n flag.\nExample: ./project-1.sh -n newname\nAborting the operation"
     exit 1
 fi
 
