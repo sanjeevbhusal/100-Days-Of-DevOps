@@ -76,3 +76,87 @@ Controller: Controllers are used to create/update pods and other objects. Contro
 Server: It is a network endpoint given to a pod so that it can communicate with others.
 
 Namespace: It is just a filter that filters the output you see on the command line with kubectl commands.
+
+There are other terminologies as well such as secrets, ConfigMaps etc.
+
+### Creating a Pod
+
+Before creating a pod, lets understand some terminologies associated with creation of pod. When you create a pod, you have 3 major terminologies.
+
+- Deployment Contoller
+- Replica Set
+- Pod
+
+**Deployment Controller**
+
+- It is used to control deployments.
+- It can do all sort of deployments such as rolling deployments, blue-green deployments etc.
+- It manages Replica Set.
+- It is controller by the user through cli commands.
+
+**Replica Set**
+
+- It is used to create and manage pods.
+- It is controlled by deployment controller.
+- It has the ability to create replicas of a pod using the same image template.
+
+**Pod**
+
+- It is a collection of one or more containers.
+- It is managed by Replica set.
+
+We can control all the attributes/configurations of deployment controller, replica set and pods. As a user, we only need to manage deployment containers. Deployment containers will take care of the underlying abstractions.
+
+By default, when we launch a replica set, it will be launched with 1 pod. However, we can configure this parameter while launching. There are 2 parameters in replica set,
+
+- desired state
+- current state
+
+desired state means the total pods that is desired by the user.
+current state measn the total pods that are currently available in the replica set. We can change the desired state value which will trigger replica set to automatically scale up or down pods.
+
+### Commands in kubernetes
+
+1. First, check that kubernetes cli is properly installed
+
+   - `microk8s.kubectl version`.
+   - this command should show versions for client and server.
+   - as you will be using kubectl a lot, we can create a alias in your `.bashrc` file as `kubectl=microk8s.kubectl`
+
+2. Lets create a pod for nginx web server
+
+   - `kubectl run my-nginx --image nginx`.
+   - `my-nginx` is the name of this pod.
+
+3. Lets view all the objects.
+
+   - `kubectl get all`
+   - You will see 2 objects.
+     - pod
+     - service.
+   - To view only pods, you can use `kubectl get pods`.
+
+4. Delete a pod
+   - `kubectl delete pod my-nginx`
+   - This command will delete the pod.
+   - If you have fault tolerance configuration set up, new pod will be created for replacement.
+
+<!-- 4. Change replica set pods
+
+   - `kubectl scale deploy/my-nginx --replicas 3`
+   - Notice that we donot talk with replica set directly. We communicate with deployment controller which takes care of underlying abstractions.
+     - We set the `desired replicas` to 3 by communicating with `deployment controller`.
+     - Deployment Controller communicates with `replica-set controller` and sets pods count to 2.
+     - replica-set controller assigns which node should start a new pod.
+       - In single node cluster, the current node will be assigned to start a new pod.
+       - In multi node cluster, other nodes will be assigned to start a new pod.
+     - `kubelet` will figure out that a new pod is needed and will start a new pod.
+   - We can write this command in multiple other ways such as
+     - `kubectl scale deployments my-nginx --replicas 3`
+     - `kubectl scale deployment my-nginx --replicas 3`
+
+   ![replia set picture](./assets/Screenshot%20from%202023-02-10%2016-08-50.png) -->
+
+### Which is faster? Swarm or Kubernetes
+
+Swarm is faster than kubernetes as everything is happening under a single process. With kubernetes we have all these additional abstraction layers that might be running in seperate processes. But in most of the cases this speed difference is negligible.
