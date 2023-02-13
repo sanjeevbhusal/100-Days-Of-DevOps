@@ -224,3 +224,11 @@ When we create load balancer, it automatically created Node Port. Node Port then
 So, technically you can just skip load balancer and send requests directly to Node Port.
 
 We had DNS service both in Docker and Docker swarm. We also have it in Kubernetes
+
+In kubernetes, you have a concept of Namespaces. You cannot run multiple containers in the same namespace inside the cluster. You can create multiple namespace and run different containers that have the same name. By default, all your containers are running on `default` namespace.
+
+You can see all the namespaces using
+
+`kubectl get namespaces`.
+
+When you access a container with `curl hostname`, DNS service will only resolve for the current hostname.
