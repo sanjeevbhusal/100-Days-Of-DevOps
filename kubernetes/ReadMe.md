@@ -309,3 +309,17 @@ In declarative commands approach,
 ### Best practise
 
 `kubectl apply -f file.yml` command will perform all the operations such as creation of resources, updation of resources, deletion of resources etc. You just update the yaml file and commit it to git to track the changes overtime.
+
+- You can define the file in either YML format or JSON format.
+- You can put one resource per file and create multiple files or put all resources in one single file.
+- these resources are called manifests. manifests define objects (deployment, service, job)
+- each manifest needs 4 parts.
+  - apiVersion:
+  - kind:
+  - metadata:
+  - spec:
+
+You can get a lits of available kind of resources with `kubectl api-resources`. This list is however extensible if you use third party resources.
+A resource can have multiple versions. Each version defines some of the attributes of that resource differently. You need to choose the resource version you want to use.
+For metadata, only name field is required.
+For spec, it will be different based upon the resource you choose.
