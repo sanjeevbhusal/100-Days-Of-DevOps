@@ -193,3 +193,15 @@ LoadBalancer is mostly used in the cloud. The idea is to control a external load
 ExternalName is used when we need to change how my traffic is getting out of my cluster to some external service when i dont have a way to control DNS of that external thing remotely. We dont use it to assign to Pods but for giving pods a DNS name that will be used outside of kubernetes.
 
 There is another way traffic can get inside of kubernetes and i.e through Kubernetes Ingress. This is specifically desgined for HTTP Traffic.
+
+You can create a service and expose a port with
+`kubectl expose deploy/httpserver --port 88888`. Here httpserver is a deployment that is already created with command `kubectl create deployment httpserver --image brerfisher/httpenv`
+
+When you create a service, it doesnot make any changes to pods. So, if you are watching the containers with command `kubectl get pods -w`, no additional logs will be created. Creating a service creates a default network i.e. ClusterIP which sits infront of the deployment.
+
+There is a default service called `kubernetes` that runs on port `443`. This service is used by kubernetes API. As we created a new service, we should see a new service called `httpserver` when we run `kubectl get service` command.
+
+You can see that the deployment now has a IP address associated with it. This is provided by the expose command we ran above. If we manage to hit that IP address, our request will go to the deployment which will then forward the request to one of our pods.
+
+But the IP address assigned is a Cluster IP which is a Internal IP address only accessible within the Kubernetes cluster. So, you can only access this IP address if you run `curl` command from one of the nodes in the cluster. On a linux machine where you are running kubernetes, your machine is a node in the cluster. So, you can just use a curl command to reach the cluster.
+In case of windows/macos, the cluster is running on a small linux virtual machine created by docker. So, in this case, you wont be able to reach the cluster from your host machine. You need to somehow be inside the linux vm and then perform curl command as that linux vm is a node in the cluster. So, you can create a new pod inside the kubernetes and open a interactive shell to that pod. Now, you can run curl command in the pod which will be able to reach kubernetes cluster.
