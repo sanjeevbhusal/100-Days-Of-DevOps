@@ -267,16 +267,45 @@ When you run commands in Imperative way, you explicitly define all the commands 
 
 Example: Creating and Configuring resources through Command Line
 
-`docker create deployment/nginx-deployment`
-`docker service create my-nginx`
-`docker run nginx --image nginx`
+`kubectl create deployment/nginx-deployment`
+`kubectl service create my-nginx`
+`kubectl run nginx --image nginx`
 
 In this case, you know the state of your program and you are creating/updating resources as you need. You know all the steps you need to take to reach a certain goal.
 
 When you run commands in declarative way, you are only concerned about the end result. You dont necessarily know the current state of the program.
 
 Example: creating and configuring resources through YAML file.
+`kubectl create -f file.yml`
+`kubectl replace -f file.yml`
 
 In this case you are not sure if you already have a deployment or a replica set. you just care that at the end of the command there will be a deployment, replica set and a pod running nginx container. You dont know the state of the program.
 
 Imperative approach only works with small teams. It is harder to automate following imperative approach. It is easy to learn but harder to manage over time.
+
+In imperative approach,
+
+- you use commands such as `run, expose, create deployment` etc.
+- It is easier to learn.
+- It is harder to manage large enviroments
+- Easier to understand and predict the changes(what will happen)
+- It is suited for personal projects.
+
+In middle ground (imperative+declarative) approach,
+
+- you use commands such as `create -f file.yml, replace -f file.yml`.
+- It is harder to learn (YML file needed)
+- It is easier to manage medium size environments
+- It is easier to track changes overtime using git.
+
+In declarative commands approach,
+
+- you use commands such as `apply -f file.yml, apply -f dir\, diff`
+- It is best approach for production
+- It is easier to track changes overtime using git
+- It is harder to understand and predict the result of running the command
+- Really easy to automate.
+
+### Best practise
+
+`kubectl apply -f file.yml` command will perform all the operations such as creation of resources, updation of resources, deletion of resources etc. You just update the yaml file and commit it to git to track the changes overtime.
