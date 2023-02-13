@@ -205,3 +205,22 @@ You can see that the deployment now has a IP address associated with it. This is
 
 But the IP address assigned is a Cluster IP which is a Internal IP address only accessible within the Kubernetes cluster. So, you can only access this IP address if you run `curl` command from one of the nodes in the cluster. On a linux machine where you are running kubernetes, your machine is a node in the cluster. So, you can just use a curl command to reach the cluster.
 In case of windows/macos, the cluster is running on a small linux virtual machine created by docker. So, in this case, you wont be able to reach the cluster from your host machine. You need to somehow be inside the linux vm and then perform curl command as that linux vm is a node in the cluster. So, you can create a new pod inside the kubernetes and open a interactive shell to that pod. Now, you can run curl command in the pod which will be able to reach kubernetes cluster.
+
+Lets create a NodePort.
+
+`kubectl expose deployment/http-server --port 8888 --name httpserver2 --type NodePort`
+This will create a Nodeport service. Creating a nodeport service means exposing a host's port so that outer traffic can reach the cluster. Nodeport also creates a ClusterIP and assigns that IP to the http-server depoyment. The host port is choosen randomly from range of `30000-32767`.
+
+When you send a traffic to host port, the traffic is redirected to the cluster. This is possible as you have assigned a IP to the cluster while creating a Nodeport. The cluster then forwards the traffic to the pods at port 8888.
+
+Lets create load balancer.
+When we create load balancer, it automatically created Node Port. Node Port then automatically creates Cluster IP. If we configure load balancer to listen on loalhost:80, then:
+
+- user sends request to localhost:80
+- load balancer will send request to the Node Port. The Node Port is simply a port in host machine.
+- Node Port will send request to cluster IP.
+- cluster will send request to the pods.
+
+So, technically you can just skip load balancer and send requests directly to Node Port.
+
+We had DNS service both in Docker and Docker swarm. We also have it in Kubernetes
