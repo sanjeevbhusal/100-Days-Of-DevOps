@@ -106,9 +106,13 @@ Master nodes will need following 4 components.
 - control manager: Master uses control manager to make decisions regarding actions to perform in worker nodes.
 - scheduler: scheduler schedules the actions that has to performed in worker nodes.
 
+### Minicube
+
+In order to set up a local kubernetes cluster, we can install minicube. Minicube will install all the components of kubernetes (kube-apiserver, etcd, control manager etc) through a single executable and also configure all of them.
+
 ### KubeCtl
 
-In order to communicate with Kubernetes API server, we need a CLI tool. One of the command in the CLI tool is KubeCtl. It is also called as cube control.
+In order to communicate with Kubernetes API server, we need a CLI tool. The most famous and official CLI tool is KubeCtl. It is also called as cube control.
 
 Kube-procy: Kube-proxy is a container that runs on all worker nodes. This container is responsible for managing networking.
 
