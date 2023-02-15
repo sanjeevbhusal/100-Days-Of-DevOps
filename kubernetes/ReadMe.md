@@ -106,13 +106,42 @@ Master nodes will need following 4 components.
 - control manager: Master uses control manager to make decisions regarding actions to perform in worker nodes.
 - scheduler: scheduler schedules the actions that has to performed in worker nodes.
 
-### Minicube
+### Installation of Kubernetes/ Minicube and KubeCtl
 
 In order to set up a local kubernetes cluster, we can install minicube. Minicube will install all the components of kubernetes (kube-apiserver, etcd, control manager etc) through a single executable and also configure all of them.
 
-### KubeCtl
-
 In order to communicate with Kubernetes API server, we need a CLI tool. The most famous and official CLI tool is KubeCtl. It is also called as cube control.
+
+Once minikube is installed, we can start a new cluster using `minikube start`. We can view the status of minikube using `minikube status`. We can see the information regarding cluster with `kubectl cluster-info`. We can view the running pods with `kubectl get pods -A`. We should see multiple pods such as api-server, controller, scheduler etc.
+
+### Pods
+
+In kubernetes, we dont deploy container directly in the worker nodes. We wrap containers in a object known as pods. pods are the smallest object you can create in kubernetes. Just like a container wraps your application, pod wraps a container.
+
+**Why do we need Pods? Why not just deploy a single container?**
+
+Lets keep kuberenete out of the discussion and just focus on docker containers. Lets say we want to deploy a python application inside a docker container. We succesfully deploy a python application using `docker run python-app`. Lets say we get a lot of traffic and decide to create 5 replicas of the container for load balancing. Overtime our application goes architectural changes and now we also need to create a new helper container for every python-app container. We have to now deploy 5 helper containers, link them together, configure networking so python-app container 1 can communicate with helper container 1. We also need to share volumes between python-app container 1 and helper container 1. If python-app-container one is removed, we also need to remove helper container 1.
+
+In case of kubernetes, we would wrap both python-app container and helper container inside a pod and deploy 5 replicas of the pod. Kubernetes will take care of managing shared storage between the containers in a pod. Kubernetes will also keep all containers in a pod in the same network. So, containers can communicate with each other by using localhost as URL as both share the same pod. When one container goes down, kubernets will also destroy other containers in the same pod.This way, we donot have to manage multiple containers ourself.
+
+The dowside is even if we only want to deploy a single container, we have to deploy it inside a pod. Thats just how Kubernetes works.
+
+**What if instead of creating a new pod, we deploy new containers in existing pod?**
+
+Lets say you have a pod containing python application. After some time, you want to deploy a new containers of the same application for high-availability and load balancing requirements.
+
+You have 2 options.
+
+- You could either deploy a new pod in the same worker Node or in other worker Node inside your cluster.
+- You could deploy a new container inside the existing pod. Now, the pod consists of 2 python application containers.
+
+It is recommended that you use the first approach to scale your application. Although, it is possible to add a new container inside the existing pod, it goes against the principle of contanerization which states that a container should contain only minimal application/services that can be scaled independently.
+
+When you add a new instance of the application to an existing pod, you are effectively creating a monolithic service, which can make it difficult to manage and scale the application. This also increases the risk of downtime, as any issues with one application can affect all applications in the pod.
+
+Your application container and pod ususally have a 1:1 relationship i.e. 1 pod only has 1 application container .
+
+The conclusion is, Kubernetes will not modify the existing container.
 
 Kube-procy: Kube-proxy is a container that runs on all worker nodes. This container is responsible for managing networking.
 
