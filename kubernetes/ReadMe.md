@@ -204,9 +204,10 @@ A label is a key value pair assigned to a resource. The sole purpose of label is
 Replication Controller is a process used to monitor pods inside a cluster. Replication Controller makes sure that at any given point of time, x number of pods are always running in the cluster. There are multiple scenarios where replica controller helps.
 
 - **Saves Time:** If we want to deploy multiple copies of a pod, we can use replica controller to deploy all the pods with a single command.
-- **Ensures Load Balancing:** Lets say we have 2 pods running for load balancing needs. If one the pod goes down, the load on remaining pod grows. Replica Controller automatically detects when the pod goes down and create a new pod as a replacement. -**Ensures High availability:** Lets say we have 1 pod running in the cluster. If that pod goes down, our users will complain. Replica Controller automatically detects when the pod goes down and creates a replacement pod.
+- **Ensures High availability:** Lets say we have 1 pod running in the cluster. If that pod goes down, our users will complain. Replica Controller automatically detects when the pod goes down and creates a replacement pod.
+- **Ensures Load Balancing:** Lets say we have 2 pods running for load balancing needs. If one the pod goes down, the load on remaining pod grows. Replica Controller automatically detects when the pod goes down and create a new pod as a replacement.
 
-**Behaviour of a Replication Controller**
+  **Behaviour of a Replication Controller**
 
 When we apply a replication controller, it does following steps:
 
@@ -285,6 +286,22 @@ The difference in both comes on how they treat already running pods.
 When defining YAML file with kind as Replica Set, need to compulsorily define a selector. The selector has labels. This label is used to identify already running pods.
 
 Lets say you specify to run a nginx image with 3 replicas in YAML file. You also specified a selector as `tier:backend`. When you run the replica set, kubernetes will first check if there is any running pod with the same label `tier:backend`. Lets say 1 pod exists with this label. Replica set will then only spin 2 new pods and use the existing pod to fulfill desired 3 replicas.
+
+## Scaling Replica Set
+
+We can scale number of containers maaged by replica set with different ways. Some of the way are:
+
+- Modifying the replicas field in the file and running replace command
+
+  ```shell
+  kubectl replace -f rs.defination.yml
+  ```
+
+- Modifying the replicas field in the file and running scale command
+
+  ```shell
+    kubectl scale --replicas 6 -f rs.defination.yml
+  ```
 
 The conclusion is, Kubernetes will not modify the existing container.
 
