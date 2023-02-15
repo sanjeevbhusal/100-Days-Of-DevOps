@@ -170,6 +170,31 @@ To view the detailed description of pods and all the events that occurred in the
 kubectl desribe pod nginx
 ```
 
+### YAML files
+
+Instead of using Command Line to define pods and other resources, we can list all the requirements inside a YAML file. There are four properties which are must in YAML file irrespective of any resource you create. They are
+
+- apiVersion
+- kind
+- metadata
+- spec
+
+![yaml file description](./assets/YAML%20file%20description.png)
+
+**apiVersion:** With each update of kubernetes, the way you define your YAML file might change. Some properties might be added, other might be removed. So, you need to specify which version of YAML file you are using to describe resources. This is in the string format.
+
+**kind:** You define the type of resource to create in this field. This is in the string format.
+
+**metadata:** You can define metadata related to the resource being created such as name, labels etc. This is in the dictionary format.
+
+**spec:** We list all the specification regarding the object we want to create. This is going to be different based upon the resource . This is in dictionary format.
+
+We can create resources based upon this YML file by running this commad
+
+```shell
+kubectl create -f pod-defination.yml
+```
+
 The conclusion is, Kubernetes will not modify the existing container.
 
 Kube-procy: Kube-proxy is a container that runs on all worker nodes. This container is responsible for managing networking.
