@@ -1,12 +1,10 @@
 apiVersion: "v1"
 kind: "Pod"
-metadata: 
-  name: my-app
+metadata:
+  name: jpt3
   labels:
     tier: backend
 spec:
   containers:
     - name: nginx
       image: nginx
-
-
