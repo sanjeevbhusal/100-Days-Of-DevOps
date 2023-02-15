@@ -81,7 +81,7 @@ Kubelet: It is a agent running on all worker nodes. Once scheduler assigns task 
 
 Container Runtime: Kubelet will use a underlying container runtime such as Docker in order to create and run a container.
 
-Controller: Controller is the brain behind orchestration. It is responsible for noticing and responding when a container or a node goes down. In such scenarios, they also make decisions to bring up new containers.
+Controller: Controller is the brain behind orchestration. They monitor the kubernetes objects and respond accordingly.
 
 ### Worker Node vs Master Node
 
@@ -181,19 +181,110 @@ Instead of using Command Line to define pods and other resources, we can list al
 
 ![yaml file description](./assets/YAML%20file%20description.png)
 
-**apiVersion:** With each update of kubernetes, the way you define your YAML file might change. Some properties might be added, other might be removed. So, you need to specify which version of YAML file you are using to describe resources. This is in the string format.
+**apiVersion:** With each update of kubernetes, the number of resources available in kubernetes might change. Some resource could have new properties added or existing properties removed. This affects the way you define your resources in YAML file. So, you need to specify which version of kubernetes to use for create resources. This is in the string format.
 
 **kind:** You define the type of resource to create in this field. This is in the string format.
 
 **metadata:** You can define metadata related to the resource being created such as name, labels etc. This is in the dictionary format.
 
-**spec:** We list all the specification regarding the object we want to create. This is going to be different based upon the resource . This is in dictionary format.
+**spec:** We list all the specification regarding the object we want to create. This is going to be different based upon the resource. This is in dictionary format.
 
 We can create resources based upon this YML file by running this commad
 
 ```shell
 kubectl create -f pod-defination.yml
 ```
+
+### Label/Selector
+
+A label is a key value pair assigned to a resource. The sole purpose of label is to organize multiple resources into groups. We could deploy hundreds of pods and assign different pods different labels to group them. Pods containg frontend application could have a label `tier:frontend` and Pods containing bakend application could have a label `tier:backend`.
+
+### Replication Controller
+
+Replication Controller is a process used to monitor pods inside a cluster. Replication Controller makes sure that at any given point of time, x number of pods are always running in the cluster. There are multiple scenarios where replica controller helps.
+
+- **Saves Time:** If we want to deploy multiple copies of a pod, we can use replica controller to deploy all the pods with a single command.
+- **Ensures Load Balancing:** Lets say we have 2 pods running for load balancing needs. If one the pod goes down, the load on remaining pod grows. Replica Controller automatically detects when the pod goes down and create a new pod as a replacement. -**Ensures High availability:** Lets say we have 1 pod running in the cluster. If that pod goes down, our users will complain. Replica Controller automatically detects when the pod goes down and creates a replacement pod.
+
+**Behaviour of a Replication Controller**
+
+When we apply a replication controller, it does following steps:
+
+- First it looks at the desired replica number supplied by the user.
+- It then identifies how many containers are running currently that has the same labels specified by user in replica controller's YML file.
+- It then figures out how many containers it has to create/stop to match the running containers to desired replica number.
+
+Lets see it using few scnearios.
+
+Scenario a) There are already 10 pods running. 2 of them have `tier: backend` as labels and one of them has `tier: web server` as labels. User wants to run 4 pods. User has supplied a label of `tier: backend` to apply to pods.
+
+- Desired replica amount: 4
+- Already existing containers that matches user label: 2
+- New containers to start: 4-2 = 2
+
+Scenario b) There are already 10 pods running. 6 of them have `tier: backend` as labels and one of them has `tier: web server` as labels. User wants to run 3 pods. User has supplied a label of `tier: backend` to apply to pods.
+
+- Desired replica amount: 3
+- Already existing nginx containers that matches user label: 6
+- Containers to remove: 6-3 = 3
+
+To run a replication controller, run the following command
+
+```shell
+kubectl apply -f replicationcontroller-defination.yml
+```
+
+To view the information regarding replication controller, run the following command
+
+```shell
+kubectl get replicationcontroller
+```
+
+**Label/Selector for Replication Controller**
+
+We could have hundreds of pods running at a time. A Replication Controller needs labels to identify which pods it needs to manage. Mentioning Labels for Replication controller is optional.
+
+If Label is not provided, it will use labels of the pod specified under template section. Using that label, it will figure out if there are any running pods which matches this label. Then, it will decide the number of containers it need to create/destroy.
+
+If the existing container that matches the labels where launched using seperate image, replication controller will still consider it. However, if any of the managed container gets destroyed, newly created container will use the image mentioned in replica controller's template section.
+
+### Replica Set
+
+Replica Set is a modern version of Replication Controller. The major difference between the both is that mentioning Lables is compulsory for Replica Set.
+
+Replica Set doesnot use the labels of pod under template section just like Replication Controller does. You have to explictly mention it.
+
+To run a replica set, run the following command
+
+```shell
+kubectl apply -f replicaset-defination.yml
+```
+
+To view the information regarding replication controller, run the following command
+
+```shell
+kubectl get replicasets.apps
+```
+
+To run a replication controller, run the following command
+
+```shell
+kubectl apply -f replicationcontroller-defination.yml
+```
+
+To view the information regarding replica set, run the following command
+
+```shell
+kubectl get replicationcontroller
+```
+
+**Differences in Replication Controller and Replica Set**
+
+The difference in both comes on how they treat already running pods.
+
+When defining YAML file with kind as Replica Set, need to compulsorily define a selector. The selector has labels. This label is used to identify already running pods.
+
+Lets say you specify to run a nginx image with 3 replicas in YAML file. You also specified a selector as `tier:backend`. When you run the replica set, kubernetes will first check if there is any running pod with the same label `tier:backend`. Lets say 1 pod exists with this label. Replica set will then only spin 2 new pods and use the existing pod to fulfill desired 3 replicas.
 
 The conclusion is, Kubernetes will not modify the existing container.
 
