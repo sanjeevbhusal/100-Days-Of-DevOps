@@ -332,4 +332,27 @@ To view only type object of a resource, you can use `kubectl explain services.sp
 
 Lets say you have a yaml file. You created resources using the yaml file. Now, you made some changes to the yml file. Now, you want to see the changes between the current yml file and yml file that was used to create the current resources. You can use `kubectl diff -f app.yml`
 
-You can add label under metadata section. They are combination of key:value pair. These are purely optional. They are used to group resources into certain category such as tier:Frontend, tier:Backend, env:Production etc.
+You can add label under metadata section. They are combination of key:value pair. These are purely optional. They are used to group resources into certain category such as tier:Frontend, tier:Backend, env:Production etc. To get pods which match a certain label run `kubectl get pods -l tier:frontend`. You can also use labels to link multiple resources. A deployment resource needs to have a link to pods to manage them. A service resource needs to have a link to pods to redirect traffic. You can define all this link in yml file.
+
+statefulsets is a new resource in kubernetes that is designed around applictions that need persistent storage. We can persist names, IP, volumes etc. The best type of application example will be database. its better to not deal with pesistent storage untill you feel confident about other features of kubernetes. Use database as a service.
+
+Volumes are of 2 types
+
+- Volumes
+  - It lives in the pod.
+  - All containers in the pod can share it.
+- Persistent Volumes
+  - It lives in the cluster.
+  - Multiple pods can share it.
+
+You can also use cloud storage as volumes. You will need to install cloud-vendor specific plugins for this.
+
+Ingress
+Lets say you have 2 containers that needs to listen on port 80. You can achieve this using Ingress. You can configure it to route the traffic to different containers based upon the hostname or URL in the request. It is not built into kubernetes. You need to install third party plugins. In this case the plugins are proxies (nginx, traefik).
+
+Deployment Tools
+There are a lot of deployment tools (over 60) which are built on top of kubernetes. Each have their own opinion on how you should run your YAML file and deploy containers.
+
+The most famous one is called `Helm`. If you want to use docker-compose in kubernetes, you can install another tool called `kompose` that translates docker-compose formatted YAML to kubernetes formatted Yaml.
+
+Each of these tools main purpose are just helping you to format your YAML in a certain way. Helm already has a lot of these templates built in.
