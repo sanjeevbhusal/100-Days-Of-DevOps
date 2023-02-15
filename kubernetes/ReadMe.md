@@ -1,33 +1,33 @@
-### What is a container orchestrator ?
+### Introdution
 
-Container Orchestrator is a software that manages all your containers across various servers.
-You will need to manage orchestrator and it will manage containers on all the servers.
+Container Orchestrator is a software that is used for automatically deploying and managing/monitoring containers.
 
-- Orchestrator takes a series of servers/nodes and make them behave as one.
-- Orchestrator will distribute your container workloads across all these servers.
-- A orchestrator runs on top of a container runtime such as Docker or containerd.
+When you have only few containers, you can manage them on your own. But as number of containers grow in size, you need a software that manages the entire lifecycle of a container.
 
-There are many orchestrators services. Some of them such as docker-swarm, kubernetes work everywhere. Other services such as ECS(Elastic Container Service) are cloud vendor specific.
+You can have your containers running on multiple servers/nodes and manage all of those through a orchestrator running on your local machine.
+
+A container orchestrator can automatically add more containers as load grows and destroy containers as load decreases, just like how auto scaling works for virtual machines. You can also add more nodes if you run out of hardware resources and spin up new containers on those nodes.
+
+There are many container orchestrator softwares such as docker-swarm, kubernetes, etc.
 
 ### Do you need orchestrator ?
 
-We can run containers normally with simple `docker run` command. But as your application grows, you will end up with 10's of containers across multiple servers. Orchestrator softwares helps you to organize/manage all these containers through one single service.
+A orchestrator offers a lot of functionalities. Those functionalities really shines when you have a lot of containers running on multiple nodes and you want to automate the deployment and management process.
 
-That also means that you might not need a orchestrator if you have less containers or if the application inside the container doesnot change much. Even if you feel you need orchestrator, you might not need all the features offered by a orchestrator. Setting up a orchestrator, managing it, securing it is a tedious work. This is where platforms such as Heroku or Elastic Beanstalk shine.
+Running a orchestrator involves a lot of overhead. Setting up a orchestrator, managing it, securing it is a tedious work. So, you should first identify if you really need a orchestartion service or not.
 
-So, if you have a lot of containers running on multiple servers and application inside the container changes frequently, you should use a orchestrator to automate tasks and monitor servers.
+There are few scenarios where you wont need a container such as:
+
+- **Less Containers:** You only need few containers to run you application. This means there is not much need for automating management/monitoring.
+- **Less Deployment:** Your application inside the container doesnot change much. This means you dont need to automate deployment.
+
+If you resonate with above scnearios, you might consider using other platforms such as Heroku or Elastic Beanstalk.
 
 ### Kubernetes
 
-Kubernetes is a orchestrator that is used to manage containers across various servers. It can manage containers started with runtime such as containerd and docker but is primarily focused on Docker.
-Kubernetes was released by Google on 2015 and is maintained by Open Source Communities.
-There are many distributions of kubernetes which are essentially extra features on top of the open source kubernetes version. Kubernetes is also called K8s. (8 refers to 8 letters between K and s).
+Kubernetes is he most famous container orchestration service. It can manage containers based upon multiple runtimes such as containerd and docker.
 
-### How do you use Kubernetes
-
-Kubernetes exposes APIs/CLI that can be used to manage containers.
-
-### How do you install Kubernetes
+Kubernetes was released by Google on 2015 and is maintained by Open Source Communities. There are many distributions of kubernetes which are essentially extra features on top of the open source kubernetes version. Kubernetes is also called K8s. (8 refers to 8 letters between K and s).
 
 You can install kubernetes on your local machine directly from Github's Repository. You can also install kubernetes provided by other vendors such as Rancher, Openshift, Vmware or cloud companies.
 
@@ -51,13 +51,64 @@ Swarm works prefect for 80% of the use cases but there are few scenarios where s
 - Kubernetes has more features in terms of managing containers.
 - Kubernetes also has a wider adoption as compared to swarm.
 
-### Parts of Kubernetes
+### Kubernetes Architecture
 
-KubeCtl: KubeCtl is a CLI tool that is used for talking with kubernetes API. It is also called as cube control. There are a lot of CLI tools that can talk to kubernetes but KubeCtl is the official one.
+As kubernetes offers a lot of features, there are a lot of parts in kubernetes. Some of them are :
 
-Node: A server is called a node in kubernetes.
+- Node
+- Cluster
+- API Server
+- etcd
+- kubelet
+- Container Runtime
 
-Kublet: Kublet is a container that runs on all worker nodes. Inside a container, there is a small agent responsible for communication between nodes and kubernetes control plane.
+- KubeCtl
+- KubeProxy
+- Single/Multi node Cluster
+- Control Plane
+
+Node: A node is a machine, either physical or virtual that is responsible for running our application. Nodes are divided into 2 categories, Master and Worker.
+
+Cluster: A Cluster is a collection of nodes grouped together. If we are using Kubernetes, our requirements consists of running multiple containers on multiple nodes.
+
+API server: This serves as a frontend for kubernetes. A user will communicate with API server via CLI tool or a GUI application to interact with a cluster.
+
+etcd: this is a key-value distributed database that stores all data used for managing clusters such as information regarding worker nodes, manager nodes etc. All the information is stored on all nodes in a cluster in a distributed fashion.
+
+Scheduler: It is responsible for distributing work across all the nodes in the cluster. If a container needs to be created, scheduler will find the right node in the cluster and assign the work to the node.
+
+Kubelet: It is a agent running on all worker nodes. Once scheduler assigns task to the node, kubelet will pick up the task and will create the contaier.
+
+Container Runtime: Kubelet will use a underlying container runtime such as Docker in order to create and run a container.
+
+Controller: Controller is the brain behind orchestration. It is responsible for noticing and responding when a container or a node goes down. In such scenarios, they also make decisions to bring up new containers.
+
+### Worker Node vs Master Node
+
+Lets say we have 20 nodes each running 2 containers. All the load is distributed equally among all nodes using Load Balancer. Now, what if two nodes went down ? We will face 2 problems here
+
+- We have to identify failed nodes and remove them from our load balancer.
+- We should launch new nodes to compensate for failed nodes.
+
+Kubernetes handles this situation with the concept of Master Nodes.
+
+**Worker Nodes** are responsible for running the application and **Master Nodes** are responsible for monitoring worker nodes. Both nodes need to install kubernetes in order to work but the components needed for both nodes are different.
+
+Worker nodes will need following 2 components.
+
+- kubelet: kubelet is responsible for communicating with master node. kubelet will pick up the tasks assigned to it by master nodes. kubelet will also pass health checks to master node frequently.
+- container runtime (Docker): kubelet will use container runtime to start and run containers.
+
+Master nodes will need following 4 components.
+
+- kube-apiserver: This is responsible for communicating with kubelet. It passes the information of tasks and also retrieves health checks.
+- etcd: All the information fetched from worker node is stored in etcd database.
+- control manager: Master uses control manager to make decisions regarding actions to perform in worker nodes.
+- scheduler: scheduler schedules the actions that has to performed in worker nodes.
+
+### KubeCtl
+
+In order to communicate with Kubernetes API server, we need a CLI tool. One of the command in the CLI tool is KubeCtl. It is also called as cube control.
 
 Kube-procy: Kube-proxy is a container that runs on all worker nodes. This container is responsible for managing networking.
 
@@ -365,4 +416,4 @@ Namespaces
 
 In kubernetes, namespaces are used to create virtual mini clusters. Instead of running all your resources in the same cluster, you can create multiple virtual clusters and run resources on those clusters. This is known as namespace. When you run any commands such as `kubectl get pods`, you are running this command against the current namespace.
 
-There is a `default` namespace in kubernetes. If you donot crete any other namespace, all your resources will run in default namespace.
+There is a `default` namespace in kubernetes. If you donot create any other namespace, all your resources will run in default namespace. You can get all the namespaces using `kubectl get namespaces`. By default, kubernetes hides a lot of process that's running in the background. It does so by running those process in different namespace. To see all the processes in all namespaces, run `kubectl get all --all-namespaces`
