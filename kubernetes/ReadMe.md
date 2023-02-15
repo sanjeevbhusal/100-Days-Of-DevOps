@@ -139,7 +139,36 @@ It is recommended that you use the first approach to scale your application. Alt
 
 When you add a new instance of the application to an existing pod, you are effectively creating a monolithic service, which can make it difficult to manage and scale the application. This also increases the risk of downtime, as any issues with one application can affect all applications in the pod.
 
-Your application container and pod ususally have a 1:1 relationship i.e. 1 pod only has 1 application container .
+Your application container and pod ususally have a 1:1 relationship i.e. 1 pod only has 1 application container.
+
+**Creating a Pod**
+
+We can create a pod by running this command.
+
+```shell
+kubectl run nginx --image=nginx
+```
+
+`--image` flag is used to provide the image name. By default, kubernetes uses dockerhub as the registry.
+
+This command did following steps:
+
+- Scheduler assigned this task to one of the node in the cluster. As this is a single node cluster, it is assigned to the host machine itself.
+- The host is also a worker node. So, it contains kubelet which will identify that a task has been assigned. It will pull the image, creates a container and starts a container inside the pod.
+
+You can view all the running pods by running this command
+
+```shell
+kubectl get pods
+```
+
+The command will show some basic information about the pod. Each pod also gets a Internal IP address inside the cluster. You can view that by supplying `-o wide` flag to the above command.
+
+To view the detailed description of pods and all the events that occurred in the pod, run this command
+
+```shell
+kubectl desribe pod nginx
+```
 
 The conclusion is, Kubernetes will not modify the existing container.
 
