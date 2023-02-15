@@ -356,3 +356,7 @@ There are a lot of deployment tools (over 60) which are built on top of kubernet
 The most famous one is called `Helm`. If you want to use docker-compose in kubernetes, you can install another tool called `kompose` that translates docker-compose formatted YAML to kubernetes formatted Yaml.
 
 Each of these tools main purpose are just helping you to format your YAML in a certain way. Helm already has a lot of these templates built in.
+
+GUI
+
+There are a lot of web GUI tools that lets you view and control Kubernetes from Browser. Kubernetes has its official one called `dashboard`. The problem with GUI tools is regarding seurity. There have been cases when outsider got access to companies kubernetes cluster. You can follow some security measures such as running GUI on a ranfom high port, putting some kind of proxy authentication in between etc.
