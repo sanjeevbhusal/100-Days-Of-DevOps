@@ -360,3 +360,9 @@ Each of these tools main purpose are just helping you to format your YAML in a c
 GUI
 
 There are a lot of web GUI tools that lets you view and control Kubernetes from Browser. Kubernetes has its official one called `dashboard`. The problem with GUI tools is regarding seurity. There have been cases when outsider got access to companies kubernetes cluster. You can follow some security measures such as running GUI on a ranfom high port, putting some kind of proxy authentication in between etc.
+
+Namespaces
+
+In kubernetes, namespaces are used to create virtual mini clusters. Instead of running all your resources in the same cluster, you can create multiple virtual clusters and run resources on those clusters. This is known as namespace. When you run any commands such as `kubectl get pods`, you are running this command against the current namespace.
+
+There is a `default` namespace in kubernetes. If you donot crete any other namespace, all your resources will run in default namespace.
