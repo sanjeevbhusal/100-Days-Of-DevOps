@@ -318,7 +318,7 @@ Lets say we want to run 5 pods with nginx:1.5 image. This are all the steps we w
 
 Now, lets say we want to update all the pods to run with nginx:1.6 image. We can perform this deployment in 2 ways.
 
-- First approach
+- Recreate approach
 
   - First destroy all the running pods. We can delete the replica set which deletes all the pods.
 
@@ -394,7 +394,7 @@ As creating a replica set/replication contoller automatically creates pods and m
 To create a deployment, run the following command
 
 ```shell
-kubectl create deployment -f deployment_defination.yaml
+kubectl create -f deployment_defination.yaml
 ```
 
 This command will automatically create a replica set. Replica set will then automatically create pods. Run the following command to view all the kubernetes resources/objects created
@@ -402,6 +402,56 @@ This command will automatically create a replica set. Replica set will then auto
 ```shell
 kubectl get all
 ```
+
+So far, all the operations done by deployment object can be achieved by just creating replica set as well. This is because the true power of deployment object comes while we perform updates/rollback to our pods.
+
+When we create a deployment, we are creating a `rollout`. This means we are rolling our application to the nodes.
+
+To check the rollout status of a deployment, run following commands
+
+```shell
+kubectl rollout status deployments myapp-deployment
+```
+
+The output will tell you either your deployment rollout has successed or failed.
+
+In order to perform any kind of rollback, we also need to track the history/revision of all the rollouts performed. Kubernetes deployment object tracks all the history/revision of all the rollouts performed and uses the revision to perform rollbacs.
+
+To view all the revision history of deployment, run following commands
+
+```shell
+kubectl rollout history deployments myapp-deployment
+```
+
+Kuberentes can perform deployments with multiple deployment strategies such as Rolling Update, Recreate etc. By default, kubernetes uses Rolling Update Strategy.
+
+**Upgrading the pods**
+
+Upgrading application can mean multiple things. We might want to update the docker image, name, tags, number of replicas etc. We will modify whatever changes we need in the `deployment_defination.yaml` file and run the following command to perform upgrade.
+
+```shell
+kubectl apply -f deployment_defination.yaml
+```
+
+The command will analyze the deployment_defination file. Deployment object will then create a new replica set. Deployment object will then delete one existing pod and replace it with new pod created from new replica set.
+
+You can view all the events that occured in the deployment object while preforming deployments with
+
+```shell
+kubectl describe deployments myapp-deployment
+```
+
+When all the pods are replaced, you can run following command
+
+```shell
+kubecl get all
+```
+
+You would see a newly created replica set. You would also see that old replica set now has 0 pods in all desired, current and ready state.
+
+**Why kubernetes doesnot update existing replica set and instead create a new one?**
+
+The reason why Kubernetes creates a new replica set instead of updating the existing replica set is to allow the possible rollback to the previous application version in case something goes wrong. To roll back to previous version, we need to have replica set that created previous version of application.
 
 When we run this command `kubectl apply -f podconfiguration.yml`, a new pod will be created and deployed in one of the nodes. But this pod will not be managed by replica set. So, even if this pod fails in the future, we will not know anything.
 
