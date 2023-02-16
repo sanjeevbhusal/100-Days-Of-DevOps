@@ -17,5 +17,5 @@ spec:
         app: myapp
     spec:
       containers:
-        - name: nginx2
-          image: nginx:1.23.3
+        - name: nginx
+          image: nginx

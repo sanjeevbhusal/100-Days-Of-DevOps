@@ -455,6 +455,20 @@ The reason why Kubernetes creates a new replica set instead of updating the exis
 
 Lets say we created a deployment with as nginx. If we change nginx to apache and run `kubectl apply -f deployment.yaml` file, a new replica set will be created. However if we change image back to nginx and run the command again, a new replica set will not be created. Kubernetes will use already exising replica set.
 
+**Rolling Back**
+
+Lets say you ran a deployment creating 5 replicas of nginx image. You then updated the file and set image to be httpd. You ran `kubectl apply -f deployment.yaml` command. Deployment object then created a new replica set. You were using Rolling Update Strategy. So, Deployment object took one container off from First Replica and Created another container in Second Replica. It did this untill all containers were removed from First Replica and Second Replica had same pods as replica amount.
+
+You realized that httpd image has problems and want to fix those problems. But you first want to rollback to previous replica till you fix the problem. As discussed above, Deployments object doesnot override the replica but instead creates a new one. Inorder to rollback to previous replica, run the following command
+
+```shell
+kubectl rollout undo deployment myapp-deployment
+```
+
+Deployment object will then remove pods from the current replica and use the previous replica to deploy new pods using Rolling Updae Strategy.
+
+have 2 replica sets A and B. You created replica set A
+
 When we run this command `kubectl apply -f podconfiguration.yml`, a new pod will be created and deployed in one of the nodes. But this pod will not be managed by replica set. So, even if this pod fails in the future, we will not know anything.
 
 Replica set will maintain the replica number number of pods with old image when we deployed it for the first time.
