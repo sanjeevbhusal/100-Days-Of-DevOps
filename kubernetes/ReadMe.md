@@ -480,53 +480,53 @@ So, the main issue in networking is to find a way so that all pods in all nodes 
 
 When you run a local instance of kubernetes using minikube, minikube runs kubernetes either inside a docker container or inside a virtual machine. Lets assume we are running kubernetes inside docker container. These are the steps you need to follow to connect with the container.
 
-- First, look for a docker container named minikube.
+a) First, look for a docker container named minikube.
 
-  ```shell
-  docker container ps | grep minikube
-  ```
+```shell
+docker container ps | grep minikube
+```
 
-- To send a request in minikube container, you have 2 options.
+b) To send a request in minikube container, you have 2 options, IP address or Docker exec.
 
-  ### Use IP address
+**Use IP address**
 
-  Get the IP address of the docker container minikube
+a) Get the IP address of the docker container minikube
 
-  ```shell
-  docker inspect -f {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} minikube
-  ```
+```shell
+docker inspect -f {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} minikube
+```
 
-  Kubernetes listens at port 8443. Send a request to the container at port 8443.
+b) Kubernetes listens at port 8443. Send a request to the container at port 8443.
 
-  ```shell
-  curl [minikube container Ip address]:8443
-  ```
+```shell
+curl [minikube container Ip address]:8443
+```
 
-  ### Use Docker exec
+**Use Docker exec**
 
-  Use docker exec command to execute a command inside docker container.
+a) Use docker exec command to execute a command inside docker container.
 
-  ```shell
-    docker exec minikube curl localhost:8443
-  ```
+```shell
+  docker exec minikube curl localhost:8443
+```
 
-  You should get a response back from kubernetes in both ways.
+You should get a response back from kubernetes in both ways.
 
-Now lets deploy a pod with nginx image in the current host. Then we will communicate with the pod using its Internal IP address.
+Now lets deploy a pod with nginx image in the current host. Then we will communicate with the pod using its Internal IP address.hese are the steps you need to follow to connect with the pod.
 
-- First, run a pod with nginx image.
+a) First, run a pod with nginx image.
 
   ```shell
   kubectl run nginx --image nginx
   ```
 
-- Get the IP address of the pod.
+b) Get the IP address of the pod.
 
   ```shell
   kubectl get pods -o wide | grep nginx | awk '{print $6}'
   ```
 
-- The pod is in the network 10.244.0.0 which is a Private IP address assigned by kubernetes. To access the pod you have to be in the same network. You can also access the pod if you are inside minikube container as the virtual network is created in minikube container.
+c) The pod is in the network 10.244.0.0 which is a Private IP address assigned by kubernetes. To access the pod you have to be in the same network. You can also access the pod if you are inside minikube container as the virtual network is created in minikube container.
 
   ```shell
   docker container exec minikube curl [Pod IP address]
