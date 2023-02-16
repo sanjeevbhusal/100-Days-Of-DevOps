@@ -394,7 +394,7 @@ As creating a replica set/replication contoller automatically creates pods and m
 To create a deployment, run the following command
 
 ```shell
-kubectl create -f deployment_defination.yaml
+kubectl create -f deployment_defination.yaml --record
 ```
 
 This command will automatically create a replica set. Replica set will then automatically create pods. Run the following command to view all the kubernetes resources/objects created
@@ -465,7 +465,74 @@ You realized that httpd image has problems and want to fix those problems. But y
 kubectl rollout undo deployment myapp-deployment
 ```
 
-Deployment object will then remove pods from the current replica and use the previous replica to deploy new pods using Rolling Updae Strategy.
+### Networking in Kubernetes
+
+All nodes in a kubernetes have a IP address assigned to them. Example: 192.168.1.0, 19.168.1.1 etc.
+All these nodes are running kubernetes. Kubernetes by default creates a virtual network with IP 10.244.0.0.
+In kubernetes, container doesnot get any IP address assinged to it. Instead, Pod get a IP address.
+When we create a Pod in a node, the pod gets a IP address assigned to it from 10.244.0.0 network Pool. Example: 10.244.0.3, 10.244.0.4 etc.
+Using this IP address, Pods can communicate with each other in a single host. In case of multiple hosts communication this will cause issues as all the nodes in the cluster have the same network IP i.e. 10.244.0.0. So, the network traffic is routed within the same host and never leaves the host.
+Kubernetes expects user to manage all the problems related to networking on their own. There are builtin solutions/addons on top of kubernetes to manage networking between multiple nodes. They are cilium, flannel, Vmware NSX etc.
+
+So, the main issue in networking is to find a way so that all pods in all nodes can communicate with all other pods in all other nodes.
+
+## Networking Inside Minicube
+
+When you run a local instance of kubernetes using minikube, minikube runs kubernetes either inside a docker container or inside a virtual machine. Lets assume we are running kubernetes inside docker container. These are the steps you need to follow to connect with the container.
+
+- First, look for a docker container named minikube.
+
+  ```shell
+  docker container ps | grep minikube
+  ```
+
+- To send a request in minikube container, you have 2 options.
+
+  ### Use IP address
+
+  Get the IP address of the docker container minikube
+
+  ```shell
+  docker inspect -f {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} minikube
+  ```
+
+  Kubernetes listens at port 8443. Send a request to the container at port 8443.
+
+  ```shell
+  curl [minikube container Ip address]:8443
+  ```
+
+  ### Use Docker exec
+
+  Use docker exec command to execute a command inside docker container.
+
+  ```shell
+    docker exec minikube curl localhost:8443
+  ```
+
+  You should get a response back from kubernetes in both ways.
+
+Now lets deploy a pod with nginx image in the current host. Then we will communicate with the pod using its Internal IP address.
+
+- First, run a pod with nginx image.
+
+  ```shell
+  kubectl run nginx --image nginx
+  ```
+
+- Get the IP address of the pod.
+
+  ```shell
+  kubectl get pods -o wide | grep nginx | awk '{print $6}'
+  ```
+
+- The pod is in the network 10.244.0.0 which is a Private IP address assigned by kubernetes. To access the pod you have to be in the same network. You can also access the pod if you are inside minikube container as the virtual network is created in minikube container.
+
+  ```shell
+  docker container exec minikube curl [Pod IP address]
+  ```
+
+Deployment object will then remove pods from the current replica and use the previous replica to deploy new pods using Rolling Update Strategy. You can verify this by running `kubectl get replicasets.apps` command before and after the rollback.
 
 have 2 replica sets A and B. You created replica set A
 
