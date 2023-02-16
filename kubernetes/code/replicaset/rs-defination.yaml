@@ -17,7 +17,7 @@ spec:
         - name: nginx
           image: nginx
 
-  replicas: 6
+  replicas: 3
   selector:
     matchLabels:
       tier: backend

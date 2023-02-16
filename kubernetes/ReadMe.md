@@ -303,6 +303,118 @@ We can scale number of containers maaged by replica set with different ways. Som
     kubectl scale --replicas 6 -f rs.defination.yml
   ```
 
+  Using this approach, you will scale your replicas but in your file replicas attribute will be the same. So, you should also update the file.
+
+### Deployment Strategy
+
+Lets say we want to run 5 pods with nginx:1.5 image. This are all the steps we will take
+
+- Create a replica set yaml file with appropriate configurations.
+- Run the following command to create a replica set object which then deploys the pods.
+
+  ```shell
+  kubectl apply -f replicaset.yml
+  ```
+
+Now, lets say we want to update all the pods to run with nginx:1.6 image. We can perform this deployment in 2 ways.
+
+- First approach
+
+  - First destroy all the running pods. We can delete the replica set which deletes all the pods.
+
+    Run the command to delete replica set.
+
+    ```shell
+    kubectl delete replicasets.apps myapp-repliaset
+    ```
+
+  - Now, update the repliaset.yml file with new image name.
+  - Run the following command to create a replica set object which then deploys the pods.
+
+    ```shell
+    kubectl apply -f replicaset.yml
+    ```
+
+This approach is fairly easy to understand and implement. This approach has a major disadvantage. After you delete all your pods, your users will not be able to access the application untill you deploy new pods.
+
+- Rolling Update Approach
+
+  - First destroy one running pod. Run the following command to delete one pod.
+
+    ```shell
+    kubectl delete pods myapp-repliaset-56878
+    ```
+
+  - Now, update the repliaset.yml file with new image name.
+  - Run the following command to create a new pod object.
+
+    ```shell
+    kubectl apply -f podconfiguration.yml
+    ```
+
+  - Repeat the steps untill all pods are updated.
+
+The second approach seems nice but it has two problem.
+
+When we run this command `kubectl delete pods myapp-repliaset-56878`, the pod gets deleted. However as the pod is managed by replica set, replica set will automatically create a replacement pod with the same image. Even if we update the `replicaset.yml` file, replica set will still use the old image. This is because, Kubernetes stores the cofiguration file for the replica set in memory. Kubernetes doesnot use the replica set file from host file path.
+
+- Third approach
+
+  - Create a new replica set with the updated image name.
+  - Deploy the new replia set with the following comand.
+
+    ```shell
+    kubectl apply -f new_replicaset.yml
+    ```
+
+  - Delete the first created replica set which deletes all the pods with nginx:1.5 image
+
+    ```shell
+      kubectl delete replicasets.apps myapp-new_repliaset
+    ```
+
+This approach seems nice but has few problems.
+
+When we run this command ` kubectl apply -f new_replicaset.yml`, we are deploying additional pods without deleting any existing pods. So, the toal number of pods have doubled. This might cause hardware resources limitations issues across multiple nodes.
+
+When we run this command ` kubectl apply -f new_replicaset.yml`, we are deploying pods in a new replica set. If we did any kind of configuration in existing replica set (networking, storage etc), we also have to repeat that in new replica set so that all new pods behave as existing pods.
+
+What if the recent update caused some issues and you want to roll back to previous version? What if you want to change the underlying resource allocation as the new version is more heavier in terms of RAM uage? What if you want all your newly ugraded applications to be rolled out together to users? There are a lot of questions.
+
+So, instead of performing all above commands one after another to perform deployments, kubernetes allows you to perform multiple kinds deployments with rollback support, resource allocation etc.
+
+### Deployments
+
+Deployments is a object in kubernetes which wraps around replica sets. A deployment might contain multiple replica sets.
+
+We can use this deployment object to perform multiple operations regarding deployments. We can use deployments to perform deployments through various strategies, perform rollbacks, pause and resume the changes so that all the applications can be released to users at once, etc.
+
+As creating a replica set/replication contoller automatically creates pods and manage them, creating Deployment will automatically create replica set and manage replica sets.
+
+To create a deployment, run the following command
+
+```shell
+kubectl create deployment -f deployment_defination.yaml
+```
+
+This command will automatically create a replica set. Replica set will then automatically create pods. Run the following command to view all the kubernetes resources/objects created
+
+```shell
+kubectl get all
+```
+
+When we run this command `kubectl apply -f podconfiguration.yml`, a new pod will be created and deployed in one of the nodes. But this pod will not be managed by replica set. So, even if this pod fails in the future, we will not know anything.
+
+Replica set will maintain the replica number number of pods with old image when we deployed it for the first time.
+
+Another way to deploy the new pod is without messing with replica set. We can create configuration file for the pod `pod.yaml` and run the following command to deploy it.
+
+So, although we can deploy the new pod with update image, we cannot delete existing pods.
+
+one after another. Even if we manage to somehow deploy a new pod before replica set does, how do we configure replicaset to manage that newly created pod ? Replica Set has no idea about this newly create pod.
+
+One solution might be to deploy a new pod with the same label as other pods deployed by replica set. If we could do this, replica set would take the new pod into consideration. We can depl
+
 The conclusion is, Kubernetes will not modify the existing container.
 
 Kube-procy: Kube-proxy is a container that runs on all worker nodes. This container is responsible for managing networking.
@@ -365,51 +477,52 @@ current state measn the total pods that are currently available in the replica s
 
 1. First, check that kubernetes cli is properly installed
 
-   - `microk8s.kubectl version`.
-   - this command should show versions for client and server.
-   - as you will be using kubectl a lot, we can create a alias in your `.bashrc` file as `kubectl=microk8s.kubectl`
+- `microk8s.kubectl version`.
+- this command should show versions for client and server.
+- as you will be using kubectl a lot, we can create a alias in your `.bashrc` file as `kubectl=microk8s.kubectl`
 
 2. Lets create a pod for nginx web server
 
-   - `kubectl run my-nginx --image nginx`.
-   - `my-nginx` is the name of this pod.
+- `kubectl run my-nginx --image nginx`.
+- `my-nginx` is the name of this pod.
 
 3. Lets view all the objects.
 
-   - `kubectl get all`
-   - You will see 2 objects.
-     - pod
-     - service.
-   - To view only pods, you can use `kubectl get pods`.
+- `kubectl get all`
+- You will see 2 objects.
+- pod
+- service.
+- To view only pods, you can use `kubectl get pods`.
 
 4. Inspect the pod
 
-   - `kubectl logs pod/my-nginx`
-   - this command will print all the logs regarding my-nginx pod's container.
-   - if you want more details regarding any object, you should use another command
-   - `kubectl describe pod/my-nginx`
-   - this command will print all the information along with events happening in the container.
+- `kubectl logs pod/my-nginx`
+- this command will print all the logs regarding my-nginx pod's container.
+- if you want more details regarding any object, you should use another command
+- `kubectl describe pod/my-nginx`
+- this command will print all the information along with events happening in the container.
 
 5. Delete a pod
-   - `kubectl delete pod my-nginx`
-   - This command will delete the pod.
-   - If you have fault tolerance configuration set up, new pod will be created for replacement.
+
+- `kubectl delete pod my-nginx`
+- This command will delete the pod.
+- If you have fault tolerance configuration set up, new pod will be created for replacement.
 
 <!-- 4. Change replica set pods
 
-   - `kubectl scale deploy/my-nginx --replicas 3`
-   - Notice that we donot talk with replica set directly. We communicate with deployment controller which takes care of underlying abstractions.
-     - We set the `desired replicas` to 3 by communicating with `deployment controller`.
-     - Deployment Controller communicates with `replica-set controller` and sets pods count to 2.
-     - replica-set controller assigns which node should start a new pod.
-       - In single node cluster, the current node will be assigned to start a new pod.
-       - In multi node cluster, other nodes will be assigned to start a new pod.
-     - `kubelet` will figure out that a new pod is needed and will start a new pod.
-   - We can write this command in multiple other ways such as
-     - `kubectl scale deployments my-nginx --replicas 3`
-     - `kubectl scale deployment my-nginx --replicas 3`
+- `kubectl scale deploy/my-nginx --replicas 3`
+- Notice that we donot talk with replica set directly. We communicate with deployment controller which takes care of underlying abstractions.
+  - We set the `desired replicas` to 3 by communicating with `deployment controller`.
+  - Deployment Controller communicates with `replica-set controller` and sets pods count to 2.
+  - replica-set controller assigns which node should start a new pod.
+    - In single node cluster, the current node will be assigned to start a new pod.
+    - In multi node cluster, other nodes will be assigned to start a new pod.
+  - `kubelet` will figure out that a new pod is needed and will start a new pod.
+- We can write this command in multiple other ways such as
+  - `kubectl scale deployments my-nginx --replicas 3`
+  - `kubectl scale deployment my-nginx --replicas 3`
 
-   ![replia set picture](./assets/Screenshot%20from%202023-02-10%2016-08-50.png) -->
+![replia set picture](./assets/Screenshot%20from%202023-02-10%2016-08-50.png) -->
 
 ### Which is faster? Swarm or Kubernetes
 
@@ -561,10 +674,10 @@ In declarative commands approach,
 - You can put one resource per file and create multiple files or put all resources in one single file.
 - these resources are called manifests. manifests define objects (deployment, service, job)
 - each manifest needs 4 parts.
-  - apiVersion:
-  - kind:
-  - metadata:
-  - spec:
+- apiVersion:
+- kind:
+- metadata:
+- spec:
 
 You can get a lits of available kind of resources with `kubectl api-resources`. This list is however extensible if you use third party resources.
 A resource can have multiple versions. Each version defines some of the attributes of that resource differently. You need to choose the resource version you want to use. Use `kubectl api-versions` to view all the available api versions.
@@ -585,11 +698,11 @@ statefulsets is a new resource in kubernetes that is designed around applictions
 Volumes are of 2 types
 
 - Volumes
-  - It lives in the pod.
-  - All containers in the pod can share it.
+- It lives in the pod.
+- All containers in the pod can share it.
 - Persistent Volumes
-  - It lives in the cluster.
-  - Multiple pods can share it.
+- It lives in the cluster.
+- Multiple pods can share it.
 
 You can also use cloud storage as volumes. You will need to install cloud-vendor specific plugins for this.
 
@@ -612,3 +725,10 @@ Namespaces
 In kubernetes, namespaces are used to create virtual mini clusters. Instead of running all your resources in the same cluster, you can create multiple virtual clusters and run resources on those clusters. This is known as namespace. When you run any commands such as `kubectl get pods`, you are running this command against the current namespace.
 
 There is a `default` namespace in kubernetes. If you donot create any other namespace, all your resources will run in default namespace. You can get all the namespaces using `kubectl get namespaces`. By default, kubernetes hides a lot of process that's running in the background. It does so by running those process in different namespace. To see all the processes in all namespaces, run `kubectl get all --all-namespaces`
+
+````
+
+```
+
+```
+````
