@@ -453,6 +453,8 @@ You would see a newly created replica set. You would also see that old replica s
 
 The reason why Kubernetes creates a new replica set instead of updating the existing replica set is to allow the possible rollback to the previous application version in case something goes wrong. To roll back to previous version, we need to have replica set that created previous version of application.
 
+Lets say we created a deployment with as nginx. If we change nginx to apache and run `kubectl apply -f deployment.yaml` file, a new replica set will be created. However if we change image back to nginx and run the command again, a new replica set will not be created. Kubernetes will use already exising replica set.
+
 When we run this command `kubectl apply -f podconfiguration.yml`, a new pod will be created and deployed in one of the nodes. But this pod will not be managed by replica set. So, even if this pod fails in the future, we will not know anything.
 
 Replica set will maintain the replica number number of pods with old image when we deployed it for the first time.
