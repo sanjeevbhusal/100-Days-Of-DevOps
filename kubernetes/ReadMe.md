@@ -493,7 +493,7 @@ b) To send a request in minikube container, you have 2 options, IP address or Do
 a) Get the IP address of the docker container minikube
 
 ```shell
-docker inspect -f {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} minikube
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' minikube
 ```
 
 b) Kubernetes listens at port 8443. Send a request to the container at port 8443.
@@ -516,23 +516,145 @@ Now lets deploy a pod with nginx image in the current host. Then we will communi
 
 a) First, run a pod with nginx image.
 
-  ```shell
-  kubectl run nginx --image nginx
-  ```
+```shell
+kubectl run nginx --image nginx
+```
 
 b) Get the IP address of the pod.
 
-  ```shell
-  kubectl get pods -o wide | grep nginx | awk '{print $6}'
-  ```
+```shell
+kubectl get pods -o wide | grep nginx | awk '{print $6}'
+```
 
 c) The pod is in the network 10.244.0.0 which is a Private IP address assigned by kubernetes. To access the pod you have to be in the same network. You can also access the pod if you are inside minikube container as the virtual network is created in minikube container.
 
-  ```shell
-  docker container exec minikube curl [Pod IP address]
-  ```
+```shell
+docker container exec minikube curl [Pod IP address]
+```
 
-Deployment object will then remove pods from the current replica and use the previous replica to deploy new pods using Rolling Update Strategy. You can verify this by running `kubectl get replicasets.apps` command before and after the rollback.
+### Services
+
+Services are kubernetes objects that let pods communicate between multiple hosts. Lets first see the problem that exists in kubernetes networking.
+
+**Problems**
+
+First, lets get our basics clear regarding kubernetehttp://192.168.49.2:30008s IP address. When kubernetes gets installed on a host, it creates a internal virtual network with IP 10.244.0.0. This is a private network which can be accessed only from the node. All the resources deployed in the node will be assigned a IP address from this pool.
+
+Lets say I have a 1 node cluster. I then deploy a web server application pod in the node. The pod gets assigned a IP address of 10.244.0.50. If I want to access my node from Internet, I can use its IP address to do so. But how do I access my pod? It is running on Internal IP address which cannot be accessed from Internet.
+
+**Solution**
+
+Thats where the concept of services comes in. Services will bind the IP address of my pod to one of the port in the host machine.
+
+Lets say I bind my port to Ip address of 3004. Now, when I send a request to IP address of host at port 3004, the request gets redirected to the pod. This way I can communicate with my pod even if it is running in private network.
+
+This also means pods deployed in different hosts can also communicate with each other if all of them are bind to a port in their respective host.
+
+This type of service is known as NodePort service because the service listens to a port in host machine and forwards the request to the pod.
+
+**Types of Services**
+
+There are total of 4 services.
+
+- Cluster IP
+- NodePort
+- Load Balancer
+
+**Cluster IP**: Cluster IP service creates a virtual IP address inside the cluster and assigns them to resources deployed in the cluster. This allows resources to communicate with each other within a single host.
+
+**NodePort**: NodePort service maps a port on the host machine to a resource inside the cluster. This way a resource can communicate with external traffic.
+
+**Load Balancer**: Load Balancer service provisions a load balancer to distribute load across multiple pods in cloud environment. You can provision a load balancer to distribute loads across all the pods running webserver.
+
+**Services In Depth**
+
+A Service is actually a server which acts like a proxy. It will listen for a request and forward that request to a kubernetes resource. Kubernetes resource will then process the request and respond back to the service. Service will then respond back to the IP which sent the original request.
+
+a) **Node Port**
+
+There are 3 ports involved in NodePort.
+
+- The host port where the service listens to
+- The services port where the traffic redirects from the host port.
+- The pod port where service forward the request.
+
+So a service is not related to any resources of kubernetes. It just acts like a reverse proxy.
+
+**Creating a Node Port service**
+
+this is a file called service-defination.yml
+
+```shell
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 90
+      nodePort: 30008
+  selector:
+    app: myapp
+    tier: backend
+```
+
+You can create a node port service by running following command
+
+```shell
+kubectl apply -f service-defination.yml
+```
+
+**Explaination of the command**
+
+In this Kubernetes manifest, the port field in the port section specifies the port number that the Service will listen on within the Kubernetes cluster. So, any request going to the service should be targeted to port 90.
+
+The targetPort field specifies the port number on which the Pods targeted by this Service are listening. In this case, the Pods should be listening on port 80.
+
+The nodePort field specifies the port number that will be opened on all the cluster nodes, which can be used to access the service from outside the cluster. In this case, the node port is 30008.So, request coming to port 30008 on host will be forwarded to port 90 on service.
+
+The selector field specifies a set of labels that should match the labels defined in the metadata.labels field of the Pods targeted by this Service. In this case, the Service targets Pods with app=myapp and tier=backend labels.
+
+As a Node Port service has a IP address, you can directly send request to the IP address on port 90. Node Port service will forward the request to the pod and return the response.
+
+If you have multiple pods in a single host that match the label defined in the service cconfiguration file, then the service will act as a load balancer and distribute the load to one of the servers using random load balancing algortithms.
+
+**Example :**
+
+Lets say we have 5 pods with nginx image in a single node. All 5 pods have a label `tier: webserver`. Lets say we create a service where we specify the selector to match all resources with label `tier:webserver`.
+
+When the service starts, it looks for all the resources with label of tier:webserver. It finds 5 pods that match the label. It then registers all 5 pods. In this case service also acts as a built in load balancer. Any request coming to the service will be forwarded to one of the pods. The algorithm that determines the pod is a random load balancing algorithm.
+
+If we have multi node cluster, kuberenetes will automatically span the service across all the nodes and adjust the port configuration acorss all the nodes. You dont have to make any additional changes.
+
+**Traffic Flow of a service**
+
+So, to clarify the traffic flow:
+
+- The client sends a request to the virtual IP address of the service, which is the IP address of the service.
+
+- The request arrives at the node that kube-proxy is running on.
+
+- kube-proxy uses the IPTables rules to select one of the available endpoints for the service (i.e. one of the selected pods) to forward the traffic to, based on the load balancing algorithm.
+
+- The traffic is forwarded to the selected endpoint (i.e. pod).
+
+- The pod processes the request and sends the response back to the client, which goes through the same process in reverse.
+
+In the case of a NodePort service, a port is opened on each node in the cluster (e.g. port 30000), and any traffic sent to that port is forwarded to the virtual IP address of the service.
+
+The traffic flow for a NodePort service is similar to that of a ClusterIP service, with the only difference being that the traffic is first directed to the NodePort on the node, which is then forwarded to the virtual IP address of the service
+
+**Is Service a server ?**
+
+In a way, you could say that a service behaves like a server. It listens for incoming requests and forwards them to the appropriate pods, using the load balancing algorithm configured for the service.
+
+The service's IP address and port number can be used by clients to connect to the service, just like they would with a server. The service then uses the selected load balancing algorithm to determine which pod to forward the request to.
+
+So, in summary, a Kubernetes service behaves like a server in that it listens for incoming requests and forwards them to the appropriate backend pods using load balancing. However, it is important to note that a service is not a server in the traditional sense, as it does not host any application code itself, but rather acts as a layer of abstraction over the pods that actually host the application code.
+
+<!-- Deployment object will then remove pods from the current replica and use the previous replica to deploy new pods using Rolling Update Strategy. You can verify this by running `kubectl get replicasets.apps` command before and after the rollback.
 
 have 2 replica sets A and B. You created replica set A
 
@@ -645,19 +767,19 @@ current state measn the total pods that are currently available in the replica s
 
 - `kubectl scale deploy/my-nginx --replicas 3`
 - Notice that we donot talk with replica set directly. We communicate with deployment controller which takes care of underlying abstractions.
-  - We set the `desired replicas` to 3 by communicating with `deployment controller`.
-  - Deployment Controller communicates with `replica-set controller` and sets pods count to 2.
-  - replica-set controller assigns which node should start a new pod.
-    - In single node cluster, the current node will be assigned to start a new pod.
-    - In multi node cluster, other nodes will be assigned to start a new pod.
-  - `kubelet` will figure out that a new pod is needed and will start a new pod.
+- We set the `desired replicas` to 3 by communicating with `deployment controller`.
+- Deployment Controller communicates with `replica-set controller` and sets pods count to 2.
+- replica-set controller assigns which node should start a new pod.
+  - In single node cluster, the current node will be assigned to start a new pod.
+  - In multi node cluster, other nodes will be assigned to start a new pod.
+- `kubelet` will figure out that a new pod is needed and will start a new pod.
 - We can write this command in multiple other ways such as
-  - `kubectl scale deployments my-nginx --replicas 3`
-  - `kubectl scale deployment my-nginx --replicas 3`
+- `kubectl scale deployments my-nginx --replicas 3`
+- `kubectl scale deployment my-nginx --replicas 3`
 
 ![replia set picture](./assets/Screenshot%20from%202023-02-10%2016-08-50.png) -->
 
-### Which is faster? Swarm or Kubernetes
+<!-- ### Which is faster? Swarm or Kubernetes
 
 Swarm is faster than kubernetes as everything is happening under a single process. With kubernetes we have all these additional abstraction layers that might be running in seperate processes. But in most of the cases this speed difference is negligible.
 
@@ -857,11 +979,4 @@ Namespaces
 
 In kubernetes, namespaces are used to create virtual mini clusters. Instead of running all your resources in the same cluster, you can create multiple virtual clusters and run resources on those clusters. This is known as namespace. When you run any commands such as `kubectl get pods`, you are running this command against the current namespace.
 
-There is a `default` namespace in kubernetes. If you donot create any other namespace, all your resources will run in default namespace. You can get all the namespaces using `kubectl get namespaces`. By default, kubernetes hides a lot of process that's running in the background. It does so by running those process in different namespace. To see all the processes in all namespaces, run `kubectl get all --all-namespaces`
-
-````
-
-```
-
-```
-````
+There is a `default` namespace in kubernetes. If you donot create any other namespace, all your resources will run in default namespace. You can get all the namespaces using `kubectl get namespaces`. By default, kubernetes hides a lot of process that's running in the background. It does so by running those process in different namespace. To see all the processes in all namespaces, run `kubectl get all --all-namespaces` -->

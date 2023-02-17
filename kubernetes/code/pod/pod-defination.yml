@@ -3,6 +3,7 @@ kind: "Pod"
 metadata:
   name: jpt3
   labels:
+    app: myapp
     tier: backend
 spec:
   containers:

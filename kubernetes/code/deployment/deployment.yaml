@@ -15,6 +15,7 @@ spec:
       name: nginx-2
       labels:
         app: myapp
+        tier: backend
     spec:
       containers:
         - name: nginx
