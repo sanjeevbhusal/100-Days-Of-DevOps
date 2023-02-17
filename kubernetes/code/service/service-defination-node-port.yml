@@ -5,13 +5,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: webserver
-      targetPort: 80
-      port: 90
-      nodePort: 30008
-
-    - name: webserver2
-      targetPort: 80
+    - targetPort: 80
       port: 100
       nodePort: 30009
   selector:

@@ -654,6 +654,95 @@ The service's IP address and port number can be used by clients to connect to th
 
 So, in summary, a Kubernetes service behaves like a server in that it listens for incoming requests and forwards them to the appropriate backend pods using load balancing. However, it is important to note that a service is not a server in the traditional sense, as it does not host any application code itself, but rather acts as a layer of abstraction over the pods that actually host the application code.
 
+b) **Cluster IP Service**
+
+Cluster IP Service is used to group multiple pods so that they can be accessed through a single interface. You can group 5 different nginx pods into a single cluster IP service called `web-server`. The service will have its own internal private IP address as it is a kubernetes resource. When you send request to web-server service, the service will forward the request to one of 5 nginx pods. The service also acts like a load balancer and can use various algorithms to balance the load.
+
+**Practical Example :**
+
+Lets say you have 2 pods running nginx web servers, 5 pods running frontend application, 5 pods running backend application and 3 pods running database. You have labelled web server pods as `tier:webserver`, frontend pods as `tier:frontend`, bakend pods as `tier:backend`.
+
+You will first create a NodePort service called `webserver` and group all pods with label `tier:webserver`. The service will have its IP address in the cluster as discussed above. You will expose port 80 on the service. You will configure the service to map port 80 of the host machine to port 80 of the pods. This is needed as nginx webserver listens at port 80 in the pod.
+
+Lets say user John sends a request to the hostmachine at port 80. The request gets forwarded to the port 80 on the IP address where `webserver` service is running. Service forwards the request to one of the pods running nginx webserver using some kind of load balancing algorithm.
+
+The purpose of nginx webserver is to act as a reverse proxy. It should forward the request to Frontend pods. Currently we have 5 frontend pods with following IP address, 10.244.0.207, 10.244.0.208, 10.244.0.209, 10.244.0.210 and 10.244.0.211.
+
+The question is how do we configure nginx webserver to send request to these pods. We can't hardcode the IP address because of following reasons.
+
+- Frontend Pods can be destroyed and recreated anytime. So, their IP address is not static.
+- Even if the IP address of frontend pods was never to change, which Frontend pod's IP address will we hardcode on nginx web server? We have 5 frontend pods for the sake of load balancing and high availability.
+
+So, currelty we need to solve 2 problems.
+
+- We need to have a static IP address that never changes even if pods are recreated.
+- We need to have some kind of load balancer between nginx webserver and frontend pods.
+
+The solution to both problems is to create a Service for Frontend Application.
+
+We will create a ClusterIP Service called `frontend` and group all pods with label `tier:frontend`. The service will have its IP address in the cluster as discussed above. You will expose port 5000 on the service. You will configure the service to forward all traffic to port 5000 of the pods. This is needed as frontend application listens at port 5000 in the pod.
+
+We will now configure nginx webserver to forward requests to `frontend` service. When the user sends request to host machine, it first gets routed to nginx web server. nginx web server then forwards the request to `frontend` service.
+
+This solves the first problem of not having a static IP address. `frontend` service will alwasy have a static IP address unless you delete the service manually. If you add or destory some frontend pods, `frontend` service will perform all necessary configurations to add and remove them from the service.
+
+This also solves the second problem of Load Balancing. Just like `webserver` service, `frontend` service will also act as a Load Balancer. When `frontend` service recieves the request, it will forward them to frontend pods using one of many load balancing algorithm.
+
+The purpose of frontend application is to communicate with backend application, get the appropriate data and send response back to user. Currenty, we have 5 backend pods running with Ip address of 10.244.0.50, 10.244.0.51, 10.244.52, 10.244.0.53 and 10.244.0.54.
+
+The question is how do we configure frontend application to send request to these backend pods. Just like the frontend application, we have same 2 problems.
+
+- Can't hardcode the IP address of backend pods as IP address can change if pods are recreated.
+- Even if the IP address of backend pods was never to change, which Backend pod's IP address will we hardcode on fronend application? We have 5 backend pods for the sake of load balancing and high availability.
+
+The solution to both problems is also creating a ClusterIP Service called `backend` and grouping all the pods with label of `tier:backend`. The service will have its own IP address. We will expose port 8000 on the service. We will configure the service to forward all traffic to port 8000 of the pods. This is needed as backend application listens at port 8000 in the pod.
+
+This solves both the problem of static IP and load balancing. We will now configure frontend application to send request to IP address of `backend` service to establish communication.
+
+Backend application also needs to communicate with database application. We face the same 2 problems of static IP and load balancing. We will use the same strategy of creating a `database` service, grouping all pods with label `tier:database`, configuring ports on the service and finally configuring backend application to send request to IP address of `database` service to establish communication.
+
+c) **Load Balancer Service**
+
+Load Balancer Service is used to configure a load balancer for all the nodes in the kubernetes cluster. If you have multiple nodes in your cluster running a web server pod, its better to provide a single Interface (Load Balancer) which routes all the request to nodes in the cluster.
+
+Lets see with a practical example.
+
+Lets say you have a kubernetes cluster spanning across 5 nodes. The IP address of those nodes are 15.206.93.156, 13.235.27.9, 14.12.67.234, 19.230.98.13, 20.158.278.34 and 14.234.23.2.
+
+You then create a deployment object(`myapp-deployment`) with 5 replicas of a python web aplication. As you are deploying 5 replicas of the pod and we have exactly 5 nodes, each node will get 1 pod.
+
+You then create a NodePort Service (`myapp-service`) and register it with `myapp-deployment`. When you register a service to a deployment, all the pods under the deployment will automatically be registered in the service. The service maps port 5000 on the host to port 5000 in the pod.
+
+In order to access the application, you can send a request to one of the IP address at port 5000. You then decide to make this application publically available to users. Your user will expect a website URL to connect to the application. They donot care about remebering IP addresses and port.
+
+To solve this Issue, you decide to create a Load Balancer and register all the Node's IP address to the load balancer. You will most probably create a seperate VM, install a lod balancer (example nginx), configure load balancer with all 5 nodes IP address and appropriate Port Number (5000). You will then get a DNS name for the load balancer. This solves your issues.
+
+Lets say due to high number of load, you decided that 5 replicas are not enough. So, you scale your deployment to have 10 replicas. Turns out that scaling 10 replicas will need additional nodes. So, you will add 2 additional nodes with IP 16.9.75.23 and 19.18.22.38.
+
+Now the issue occurs. There are few issues due to this approach.
+
+- These new nodes are useless untill you register your nodes with the load balancer.
+- Lets say you decide to change the exposed Port on the host from port 5000 to port 6000. You will make necessary changes in your NodePort service (`myapp-service`) configuration file. For this to work, you also need to make necessary changes to Load Balancer's configuration.
+
+**Solution**
+
+The solution to this Problem is a new service called LoadBalancer Service. When you create a Load Balancer service, it registers all your resources automatically in the load balancer. You dont need to make any changes to the load balancer even if you add/delete additional nodes.
+
+Load Balancer service automatically creates a Node Port service. Load Balancer service is only available to cloud specific vendors like AWS, Azure etc. Trying to use Load Balancer service outside of Cloud Environment will only create NodePort service.
+
+Lets see how above example plays out in this case.
+
+Previously we created NodePort Service and registered it to `my-deployment` deployment object. This time, we will create a LoadBalancer Service and register it to `my-deployment`.
+
+Creation of loadbalancer service will do following steps:
+
+- Creates a NodePort service and register `myapp-deployment` to NodePort. This will make sure that when a request comes to host, it is mapped to pods running in private network inside host.
+- Registers all the configuration of NodePort service such as Host's IP addresses, Port number etc to a load balancer. This way load balancer gets automatically configured. Load Balancer configuration gets automatically updated whenever new pods are added/removed.
+
+You can view all the details in LoadBalancer Service object.
+
+For a load balancer service to work, it needs to configure both load balancer and kubernetes cluster. The load balancer provided by cloud providers are already configured for such use cases. This is why, this service only works in cloud.
+
 <!-- Deployment object will then remove pods from the current replica and use the previous replica to deploy new pods using Rolling Update Strategy. You can verify this by running `kubectl get replicasets.apps` command before and after the rollback.
 
 have 2 replica sets A and B. You created replica set A
