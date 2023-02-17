@@ -608,7 +608,7 @@ kubectl apply -f service-defination.yml
 
 **Explaination of the command**
 
-In this Kubernetes manifest, the port field in the port section specifies the port number that the Service will listen on within the Kubernetes cluster. So, any request going to the service should be targeted to port 90.
+In this Kubernetes manifest, the port field in the port section specifies the port number that will be opened in the service. You could configure a service to listen on multiple ports (80, 400) etc and forward the request to different endpoints in the pod (80->80, 400->100) etc. This is useful if you have 2 applications in the pod listening to 2 different ports (80, 100).
 
 The targetPort field specifies the port number on which the Pods targeted by this Service are listening. In this case, the Pods should be listening on port 80.
 
@@ -650,7 +650,7 @@ The traffic flow for a NodePort service is similar to that of a ClusterIP servic
 
 In a way, you could say that a service behaves like a server. It listens for incoming requests and forwards them to the appropriate pods, using the load balancing algorithm configured for the service.
 
-The service's IP address and port number can be used by clients to connect to the service, just like they would with a server. The service then uses the selected load balancing algorithm to determine which pod to forward the request to.
+The service's IP address and port number can be used by clients to connect to the service, just like they would with a server. The service then uses the selected load balancing algorithm to determine which pod to forward the rIs it because I can configure multiple port forwarding rules in a single service based upon the request service receivesequest to.
 
 So, in summary, a Kubernetes service behaves like a server in that it listens for incoming requests and forwards them to the appropriate backend pods using load balancing. However, it is important to note that a service is not a server in the traditional sense, as it does not host any application code itself, but rather acts as a layer of abstraction over the pods that actually host the application code.
 

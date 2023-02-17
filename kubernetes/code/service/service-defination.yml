@@ -5,9 +5,15 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - targetPort: 80
+    - name: webserver
+      targetPort: 80
       port: 90
       nodePort: 30008
+
+    - name: webserver2
+      targetPort: 80
+      port: 100
+      nodePort: 30009
   selector:
     app: myapp
     tier: backend
