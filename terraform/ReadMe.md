@@ -56,9 +56,35 @@ You can use `terraform apply` command to apply the changes from the resource def
 
 ```shell
 	resource "local_file" "pet_defination" {
-		filename: "./pet_info.txt"
-		content: "this file contains information about a pet."
+		filename = "./pet_info.txt"
+		content = "this file contains information about a pet."
 	}
 ```
 
 This is a resource that uses a provider called `local`. The resource used is `file`. This resource has a lot of `properties` that can be used to cofigure its behaviour. The compulsory properties are `filename` and `content`.
+
+When you use `terraform apply`, it scans for all the files ending with `.tf` in the current directory. Before using `terraform apply`, you need to make sure that you already have `.terraform` directory and `.terraform.lock.hcl` file in your current directory. As discussed above, directory stores the provider mentioned in the resource file and file stores the hashes of the provider.
+
+If you run `terraform apply` more than once without changing your infrastructure, terraform will not perform any actions. The reason being idempotent, again something already discussed.
+
+## validate
+
+You can run a command `terraform validate` to check if the configuration file is valid.
+
+## refresh
+
+Terraform state refresh is a command in Terraform that allows you to update the state file with the current state of the infrastructure.
+
+This command compares the current state of your infrastructure with the state file, and updates the state file with any changes that have occurred outside of Terraform.
+
+The refresh command does not make any changes to your infrastructure or modify any resources. It simply retrieves the current state of your infrastructure and updates the state file with any differences that it finds.
+
+Terraform performs refresh command automatically everytime you run plan or apply command.
+
+## Immutability
+
+Terraform follows immutability. This means, if there is any chane between the desired state and current state of a resource, terraform will not update the existing resource. It will delete the existing resource and create a new one from the updated confiuration.
+
+This makes sure that if anything goes wrong during upgrade, our existing application is not affected.
+
+If something goes wrong during upgrade, we only need to debug the current confiuration. Existing application can't cause this issue due to this concept of immutability.
