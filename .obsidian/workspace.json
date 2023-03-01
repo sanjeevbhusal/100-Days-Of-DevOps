@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "f892192b6326d406",
+        "id": "70f7345b8b5fa67d",
         "type": "tabs",
         "children": [
           {
-            "id": "3a12bc1b83c8718a",
+            "id": "ecd1508ee38145d9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "aws/IAM.md",
+                "file": "docker/Docker Layered Architecture.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "aws/IAM.md",
+                "file": "docker/Docker Layered Architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "aws/IAM.md",
+                "file": "docker/Docker Layered Architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "aws/IAM.md"
+                "file": "docker/Docker Layered Architecture.md"
               }
             }
           }
@@ -146,10 +146,23 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "62e05acd8b913768",
+  "active": "ecd1508ee38145d9",
   "lastOpenFiles": [
-    "Untitled.md",
+    "assets/images/docker-layered-architecture-container.png",
+    "assets/images/docker-layered-architecture-image.png",
+    "docker/Docker Layered Architecture.md",
+    "docker/Docker Container Isolation.md",
+    "docker/Docker file storage.md",
+    "Continuous-Deployment/ReadMe.md",
+    "Networking/ReadMe.md",
+    "ReadMe.md",
+    "assets/images/devops-software-development-concept-179685898.jpg",
+    "assets/images/docker-container-isolation.png",
     "aws/IAM.md",
+    "docker-container-isolation",
+    "docker/ReadMe.md",
+    "docker/manager-worker-nodes-4.png",
+    "Untitled.md",
     "aws"
   ]
 }

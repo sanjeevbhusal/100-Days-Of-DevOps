@@ -55,7 +55,7 @@ You will create different users and assign them different permissions based on u
 
 Groups are collection of users managed together.  If you have a lot of users perform similar tasks on aws, you will notice that a lot of Policies are shared among those users.  With Groups, you can create a group and add all the users in the group. Then you can assign policies directly to the group, instead of individual user.
 
-# Roles
+## Roles
 
 Roles are needed for one aws service to interact with another aws service. AWS has multiple services which can interact with other aws services as if they were acting on your behalf.  
 
