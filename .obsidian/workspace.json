@@ -23,16 +23,13 @@
             "id": "757a3117e062d965",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "docker/Docker networking.md",
-                "mode": "source",
-                "source": false
+                "file": "assets/images/Pasted image 20230301202229.png"
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -82,8 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "c62dbbb5d6f1f6f6",
@@ -99,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docker/Docker networking.md",
+                "file": "docker/Docker Layered Architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docker/Docker networking.md",
+                "file": "docker/Docker Layered Architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docker/Docker networking.md"
+                "file": "docker/Docker Layered Architecture.md"
               }
             }
           }
@@ -160,21 +156,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "757a3117e062d965",
+  "active": "46e926d1800966a7",
   "lastOpenFiles": [
-    "Pasted image 20230302082204.png",
-    "Pasted image 20230302081904.png",
-    "Pasted image 20230302081336.png",
-    "Pasted image 20230302081049.png",
-    "Pasted image 20230302080924.png.md",
+    "assets/images/Pasted image 20230301202229.png",
     "docker/Docker networking.md",
+    "assets/images/Pasted image 20230302082204.png",
+    "assets/images/Pasted image 20230302081904.png",
+    "assets/images/Pasted image 20230302081336.png",
+    "assets/images/Pasted image 20230302081049.png",
+    "Pasted image 20230302080924.png.md",
     "Pasted image 20230302080924.png",
-    "Pasted image 20230302080543.png",
-    "Pasted image 20230302075226.png",
-    "Pasted image 20230302074724.png",
-    "Pasted image 20230302074404.png",
-    "Pasted image 20230302074144.png",
-    "Pasted image 20230302073327.png",
+    "assets/images/Pasted image 20230302080543.png",
+    "assets/images/Pasted image 20230302075226.png",
+    "assets/images/Pasted image 20230302074724.png",
+    "assets/images/Pasted image 20230302074404.png",
+    "assets/images/Pasted image 20230302074144.png",
     "docker/Docker Layered Architecture.md",
     "docker/Docker Storage Drivers.md",
     "docker/Docker Container Isolation.md",
