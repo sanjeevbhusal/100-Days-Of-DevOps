@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "70f7345b8b5fa67d",
+        "id": "71626b8332119751",
         "type": "tabs",
         "children": [
           {
-            "id": "ecd1508ee38145d9",
+            "id": "46e926d1800966a7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "757a3117e062d965",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docker/Docker networking.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -69,7 +82,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "c62dbbb5d6f1f6f6",
@@ -85,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docker/Docker Layered Architecture.md",
+                "file": "docker/Docker networking.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docker/Docker Layered Architecture.md",
+                "file": "docker/Docker networking.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docker/Docker Layered Architecture.md"
+                "file": "docker/Docker networking.md"
               }
             }
           }
@@ -146,22 +160,32 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ecd1508ee38145d9",
+  "active": "757a3117e062d965",
   "lastOpenFiles": [
-    "assets/images/docker-layered-architecture-container.png",
-    "assets/images/docker-layered-architecture-image.png",
+    "Pasted image 20230302082204.png",
+    "Pasted image 20230302081904.png",
+    "Pasted image 20230302081336.png",
+    "Pasted image 20230302081049.png",
+    "Pasted image 20230302080924.png.md",
+    "docker/Docker networking.md",
+    "Pasted image 20230302080924.png",
+    "Pasted image 20230302080543.png",
+    "Pasted image 20230302075226.png",
+    "Pasted image 20230302074724.png",
+    "Pasted image 20230302074404.png",
+    "Pasted image 20230302074144.png",
+    "Pasted image 20230302073327.png",
     "docker/Docker Layered Architecture.md",
+    "docker/Docker Storage Drivers.md",
     "docker/Docker Container Isolation.md",
+    "ReadMe.md",
+    "docker/docker volume.md",
     "docker/Docker file storage.md",
     "Continuous-Deployment/ReadMe.md",
     "Networking/ReadMe.md",
-    "ReadMe.md",
-    "assets/images/devops-software-development-concept-179685898.jpg",
-    "assets/images/docker-container-isolation.png",
     "aws/IAM.md",
     "docker-container-isolation",
     "docker/ReadMe.md",
-    "docker/manager-worker-nodes-4.png",
     "Untitled.md",
     "aws"
   ]

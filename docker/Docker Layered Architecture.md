@@ -56,9 +56,18 @@ We didnt change the first 3 commands and the last command in the Dockerfile. Thi
 - Layer 4 (COPY . /opt/source-code-2): This layer will be built from scratch as docker donot have any cached layer created using this command.
 - Layer 5 (ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run): This layer will also be rebuilt.
 
-Layer 5 will also be rebuilt although it has not changed. This is because docker builds all the subsequent layers after a layer has been changed.  Here layer no 4 was changed, so all the layers below it will be rebuilt.
+The second image will take very less size as a lot of layers are reused. If you see the size of the image through `docker image ls` command, you will see that both images take up massive size. This is because this size actually represents the size of all the layers this image is built upon. So, if you see size as 450 MB, this is the total size of all the layers this image is built upon. If you were to push this image, docker will push multiple layers which total size will be  450 MB.  So, this doesnot mean that this image is taking 450 MB size on disk.  If you run command `docker system df`, you can see the total size images are taking on your local system. You will realize the total size to be close to 450 MB. This means both the images are sharing multiple layers but when shown with `docker image ls` command, displays the entire image size. 
+use `-v` flag with `docker system df` to see the breakdown.
 
-![[docker-layered-architecture-image.png | 1200]]
+
+Layer 5 will also be rebuilt although it has not changed. This is because docker builds all the subsequent layers after a layer has been changed.  Here layer no 4 was changed, so all the layers below it will be rebuilt. To view all the layers of a image, we can run the following command 
+
+```shell
+docker history [imageid]
+```
+
+![[docker-layered-architecture-image.png | 600]]
+
 
 
 Once a Image is built, it cannot be edited. Images are read only files. But when we build a container through that image, we can make changes to that container. Lets understand container layered architecture.
@@ -81,6 +90,6 @@ docker run -d my-custom-app
 
 Lets say I want to try changing the source code inside the container and play around with it. When I change a file in the source code, docker will make a copy of that file available in the container layer. Further modfications of the file is done in container layer. This mechanism is known as `copy on write` mechanism.
 
-When we delete the container,  docker will also delete the container layer.  To save the changes in the container layer, we can create a volume and mount it to a container. 
+When we delete the container,  docker will also delete the container layer.  To save the changes in the container layer, we can create a mounted volume and mount it to the container. 
 
-![[docker-layered-architecture-container.png | 1200]]
+![[docker-layered-architecture-container.png | 600]]
