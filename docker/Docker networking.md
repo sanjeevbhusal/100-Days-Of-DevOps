@@ -16,7 +16,8 @@ As you can see, we have 3 default networks on the system. Lets discuss about all
 
 ## Bridge network
 
-This is dockers default network. If a container is not assigned a network when it is created, docker assigns it to bridge network. The IP address of this network is `172.17.0.1`. The first container assigned to this network will get a IP address of `172.17.0.2`. All other containers will get subsequent IP address. The container running on the bridge network is not bind to host network automatically. So, inorder to access the container, you need to get its IP address. 
+This is dockers default network. It is a interenal private network created on the host machine. This network gets a Internal IP address that is only reachable from the host.
+The IP address of this network is `172.17.0.1`. If a container is not assigned a network when it is created, docker assigns it to bridge network. To access the container from outside, map port of the container to port on the host. The first container assigned to this network will get a IP address of `172.17.0.2`. All other containers will get subsequent IP address. The container running on the bridge network is not bind to host network automatically. So, inorder to access the container, you need to get its IP address. 
 
 Lets see  a example of this network.
 

@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "Service",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,11 +65,13 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "c62dbbb5d6f1f6f6",
@@ -148,22 +150,22 @@
   },
   "active": "46e926d1800966a7",
   "lastOpenFiles": [
+    "Pasted image 20230303141600.png",
+    "Pasted image 20230303120914.png",
+    "docker/Docker networking.md",
+    "kubernetes/Container Orchestration In a Nutshell.md",
+    "Pasted image 20230302220037.png",
+    "Pasted image 20230302155255.png",
     "docker/dockervsvirtualmachines.png",
     "docker/docker-cheatsheet.png",
     "docker/Docker Layered Architecture.md",
-    "kubernetes/Container Orchestration In a Nutshell.md",
     "assets/images/Pasted image 20230301202229.png",
     "kubernetes/ReadMe.md",
-    "docker/Docker networking.md",
     "assets/images/Pasted image 20230302082204.png",
     "assets/images/Pasted image 20230302081904.png",
     "assets/images/Pasted image 20230302081336.png",
     "assets/images/Pasted image 20230302081049.png",
     "Pasted image 20230302080924.png.md",
-    "Pasted image 20230302080924.png",
-    "assets/images/Pasted image 20230302080543.png",
-    "assets/images/Pasted image 20230302075226.png",
-    "assets/images/Pasted image 20230302074724.png",
     "docker/Docker Storage Drivers.md",
     "docker/Docker Container Isolation.md",
     "ReadMe.md",

@@ -24,7 +24,7 @@ This is precisely what container orchestration does. We can do these with either
 
 In Docker Swarm, we can manage multiple virtual machines together as a cluster. The only requirement is that all the virtual machines must have docker installed. From this cluster of machines, we need to make one of the virtual machine as manager. This manager machine will manage the deployments of containers across all other machines. All the other machines are also known as worker nodes or slaves. The key component of docker swarm is service.
 
-Service will let us run multiple replicas of a container that are distibuted across all the worker nodes. Service will provide us a single endpoint to acess all the containers. This means service also acts as a load balancer. If one of the instance fails, service will automatically run another instance as replacement. As service is acting as a load balancer, we need to de-register the failed instance from the service(so that it doesnot receive any traffic) and register the new instance to the service (so that it receives traffic). We dont need to do this manually as this is done automatically by Service.
+Service is one or more instances of a container running on one or more hosts. Service will let us run multiple replicas of a container that are distibuted across all the worker nodes. Service will provide us a single endpoint to acess all the containers. This means service also acts as a load balancer. If one of the instance fails, service will automatically run another instance as replacement. As service is acting as a load balancer, we need to de-register the failed instance from the service(so that it doesnot receive any traffic) and register the new instance to the service (so that it receives traffic). We dont need to do this manually as this is done automatically by Service.
 
 We can create a service with this command
 
@@ -348,3 +348,15 @@ So, when traffic comes to the service at node 3, the load balancer present in th
 The DNS server that resolves the name always listens on `127.0.0.11`
 
 ![[Pasted image 20230303141600.png | 600]]
+
+### Docker  stack
+
+Docker stack is a group of interrelated services that together form a entire application. We could have 4 servies representing webserver, frontend application, backend application and database. These all services work together to make up a entire applicaton. 
+
+##### Deploying a stack
+
+We know that docker-compose.yml file is used to deploy multiple docker containers. We can actually use the same file to deploy multiple services as well. We can specify all sorts of details such as replicas, container's resource limitation , containers host preference etc.  We can then use the following command to deploy all the services.
+
+```shell
+docker stack deploy docker-compose.yml
+```
