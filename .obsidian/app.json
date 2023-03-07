@@ -1,4 +1,7 @@
 {
   "readableLineLength": false,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "foldHeading": true,
+  "spellcheck": true,
+  "foldIndent": true
 }

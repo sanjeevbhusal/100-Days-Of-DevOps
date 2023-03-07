@@ -54,50 +54,75 @@ The main reason to use kubectl is its ease of use and consistenct interface.
 
 # Pods
 
-In kubernetes, we dont deploy container directly in the worker nodes. We wrap containers in a object known as pods. Pods are the smallest object you can create in kubernetes. Just like a container wraps your application, pod wraps a container. Deploying pods instead of containers raises a quesion.
+In kubernetes, we dont deploy container directly in the worker nodes. We wrap containers in a object known as pods. Pods are the smallest object you can create in kubernetes. Just like a container wraps your application, pod wraps a container. A pod could contain one or more containers. Deploying pods instead of containers raises a quesion.
 
-**Why do we need Pods? Why not just deploy container directly?**
+**Why do we need Pods? What is the problem in deploying containers directly?**
 
-Lets keep kuberenetes out of the discussion and just focus on docker containers. We will use an example to understand why deploying pods is better than deploying containers.
+ Lets keep kuberenetes out of the discussion and just focus on docker containers. We will use an example to understand the problems we face when we deploy containers directly.
 
-Lets say we want to deploy a python application inside a docker container. We will use a Image called `python-app`. We can easily deploy a python application using `docker run python-app`. Lets say we get a lot of traffic and decide to create 5 replicas of the container for load balancing. We can easily do it by running the same command 4 times. 
+ Lets say we want to deploy a python application inside a docker container. We will use a Image called `python-app`. We can easily deploy a python application using `docker run python-app`. Lets say we get a lot of traffic and decide to create 5 replicas of the container for load balancing. We can easily do it by running the same command 4 times. 
 
-Overtime our application goes architectural changes and now we also need to create a new helper container for each of the 5 containers. The helper container will use a image called `helper`. We wil have to do number of steps to make this work. The steps we have to perform are: 
+ Overtime our application goes architectural changes and now we also need to create a new helper container for each of the 5 containers. The helper container will use a image called `helper`. We wil have to do number of steps to make this work. The steps we have to perform are: 
 
-- Deploy 5 helper containers by running this command 5 times. `docker run helper` 
-- Create 5 different custom networks.
-- Assign each  `python-app` container with one of the custom network. 
-- Assign each worker container with one of the custom network.  
+ - Deploy 5 helper containers by running this command 5 times. `docker run helper` 
+ - Create 5 different custom networks.
+ - Assign each  `python-app` container with one of the custom network. 
+ - Assign each worker container with one of the custom network.  
 
-The final result is 5 different networks and each network having one python-app container and one helper container. This will allow python-app container and worker container to communicate with each other. 
+ The final result is 5 different networks and each network having one python-app container and one helper container. This will allow python-app container and worker container to communicate with each other. 
 
-Now what if both containers need to share some Volume? Python-app container might write to a file that has to be accessed by worker container
+ Now what if both containers need to share some Volume? Python-app container might write to a file that has to be accessed by worker container. In such cases, we need to asssign a common volume manually to both the containers. 
+
+ Now, what if we want to remove python-app container? We also have to remove both the network and worker container associated with the removed python-app container.  
+
+ Performing all these mentioned tasks are not a problem. They are just a part of running containerized application. The problem is doing all these task manually. Docker doesnot have a way to understand if 2 containers are related to each other. So, it cannot automatically create and share a network between 2 containers, share common volumes between 2 containers and have same lifecycle for both containers. Kubernetes on the other hand, solves this problem with pod.   
+
+**Kubernetes Solution to this Problem**
+
+ Kubernetes creates a virtual wrapper around containers called pods which solves all the issues discussed above. As disucssed above, a pod can contain one or more containers. When we deploy a pod, kubernetes automatically does the following: 
+
+ - creates a custom network that is attached to all the containers inside the pod. 
+ - creates a volume and attach it to all the containers inside the pod. 
+ - make lifecycle of containers depend on the pod. This means, when we create a pod, all the containers are automatically created and when we delete a pod, all the containers are automatically deleted.
+
+There are some other questions regarding pods and containers in kubernetes. Lets see the questions and their answers.
+
+**1. Can you deploy container directly and not use pod if you only want to deploy 1 container?**
+ No, even if we only want to deploy a single container, we have to deploy it inside a pod. Kubernetes doesnot work with containers directly. This is the reason why kubernetes can work with multiple container runtime components such as docker, crio etc. Always remeber, the smallest object in kubernetes are Pods.
+
+**2. Should a Pod contain a single container or should it always contain more than one container?**
+ Kubernetes recommends only running one container per pod. However there might be some rare usecases when you need 2 containers in the same pod. 
+ 
+ The reason why you should not have 2 containers in a pod has to do mostly with how kubernetes performs scaling. As discussed above, pods as the smallest object available in kubernetes. If we want to scale our application, kubernetes deploys the new instance of pod. This means all the containers will be created inside the newly created pod even if we only needed to deploy a specific container. This leads to wastage of containers.
+
+ Instead, if we create 2 seperate pods, each containing one single container, it will be easier for use to scale containers. We can scale the respective pod without creating any additional unneeded containers. 
+ 
+ Your application container and pod usually have a 1:1 relationship i.e. 1 pod only has 1 application container.
+
+**3. Is it possible to add a new container inside a existing Pod?**
+  Yes, it is possible to add a new container inside a existing Pod. You need to modify the configuration YAML file. However this is not recommended by kubernetes. Lets see the reason with this example.
+  
+  Lets say you have a pod containing python application. After some time, you want to deploy a new containers of the same application for high-availability and load balancing requirements.
+
+  You have 2 options.
+
+ - You could either deploy a new pod in the same worker Node or in other worker Node inside your cluster.
+ - You could deploy a new container inside the existing pod. Now, the pod consists of 2 python application containers.
+
+ It is recommended that you use the first approach to scale your application. Although, it is possible to add a new container inside the existing pod, it goes against the principle of contanerization which states that a container should contain only minimal application/services that can be scaled independently.
+
+ When you add a new instance of the application to an existing pod, you are effectively creating a monolithic service, which can make it difficult to manage and scale the application. This also increases the risk of downtime, as any issues with one application can affect all applications in the pod.
+
+**4. What about IP addresses and Port number for Pods and containers?**
+   Pods are assigned a unique IP address and containers inside Pod share the same IP address. When Pod is created, kubernetes assigns a unique IP address to it, and then assigns each container inside the Pod with a unique Port number.  
+
+**5. How do 2 containers running in the same or different pod communicate with each other?**
+ As containers donot have IP addresses, they can't refer each other directly. However as mentioned above, containers are assigned Port number within Pod.
+
+ This means containers within a Pod can communicate with each other through localhost interface, using the assigned port number. Kubernetes configures DNS name `localhost` to map to the current Pod's IP address. They can also communicate with other Pods in the same cluster using the Pod's IP address. 
+
+**6. How do client access Pods?**
+ Kubernetes provides a resource called `service` that allows clients to access a set of Pods using a single IP address and Port number. We will discuss this in later sections. 	
 
 
 
-
-
-
-
-Now, each python container can communicate with one helper container. 
-
-we link them together, configure networking so python-app container 1 can communicate with helper container 1. We also need to share volumes between python-app container 1 and helper container 1. If python-app-container one is removed, we also need to remove helper container 1.
-
-In case of kubernetes, we would wrap both python-app container and helper container inside a pod and deploy 5 replicas of the pod. Kubernetes will take care of managing shared storage between the containers in a pod. Kubernetes will also keep all containers in a pod in the same network. So, containers can communicate with each other by using localhost as URL as both share the same pod. When one container goes down, kubernets will also destroy other containers in the same pod.This way, we donot have to manage multiple containers ourself.
-
-The dowside is even if we only want to deploy a single container, we have to deploy it inside a pod. Thats just how Kubernetes works.
-
-**What if instead of creating a new pod, we deploy new containers in existing pod?**
-
-Lets say you have a pod containing python application. After some time, you want to deploy a new containers of the same application for high-availability and load balancing requirements.
-
-You have 2 options.
-
-- You could either deploy a new pod in the same worker Node or in other worker Node inside your cluster.
-- You could deploy a new container inside the existing pod. Now, the pod consists of 2 python application containers.
-
-It is recommended that you use the first approach to scale your application. Although, it is possible to add a new container inside the existing pod, it goes against the principle of contanerization which states that a container should contain only minimal application/services that can be scaled independently.
-
-When you add a new instance of the application to an existing pod, you are effectively creating a monolithic service, which can make it difficult to manage and scale the application. This also increases the risk of downtime, as any issues with one application can affect all applications in the pod.
-
-Your application container and pod ususally have a 1:1 relationship i.e. 1 pod only has 1 application container.
