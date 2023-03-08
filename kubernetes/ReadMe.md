@@ -135,11 +135,11 @@ You have 2 options.
 - You could either deploy a new pod in the same worker Node or in other worker Node inside your cluster.
 - You could deploy a new container inside the existing pod. Now, the pod consists of 2 python application containers.
 
-It is recommended that you use the first approach to scale your application. Although, it is possible to add a new container inside the existing pod, it goes against the principle of contanerization which states that a container should contain only minimal application/services that can be scaled independently.
+It is recommended that you use the first approach to scale your application. Although, it is possible to add a new container inside the existing pod, it goes against the principle of containerization which states that a container should contain only minimal application/services that can be scaled independently.
 
 When you add a new instance of the application to an existing pod, you are effectively creating a monolithic service, which can make it difficult to manage and scale the application. This also increases the risk of downtime, as any issues with one application can affect all applications in the pod.
 
-Your application container and pod ususally have a 1:1 relationship i.e. 1 pod only has 1 application container.
+Your application container and pod usually have a 1:1 relationship i.e. 1 pod only has 1 application container.
 
 **Creating a Pod**
 

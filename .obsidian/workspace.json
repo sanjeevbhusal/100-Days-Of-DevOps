@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "c79b3bded088ce69",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "kubernetes/ReadMe.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "8e51d958b7c0b308",
             "type": "leaf",
             "state": {
@@ -30,9 +18,20 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "d3ee4ba4f1d18994",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "kubernetes/ReadMe.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -82,8 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "c62dbbb5d6f1f6f6",
@@ -164,6 +162,7 @@
   "lastOpenFiles": [
     "kubernetes/ReadMe.md",
     "kubernetes/Kubernetes Certified Application Developer.md",
+    "Pasted image 20230308115603.png",
     "kubernetes/Container Orchestration In a Nutshell.md",
     "Networking/OSI Model.md",
     "Networking/ReadMe.md",
@@ -179,7 +178,6 @@
     "docker/Docker Layered Architecture.md",
     "assets/images/Pasted image 20230301202229.png",
     "assets/images/Pasted image 20230302082204.png",
-    "assets/images/Pasted image 20230302081904.png",
     "Pasted image 20230302080924.png.md",
     "docker/Docker Storage Drivers.md",
     "docker/Docker Container Isolation.md",

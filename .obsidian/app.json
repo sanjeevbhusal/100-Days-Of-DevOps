@@ -3,5 +3,6 @@
   "alwaysUpdateLinks": true,
   "foldHeading": true,
   "spellcheck": true,
-  "foldIndent": true
+  "foldIndent": true,
+  "strictLineBreaks": false
 }
