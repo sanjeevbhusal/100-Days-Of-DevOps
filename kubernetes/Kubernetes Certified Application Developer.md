@@ -335,4 +335,15 @@ Kubernetes has 2 types of accounts available.
 
 User Account is used by kubernetes administrator or developer who wants to interact with the cluster. Service Account is used by Services such as Prometheus, web application etc who wants to interact with the cluster. 
 
-We already know that in order to interact with the cluster, we need to use kubernetes API-server component. We also know that we can do it either 
+We already know that in order to interact with the cluster, we need to use kubernetes API-server component. We also know there are 2 ways of accessing API-server component. 
+
+- Through CLI with kubectl
+- Directly hitting the rest API endpoint.
+
+User Account will use the first approach of using CLI wheras third party application will use second approach of directly hitting rest API endpoint.
+
+
+
+Kubernetes has a Token based authentication system that needs us authenticate before accessing the cluster. For Token, kubernetes supports the use of Bearer Token. The token is actually a Secrets Object and is not stored directly in your account. 
+
+Creation of account and token is 2 separate process. You first create a account, then create a token and finally link the token to your account. 
