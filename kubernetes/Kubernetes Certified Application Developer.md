@@ -340,23 +340,37 @@ We already know that in order to interact with the cluster, we need to use kuber
 - Through CLI with kubectl
 - Directly hitting the rest API endpoint.
 
-User Account will use the first approach of using CLI whereas third party application will use second approach of directly hitting rest API endpoint. Lets exploer both accounts in depth.
+User Account will use the first approach of using CLI whereas third party application will use second approach of directly hitting rest API endpoint. Lets explore both accounts in depth.
 
 #### 1. Service Account
 
 For Services, Kubernetes has a Token based authentication system. All applications that want to access the cluster must first authenticate with API-server. For Token, kubernetes supports the use of Bearer Token. 
 
-The token is actually a Secrets Object. Being a Secrets Object means that the contents of the token is encoded. The token is also not stored in the accounts configuration directly. Creation of service account and token is a 3 separate steps. 
+##### Default Service Account
+
+There is a default service account automatically created for every namespace. 
+
+
+#### Service Account and Its Token 
+
+A service account acts as a username. It needs a token in order to authenticate. The
+
+%%The token is actually a Secrets Object. Being a Secrets Object means that the contents of the token is encoded. The token is also not stored in the accounts configuration directly. Creation of service account and token is a 3 separate steps. 
 
 - First create a service account
 - Second, create a token 
-- Third, connect the token to your account. 
+- Third, connect the token to your account.%% 
 
 
-##### Default Service Account
+The procedure on how this service account and its token are used currently and how it used to be used has major differences. 
 
-There is a default service account automatically created for every namespace. Just like discussed above, this account's token is stored in a separate secrets object. 
-When we create a new pod, the default service account and secrets object is automatically mounted as volume inside the Pod. This way you don't have to manually copy the Token from secret object inside the pod.  You can however choose to not automatically mount the default service account in the Pod or specify a different service account. 
+###### Old Way of Using Token 
+
+When you created a service account, a secrets object was also automatically created. The token for the service account was stored in the secrets object. This secret object's name was present in the account's configuration effectively linking service account and secret object containing token. 
+
+When we created a new pod, the default service account and secrets object is automatically mounted as volume inside the Pod. This way you don't have to manually copy the Token from secret object inside the pod.  You can however choose to not automatically mount the default service account in the Pod or specify a different service account. 
 
 It is important to note that default service account is very much limited. It only has minimum authorizations available which can only do basic queries. You cannot mount a different service account once the pod has been created. 
 
+
+%%TOKEN REQUEST API%%
