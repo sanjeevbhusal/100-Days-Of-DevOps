@@ -236,13 +236,48 @@ Deployments is a kubernetes resource that comes higher in hierarchy than replica
 
 If all we want is to run few replicas of our containers across various nodes, replica set is enough. The true power of deployment resource comes when we think about the challenges we face while deploying and updating our application in production environment. 
 
-When we deploy to production environment, we might want to use various deployment strategies, perform rollbacks, pause and resume changes so that all changes can be released to users at once etc. All these functionality are not provided by replica set. That's why kubernetes created a new resource called Deployments. Lets explain all the features offered by deployment resource one by one.
+When we deploy to production environment, we might want to use various deployment strategies, perform rollbacks, pause and resume changes so that all changes can be released to users at once etc. All these functionality are not provided by replica set. That's why kubernetes created a new resource called Deployments. 
 
-#### Various Deployment Strategies
+Lets explain all the features offered by deployment resource one by one.
 
-
+#### 1. Various Deployment Strategies
 
 A Deployment can contain multiple replica Sets. Each replica Set might have different configuration. 
 
-
 Just like creating a replica set/replication controller automatically creates pods and manage them, creating Deployment will automatically create and manage replica sets.
+
+## Namespaces
+
+A Kubernetes cluster might have hundreds of pods, replicas and deployments. In order to organize them better, kubernetes creates a group and isolates the resources within a group. You can only see the resources in your currently activated group. This group is called Namespaces. 
+
+Kubernetes creates 4 namespaces by default. They are:
+
+- default namespace: If no any namespace is activated, default namespace is used to provision resources.
+- kube-node-lease namespace
+- kube-public: Resources provisioned in this namespace is available publically to all the users.
+- kube-system: This namespace is used to provision resources related to kubernetes components. When kubernetes starts up, it creates multiple containers that host control plane components, DNS server etc. All these components are crucial for functioning of kubernetes. 
+
+
+### Why do we create Namespaces?
+
+Lets understand this with a example. Consider you are using same cluster for both dev and prod environment. You have created some resource for dev environment and some resource for prod environment. You have not created any namespaces. This means all your resources are deployed in `default` namespace. This causes 2 problems.
+
+- Environment Clutter: When you view your resources using commands such as `kubectl get pods`, you get all the resources in your current namespace. What if you only wanted to view resources deployed in `dev` environment? 
+- Accidental Modification: Lets say you wanted to delete a pod from `dev` environment. You first want to get the details of pod using `kubectl get pods` command. As discussed, this will output all the pods in the current namespace. What if you accidentally delete one of the pods from `prod` environment?
+
+We can solve both of these problems if we create 2 namespaces. One namespace will be used to deploy prod resources and another namespace will be used to deploy dev resources. 
+
+This is the reason why kubernetes deploys containers for host control plane components and DNS server in `kube-system` namespace. 
+
+ ![[Pasted image 20230308160342.png | 600]]
+
+### More about Namespace
+
+Each of the namespace can have their own policies that defines who can do what. You can also give a resource quota to a namespace. This way a namespace will only use resources within its quota.  
+
+Resources inside a namespace can refer to each other directly with their name. To refer resource in another namespace, we can use the name of Namespace followed by the name of Resource. You can use DNS name because when Service is created, a DNS entry is added automatically.
+
+ ![[Pasted image 20230308160812.png | 600]]
+
+
+ ![[Pasted image 20230308161124.png | 600]]
