@@ -340,10 +340,14 @@ We already know that in order to interact with the cluster, we need to use kuber
 - Through CLI with kubectl
 - Directly hitting the rest API endpoint.
 
-User Account will use the first approach of using CLI wheras third party application will use second approach of directly hitting rest API endpoint.
+User Account will use the first approach of using CLI whereas third party application will use second approach of directly hitting rest API endpoint. Lets exploer both accounts in depth.
 
+#### 1. Service Account
 
+For Services, Kubernetes has a Token based authentication system. All applications that want to access the cluster must first authenticate with API-server. For Token, kubernetes supports the use of Bearer Token. 
 
-Kubernetes has a Token based authentication system that needs us authenticate before accessing the cluster. For Token, kubernetes supports the use of Bearer Token. The token is actually a Secrets Object and is not stored directly in your account. 
+The token is actually a Secrets Object. Being a Secrets Object means that the contents of the token is encoded. The token is also not stored in the accounts configuration directly. Creation of service account and token is a 3 separate steps. 
 
-Creation of account and token is 2 separate process. You first create a account, then create a token and finally link the token to your account. 
+- First create a service account
+- Second, create a token 
+- Third, connect the token to your account. 
