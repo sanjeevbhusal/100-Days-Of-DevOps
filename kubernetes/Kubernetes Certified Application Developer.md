@@ -314,4 +314,6 @@ A process can be present in 2 namespaces. Each namespace will have is own Proces
 
 #### Users in Container
 
-Docker has multiple users available. By default, all the processes inside the container is ran by root user. You can however run a process with other available users as well. You can also create a seperate user inside docker container that is only available within the co
+Docker has multiple users available. By default, all the processes inside the container is ran by root user. You can however run a process with other available users as well. You can also create a seperate user inside docker container that is only available within the container. The concept of namespaces applies here as well. The user is only scoped within the containers namespace. 
+
+However for security reasons, docker limits the capability of root user inside the container. So, it is not as powerful as root user in the host. Docker also runs containers with limited set of permissions. Processes inside the container cant perform tasks such as rebooting the host that will affect the host and other containers in the host.
