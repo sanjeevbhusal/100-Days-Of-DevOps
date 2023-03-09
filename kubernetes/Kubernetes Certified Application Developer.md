@@ -344,7 +344,7 @@ User Account will use the first approach of using CLI whereas third party applic
 
 #### 1. Service Account
 
-For Services, Kubernetes has a Token based authentication system. All applications that want to access the cluster must first authenticate with API-server. For Token, kubernetes supports the use of Bearer Token. 
+For Services, Kubernetes has a Token based authentication system. All applications that want to access the cluster must first authenticate with API-server. For Token, kubernetes supports the use of JWT Token. 
 
 ##### Default Service Account
 
@@ -360,4 +360,8 @@ Previously, Service Account and Token used to be treated separately. When you cr
 
 When we created a new pod, you could specify a service account name in the definition file. When kubernetes created a pod, it would mount the account and its secrets as a volume inside the pod. This way you didn't had to manually copy the Token from secret object and place it inside the pod. However, If you didn't explicitly specify a service name, kubernetes would mount the default service and its secret. You could however define a field to inform kubernetes not to mount default service when you don't specify any other service.
 
+This way of using JWT token for authentication has some issues mainly concerning Security and Scalability. Hence a new way of using service tokens was introduced in version 1.22 
+
 ###### New Way of Creating Service Account and Token 
+
+A new API by the name `TokenRequesetAPI` was introduced to sovl
