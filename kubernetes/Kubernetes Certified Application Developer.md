@@ -356,20 +356,8 @@ The procedure for creating a service account and its token has changed in the pa
 
 ###### Old Way of Creating Service Account and Token 
 
-Previously, Service Account and Token used to be treated separately. When you created a Service Account, a new Secret Resource was created that stored the Token for the account. The Secret was then linked to the Service Account's Configuration using its name.  When you view the details of service account using `kubetl get serviceaccount default`, you would only get the name of a secrets object. You then had to view the secrets object using `kubectl get sec`
+Previously, Service Account and Token used to be treated separately. When you created a Service Account, a new Secret Resource was created that stored the Token for the account. The Secret was then linked to the Service Account's Configuration using its name.  When you view the details of service account using `kubetl describe serviceaccount default`, you would only get the name of a secrets object. You then had to view the secrets object using `kubectl describe secret default-token`. 
 
+When we created a new pod, you could specify a service account name in the definition file. When kubernetes created a pod, it would mount the account and its secrets as a volume inside the pod. This way you didn't had to manually copy the Token from secret object and place it inside the pod. However, If you didn't explicitly specify a service name, kubernetes would mount the default service and its secret. You could however define a field to inform kubernetes not to mount default service when you don't specify any other service.
 
-The token is actually a Secrets Object. Being a Secrets Object means that the contents of the token is encoded. The token is also not stored in the accounts configuration directly. Creation of service account and token is a 3 separate steps. 
-
-- First create a service account
-- Second, create a token 
-- Third, connect the token to your account
-
-When you created a service account, a secrets object was also automatically created. The token for the service account was stored in the secrets object. This secret object's name was present in the account's configuration, effectively linking service account and secret object containing token. This is true even for Default Service Account. The default service account had a secret object that stored the token that was linked to the account's configuration using its name. 
-
-When we created a new pod, the default service account and its secrets object were automatically mounted as volumes inside the Pod. This way you didn't had to manually copy the Token from secret object and place it inside the pod. You could however choose to not automatically mount the default service account in the Pod or specify a different service account. 
-
-You cannot mount a different service account once the pod has been created. 
-
-
-%%TOKEN REQUEST API%%
+###### New Way of Creating Service Account and Token 
