@@ -358,5 +358,5 @@ The token is actually a Secrets Object. Being a Secrets Object means that the co
 There is a default service account automatically created for every namespace. Just like discussed above, this account's token is stored in a separate secrets object. 
 When we create a new pod, the default service account and secrets object is automatically mounted as volume inside the Pod. This way you don't have to manually copy the Token from secret object inside the pod.  You can however choose to not automatically mount the default service account in the Pod or specify a different service account. 
 
-It is important to note that default service account is very much limited. It only has minimum authorizations available which can only do basic queries. You cannot mount a different service 
+It is important to note that default service account is very much limited. It only has minimum authorizations available which can only do basic queries. You cannot mount a different service account once the pod has been created. 
 
