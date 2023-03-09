@@ -312,8 +312,15 @@ A process can be present in 2 namespaces. Each namespace will have is own Proces
 
 ![[Pasted image 20230309125411.png | 600]]
 
-#### Users in Container
+#### Restricting Containers Permissions
 
-Docker has multiple users available. By default, all the processes inside the container is ran by root user. You can however run a process with other available users as well. You can also create a seperate user inside docker container that is only available within the container. The concept of namespaces applies here as well. The user is only scoped within the containers namespace. 
+Docker has multiple users available. By default, all the processes inside the container is ran by root user. You can however run a process with other available users as well. You can also create a separate user inside docker container that is only available within the container. The concept of namespaces applies here as well. The user is only scoped within the containers namespace. 
 
-However for security reasons, docker limits the capability of root user inside the container. So, it is not as powerful as root user in the host. Docker also runs containers with limited set of permissions. Processes inside the container cant perform tasks such as rebooting the host that will affect the host and other containers in the host.
+However for security reasons, docker limits the capability of root user inside the container. So, it is not as powerful as root user in the host. Docker also runs containers with limited set of permissions. Processes inside the container cant perform tasks such as rebooting the host that will affect the host and other containers in the host. You can add/remove capabilities for the container when you run it.
+
+
+### Introduction to Kubernetes Security
+
+Just like you can configure capability of a container in docker, you can also configure capability of both Pods and containers in kubernetes. If you configure capability at Pod level, it will carry down to all the containers in the Pod. If you configure it in both Pod and container, container's capability will override Pod's capability. 
+
+Not all capabilities are supported for Pods. You can configure capabilities like the user responsible for running the Pod but cant configure capabilities like rebooting the host. It is only available at container level. 
