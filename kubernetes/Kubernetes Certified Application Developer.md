@@ -281,3 +281,23 @@ Resources inside a namespace can refer to each other directly with their name. T
 
 
  ![[Pasted image 20230308161124.png | 600]]
+
+
+
+
+---
+
+## Security
+
+Before we look at kubernetes security, it is important to understand docker security.
+
+### Introduction to Docker Security
+
+Lets first understand namespaces in Linux. Note that Namespaces in Linux is different than Namespaces in kubernetes.
+
+We know that unlike virtual machines, containers are not completely isolated from the host system. Containers use a Linux concept called Namespaces. A process running in a Namespace can only see resources scoped to that namespace. By resources, i mean filesystem, other processes etc.  A nginx process running in host Namespace can see all the filesystem, other processes etc 
+
+
+The Linux host machine itself runs all the processes in a Namespace. This includes system utilities, docker's containerd runtime, other software's etc.  
+
+(nothing to do with kubernetes namespaces) 
