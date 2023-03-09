@@ -297,17 +297,16 @@ Lets first understand namespaces in Linux. Note that Namespaces in Linux is diff
 
 #### Namespaces in Docker
 
+>[!info]
+>We will be talking about a concept called Namespaces. note that this namespace and kubernetes namespace are different concepts.
+
 We know that unlike virtual machines, containers are not completely isolated from the host system. Containers use a Linux concept called Namespaces. A process running in a Namespace can only access resources scoped to that namespace. By resources, i mean filesystem, other processes etc.  A nginx process running in Namespace A can access all the filesystem, other processes etc scoped only to Namespace A.
 
 The Linux host machine runs all the processes in a Namespace. This includes system utilities, docker's containerd runtime, other software's etc.  
 When you run the command `ps aux | grep docker` , you can see a docker process running. The only reason you can access this process is because docker is running in host namespace.
 
-When docker creates container, it needs to run them in host namespace itself. Else, docker cant access those containers once created. All the processes created inside the container are also run in the host system namespace. Meaning, you can see those processes from the host system. If a user can see docker processes from the host system, this is not a problem. The problem occurs when those processes inside container can also access Resource from host system. If all the processes inside the container could access resource from the host system Lets now talk about how docker handles processes inside the container.
+When docker creates container, it needs to run them in host namespace itself. Else, docker cant access those containers once created. All the processes created inside the container are also run in the host system namespace. Meaning, you can see those processes from the host system. If a user can see docker processes from the host system, this is not a problem. The problem occurs when those processes inside container can also access Resource from host system. If all the processes inside the container could access resource from the host system, the  the entire concept of isolation goes away. Lets see how docker handles this issue.
 
-If docker ran all the processes inside the container in the host system namespace, the entire concept of isolation goes away. All the processes inside the container are affected by the host system. This is why docker runs all the processes with a different namespace.  
+When Docker creates a container, it also creates a new namespace. This namespace is attached to all the processes that will run inside the container. When we run a new process like Nginx inside the container, docker attaches this new namespace to the process. This means, theoretically a process will now have 2 namespaces attached to it. But docker removes the host namespace from the process. This means every process running inside the container now only have a namespace that is scoped within the container and can only access Resources within the container. 
 
-cannot run them in host namespace. If it did so, the entire concept of isolation is 
-This means docker itself 
-
-
-(nothing to do with kubernetes namespaces) 
+![[Pasted image 20230309125411.png | 600]]
