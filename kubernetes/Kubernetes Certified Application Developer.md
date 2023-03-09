@@ -307,6 +307,11 @@ When you run the command `ps aux | grep docker` , you can see a docker process r
 
 When docker creates container, it runs all the processes inside the container in separate namespace. This is done so that processed inside container can only access resources scoped to the containers namespace. This is how docker manages isolation.  But you can see all the container scoped processes from the host as well. This is because, for host namespace, the containers namespace is a child namespace. A host machine can view all the processes in its namespace and its child namespace.
 
-Lets say we run nginx container. Docker creates a namespace (lets say namespace A) inside the container and assign nginx to that namespace. When you run `ps aux` inside container, you can only see nginx process. You will also notice that this process has a process ID of 1. When you run `ps aux` in host machine, you will also be able to see nginx process. But the process ID will be different. All the processes running in child namespace are technically processes running in host namespace. This means nginx process is actually running in host but is also available inside container with a separate process ID and namespace.  
+A process can be present in 2 namespaces. Each namespace will have is own Process ID for the process. When you run nginx container, nginx process starts. This process is present in 2 namespaces. Host machine namespace and containers namespace. It will have different process ID in both namespaces. This is because for host namespace, there are already hundreds if not thousands of other processes running. nginx process will get the latest Process ID. In case of nginx container, nginx process is the first process to run. So, In the namespace inside container, nginx process will get process ID of 1.
+
 
 ![[Pasted image 20230309125411.png | 600]]
+
+#### Users in Container
+
+Docker has multiple users available. By default, all the processes inside the container is ran by root user. You can however run a process with other available users as well. You can also create a seperate user inside docker container that is only available within the co
