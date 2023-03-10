@@ -246,6 +246,8 @@ A Deployment can contain multiple replica Sets. Each replica Set might have diff
 
 Just like creating a replica set/replication controller automatically creates pods and manage them, creating Deployment will automatically create and manage replica sets.
 
+---
+
 ## Namespaces
 
 A Kubernetes cluster might have hundreds of pods, replicas and deployments. In order to organize them better, kubernetes creates a group and isolates the resources within a group. You can only see the resources in your currently activated group. This group is called Namespaces. 
@@ -284,6 +286,8 @@ Resources inside a namespace can refer to each other directly with their name. T
 
 
 
+
+---
 
 ---
 
@@ -373,3 +377,10 @@ A new API by the name `TokenRequesetAPI` was introduced which solved the securit
 Now, when we create a service, no token is created automatically. This also means that we no longer need a secret resource to hold our token. So, secret resource is also not created. If we want to generate a token, we need to run the command ourself `kubectl create token my-service-account-q`. This will print a token on the terminal. This token has all the security features we listed above.
 
 As there is no secrets object created, the way kubernetes associated service and secret object as volume to a pod has also changed. Instead kubernetes now creates tokens on the fly. When we create a new pod, kubernetes will make a API request to TokenRequestAPI to get a fresh token. This token is then mounted as a volume to the Pod, just like we discussed in the Old way. 
+
+---
+## Resource Limits
+
+When you run a container on just docker without using kubernetes, containers do not have any resource limits on them. This is the default behaviour of containers. You can however specify the resource limit on the container when you  
+
+By default, a container runnin
