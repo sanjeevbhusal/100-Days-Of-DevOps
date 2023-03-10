@@ -370,4 +370,6 @@ A new API by the name `TokenRequesetAPI` was introduced which solved the securit
 - The token is Time Bound
 - The token is Object Bound.
 
-Now, when we create a service, no token is created. This also means that secret resource is also not created. Instead we create Token on the fly. When we create a new pod, kubernetes will make a API request to TokenRequestAPI to get a token. This token is then mounted as a volume to the Pod, just like we discussed in the Old way. 
+Now, when we create a service, no token is created automatically. This also means that we no longer need a secret resource to hold our token. So, secret resource is also not created. If we want to generate a token, we need to run the command ourself `kubectl create token my-service-account-q`. This will print a token on the terminal. This token has all the security features we listed above.
+
+As there is no secrets object created, the way kubernetes associated service and secret object as volume to a pod has also changed. Instead kubernetes now creates tokens on the fly. When we create a new pod, kubernetes will make a API request to TokenRequestAPI to get a fresh token. This token is then mounted as a volume to the Pod, just like we discussed in the Old way. 
