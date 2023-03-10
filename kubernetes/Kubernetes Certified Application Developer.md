@@ -398,7 +398,19 @@ If your application needs more resources than the default, you can assign it exp
 
 ### CPU
 
-When you specify CPU resources needed for the container, you have 2 measurements to use. You can either specify can specify a minimum value of `0.1`. 0.1 CPU can also be written as 100m, where m stands for `mili`.  
+When you specify CPU resources needed for the container, you have 2 measurements to use. Each of these measurement represent CPU count.
+
+- Numbers: You can specify CPU count with numbers. Example:  1, 0.1 etc. 
+- Mili Format: You can specify CPU count with a unit of measurement called mili. Example: 1m, 100m etc. Here, m stands for mili. 0.1 CPU is equivalent to 100m  
+
+The minimum CPU count you can specify is 1m or 0.001 CPU.1 count of CPU is equivalent to 1vCPU in AWS and 1 Core in GCP and Azure. 
+
+
+### Memory
+
+When you specify memory resource for the container, you have 2 measurements to use. Each of these measurement represent bytes.
+
+- Number: You can specify Bytes Directly. Example: 268435456.
 
 
 
