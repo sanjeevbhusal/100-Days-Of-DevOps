@@ -457,14 +457,15 @@ If a container tries to exceed its resource limit, you might assume that kuberne
 
 ## Taints and Toleration
 
-Taints and Toleration are used to set restrictions on what pod can be scheduled on a node. Taints are set on nodes and Tolerations are set on pods. A pod can only be scheduled on a node if the pod has toleration for the taint in the node.
+Taints and Toleration are used to set restrictions on what pod can be scheduled on a node. Taints are set on nodes and Tolerations are set on pods. A pod can only be scheduled on a node if the pod has toleration for the taint in the node. 
 
-### Why you want to set Taints and Tolerations
+### When you should use Taints and Tolerations
 
-There are 2 cases for using Taints and Tolerations.
+There is 1 single use case for using Taints and Tolerations.
 
-- You don't want some pods to be assigned to a particular Node.
-- You want a pod to be assigned to only a particular Node. 
+- You want a Node to only accept particular kinds of Pods. 
+
+### When you should not use Tai
 
 ### Why do you want a Pod to be assigned to a specific Node
 
@@ -501,4 +502,8 @@ There are 3 types of Taints. They define what will happen when a Pod does not ha
 
 - No Schedule: If a node has no schedule taint, then new pods with no tolerance will not be assigned to the node. this is the one we have been discussing so far.
 - PreferNoSchedule: If a node has PreferNoSchedule taint, then new pods will no tolerance might or might not be assigned to the node. There is no guarantee.
-- NoExecute: If a node has NoExecute taint, then it has the same behavior as No Schedule taint with a addition. The addition is, all the pods that might be running on the node before taint is applied are also removed.
+- NoExecute: If a node has NoExecute taint, then it has the same behavior as No Schedule taint with a addition. The addition is, any running containers on the node (before taint is applied) that do not have toleration will also be removed.
+
+### Small catch that is overlooked
+
+Taints and Tolerations does not tell a Pod to go to a particular node. It only tells a Node to only accept Pods with certain toleration. If a node does not have any taint associated with it, it can accept all the pods including those which have toleration. 
