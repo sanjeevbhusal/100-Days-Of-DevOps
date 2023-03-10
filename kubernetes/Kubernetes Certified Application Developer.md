@@ -461,11 +461,14 @@ Taints and Toleration are used to set restrictions on what pod can be scheduled 
 
 ### When you should use Taints and Tolerations
 
-There is 1 single use case for using Taints and Tolerations.
+You should use Taints and Tolerations if you want a Node to only accept specific kinds of Pods. 
 
-- You want a Node to only accept particular kinds of Pods. 
+### When you should not use Taints and Tolerations
 
-### When you should not use Tai
+You should not use Taints and Toleration if you want a Pod to be assigned to a specific Node. This can be achieved by another Concept called Node Affinity.
+
+Taints and Tolerations does not tell a Pod to go to a particular node. It only tells a Node to only accept certain kinds of Pods. If a node does not have any taint associated with it, it can accept all the pods including those which have toleration. 
+
 
 ### Why do you want a Pod to be assigned to a specific Node
 
@@ -504,6 +507,8 @@ There are 3 types of Taints. They define what will happen when a Pod does not ha
 - PreferNoSchedule: If a node has PreferNoSchedule taint, then new pods will no tolerance might or might not be assigned to the node. There is no guarantee.
 - NoExecute: If a node has NoExecute taint, then it has the same behavior as No Schedule taint with a addition. The addition is, any running containers on the node (before taint is applied) that do not have toleration will also be removed.
 
-### Small catch that is overlooked
 
-Taints and Tolerations does not tell a Pod to go to a particular node. It only tells a Node to only accept Pods with certain toleration. If a node does not have any taint associated with it, it can accept all the pods including those which have toleration. 
+
+### Automatic Taints on Master Nodes
+
+Master nodes have taints applied automatically when the cluster is set up. This prevents scheduler from scheduling pods in the master nodes. You can change this by removing the taints from master nodes, however it is not recommended as master nodes should only be used for management purposes.
