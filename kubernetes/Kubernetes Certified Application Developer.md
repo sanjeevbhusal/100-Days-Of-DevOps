@@ -387,14 +387,20 @@ A node in a kubernetes cluster has 3 kinds of resources available.
 - RAM (Memory)
 - Storage
 
-### Container Resource Behavior in Docker
+### Resource Request for Containers
+
+When a container requests certain resources to the underlying docker host, it is known as Resource Request for a container. By default, kubernetes assumes that a pod will need `0.5` CPU, `256` Mebibytes of memory. 
+
+Whenever the scheduler has to assign a pod in the cluster, scheduler takes into consideration the resource request of a container and resources available in each of the nodes. If none of the node have enough resources, then kubernetes will hold the pod in `Pending` state. If you look at the events, you will see a reason with error `Insufficient CPU` ``.
+
+If your application needs more resources than the default, you can assign it explicitly in pod-definition or deployment-definition file.
 
 
+### CPU
+
+When you specify CPU resources needed for the container, you have 2 measurements to use. You can either specify can specify a minimum value of `0.1`. 0.1 CPU can also be written as 100m, where m stands for `mili`.  
 
 
-### Container Resource Behavior in Kubernetes
-
-Whenever the scheduler has to assign a pod in the cluster, scheduler takes into consideration the resources needed for the pod and resources available in each of the nodes. If none of the node have enough resources, then kubernetes will hold the pod in `Pending` state. If you look at the events, you will see a reason with error `Insufficient CPU` .  ``
 
 When you run a container on just docker without using kubernetes, containers do not have any resource limits on them. This is the default behavior of containers. You can however specify the resource limit for the container explicitly.
 
