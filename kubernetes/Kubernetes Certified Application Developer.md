@@ -455,5 +455,6 @@ If a container tries to exceed its resource limit, you might assume that kuberne
 
 ---
 
-## Taints and Tolerations
+## Taints and Toleration
 
+Taints and Toleration are used to set restrictions on what pod can be scheduled on a node. Taints are set on nodes and  
