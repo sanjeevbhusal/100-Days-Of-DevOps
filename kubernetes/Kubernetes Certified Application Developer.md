@@ -410,7 +410,14 @@ The minimum CPU count you can specify is 1m or 0.001 CPU.1 count of CPU is equiv
 
 When you specify memory resource for the container, you have 2 measurements to use. Each of these measurement represent bytes.
 
-- Number: You can specify Bytes Directly. Example: 268435456.
+- Direct Bytes: You can specify Bytes Directly. Example: 268435456.
+- Other Format: You can specify Bytes with other units of measurements. Kubernetes supports Gigabyte, Megabyte, Kilobyte, Gibibyte, Mebibyte and kibibyte. The above 268435456 bytes is roughly 256 mebibyte.
+
+#### Relation between Gigabyte, Megabyte, Kilobyte, Gibibyte, Mebibyte and kibibyte
+
+1 Gigabyte (1 G) refers to 1000 Megabytes (1000 M) whereas 1 Gibibyte (1 Gi) refers to 1024 Mebibytes (1024 Mi). The same applies to Megabytes and Kilobytes as well.
+
+![[Pasted image 20230310122446.png | 600]]
 
 
 
@@ -422,7 +429,11 @@ When you run a container on kubernetes, kubernetes by default assigns a resource
 - Memory
 - Storage
 
-### CPU
+
+
+### Resource Limits
+
+By default, a container can consume as many resources as it wants in the host. When you as
 
 By default, kubernetes assigns 1CPU to the container. This is equivalent to 1 virtual CPU offered by cloud providers. When a container tries to exceed this limit, kubernetes will not allow it. 
 
