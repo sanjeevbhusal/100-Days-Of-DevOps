@@ -437,7 +437,8 @@ By default, when docker runs a container, the container can consume as many reso
 Kubernetes however assigns a default resource limit to the container. 
 
 - The default resource limit set by kubernetes for CPU is 1 vCPU. 
-- The default resource limit set by kubernetes for Memory is 512 Mebibytes (Mi). 
+- The default resource limit set by kubernetes for Memory is 
+- 512 Mebibytes (Mi). 
 
 You can change the default limit by modifying pod-definition file. Remember, resource limits are set for each containers within the pods, and not pod itself.
 
@@ -449,4 +450,10 @@ If a container tries to exceed its resource limit, you might assume that kuberne
 - If container's CPU usage tries to exceed, kubernetes throttles the CPU so that container doesn't exceeds the limit.
 - If container's Memory usage tries to exceed, kubernetes will let the container use more memory than its limit. If a container tries to consume more memory than its limit continuously, then the pod will be terminated.
 
+
+
+
+---
+
+## Taints and Tolerations
 
