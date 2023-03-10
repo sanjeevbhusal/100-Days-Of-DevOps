@@ -457,4 +457,12 @@ If a container tries to exceed its resource limit, you might assume that kuberne
 
 ## Taints and Toleration
 
-Taints and Toleration are used to set restrictions on what pod can be scheduled on a node. Taints are set on nodes and  
+Taints and Toleration are used to set restrictions on what pod can be scheduled on a node. Taints are set on nodes and Tolerations are set on pods. A pod can only be scheduled on a node if the pod has toleration for the taint in the node.
+
+### Why you want to set Taints and Tolerations
+
+If you want some Pods to be assigned to a specific Node, then you should use Taints and Tolerations. Y
+
+Example: You might have 3 pods that needs to be scheduled. Lets call those pods Pod A, Pod B and Pod C. You also have 3 nodes in the cluster. Lets call those nodes Node 1, Node 2 and Node 3. Node 1 has more amount of RAM and CPU power compared to 2 other nodes. This is because the application on Pod C runs database that requires more resource as compared to applications on other Pods. So, it is crucial that Pod C is only scheduled in node 1. 
+
+We set a Taint called `db` on Node 1. When scheduler tries to schedule Pod A, it first tries to schedule it on Node 1. As Node 1 has a taint and Pod A is not tolerant to that taint, the Pod cannot be scheduled. Scheduler then schedules that Pod to Node 2 where it is successfully assigned. Scheduler now tries to assign Pod B on Node 1. As Pod B is also not tolerant to taint on Node 1, it cannot be assigned. The scheduler then assigns Pod B to Node 3 as Node 2 already has a Pod. Now its time for Pod C. In Pod C's definition file, we have specified that Pod C was tolerant to a taint called `db`. When Scheduler assigns Pod C on Node 1, it is successfully placed.
