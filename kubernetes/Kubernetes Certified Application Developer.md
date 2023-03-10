@@ -381,6 +381,35 @@ As there is no secrets object created, the way kubernetes associated service and
 ---
 ## Resource Limits
 
-When you run a container on just docker without using kubernetes, containers do not have any resource limits on them. This is the default behaviour of containers. You can however specify the resource limit on the container when you  
+A node in a kubernetes cluster has 3 kinds of resources available.
+
+- CPU
+- RAM (Memory)
+- Storage
+
+### Container Resource Behavior in Docker
+
+
+
+
+### Container Resource Behavior in Kubernetes
+
+Whenever the scheduler has to assign a pod in the cluster, scheduler takes into consideration the resources needed for the pod and resources available in each of the nodes. If none of the node have enough resources, then kubernetes will hold the pod in `Pending` state. If you look at the events, you will see a reason with error `Insufficient CPU` .  ``
+
+When you run a container on just docker without using kubernetes, containers do not have any resource limits on them. This is the default behavior of containers. You can however specify the resource limit for the container explicitly.
+
+When you run a container on kubernetes, kubernetes by default assigns a resource limit on containers. Lets view 3 different types of resource limits available.
+
+- CPU
+- Memory
+- Storage
+
+### CPU
+
+By default, kubernetes assigns 1CPU to the container. This is equivalent to 1 virtual CPU offered by cloud providers. When a container tries to exceed this limit, kubernetes will not allow it. 
+
+### Memory
+
+
 
 By default, a container runnin
