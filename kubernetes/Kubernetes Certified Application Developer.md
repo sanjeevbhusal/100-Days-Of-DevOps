@@ -511,4 +511,4 @@ There are 3 types of Taints. They define what will happen when a Pod does not ha
 
 ### Automatic Taints on Master Nodes
 
-Master nodes have taints applied automatically when the cluster is set up. This prevents scheduler from scheduling pods in the master nodes. You can change this by removing the taints from master nodes, however it is not recommended as master nodes should only be used for management purposes.
+	Master nodes have taints applied automatically when the cluster is set up. This prevents scheduler from scheduling pods in the master nodes. You can change this by removing the taints from master nodes, however it is not recommended as master nodes should only be used for management purposes.
