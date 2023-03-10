@@ -379,22 +379,13 @@ Now, when we create a service, no token is created automatically. This also mean
 As there is no secrets object created, the way kubernetes associated service and secret object as volume to a pod has also changed. Instead kubernetes now creates tokens on the fly. When we create a new pod, kubernetes will make a API request to TokenRequestAPI to get a fresh token. This token is then mounted as a volume to the Pod, just like we discussed in the Old way. 
 
 ---
-## Resource Limits
+## Resources used by Containers
 
 A node in a kubernetes cluster has 3 kinds of resources available.
 
 - CPU
 - RAM (Memory)
 - Storage
-
-### Resource Request for Containers
-
-When a container requests certain resources to the underlying docker host, it is known as Resource Request for a container. By default, kubernetes assumes that a pod will need `0.5` CPU, `256` Mebibytes of memory. 
-
-Whenever the scheduler has to assign a pod in the cluster, scheduler takes into consideration the resource request of a container and resources available in each of the nodes. If none of the node have enough resources, then kubernetes will hold the pod in `Pending` state. If you look at the events, you will see a reason with error `Insufficient CPU` ``.
-
-If your application needs more resources than the default, you can assign it explicitly in pod-definition or deployment-definition file. Remember, resource requests are set for each containers within the pods, and not pod itself.
-
 
 ### CPU
 
@@ -431,7 +422,15 @@ When you run a container on kubernetes, kubernetes by default assigns a resource
 
 
 
-### Resource Limits
+### Resource Request for Containers
+
+When a container requests certain resources to the underlying docker host, it is known as Resource Request for a container. By default, kubernetes assumes that a pod will need `0.5` CPU, `256` Mebibytes of memory. 
+
+Whenever the scheduler has to assign a pod in the cluster, scheduler takes into consideration the resource request of a container and resources available in each of the nodes. If none of the node have enough resources, then kubernetes will hold the pod in `Pending` state. If you look at the events, you will see a reason with error `Insufficient CPU` ``.
+
+If your application needs more resources than the default, you can assign it explicitly in pod-definition or deployment-definition file. Remember, resource requests are set for each containers within the pods, and not pod itself.
+
+### Resource Limits for Containers
 
 By default, when docker runs a container, the container can consume as many resources as it wants in the host. If you want to limit the resource usage of a container, then you need to explicitly assign the resource limit. 
 
@@ -445,14 +444,9 @@ You can change the default limit by modifying pod-definition file. Remember, res
 
 #### Exceeding Resource Limit
 
-If a container tries to exceed its resource limit, you might assume that kubthen the behaviour of kubernetes differs for different Resource.
+If a container tries to exceed its resource limit, you might assume that kubernetes will either prevent the container from exceeding the resource or will kill the container. Both the assumptions are true but it differs on which resource exceeds the limit.
 
-- If container's CPU usage tries to exceed, kubernetes throttles the CPU so that it doesn't exceeds the limit.
-- If container's Memory usage tries to exceed, kubernetes throttles the CPU so that it doesn't exceeds the limit.
-
-
-### Memory
+- If container's CPU usage tries to exceed, kubernetes throttles the CPU so that container doesn't exceeds the limit.
+- If container's Memory usage tries to exceed, kubernetes will let the container use more memory than its limit. If a container tries to consume more memory than its limit continuously, then the pod will be terminated.
 
 
-
-By default, a container runnin
