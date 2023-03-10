@@ -461,8 +461,30 @@ Taints and Toleration are used to set restrictions on what pod can be scheduled 
 
 ### Why you want to set Taints and Tolerations
 
-If you want some Pods to be assigned to a specific Node, then you should use Taints and Tolerations. Y
+If you want some Pods to be assigned to a specific Node, then you should use Taints and Tolerations. 
 
-Example: You might have 3 pods that needs to be scheduled. Lets call those pods Pod A, Pod B and Pod C. You also have 3 nodes in the cluster. Lets call those nodes Node 1, Node 2 and Node 3. Node 1 has more amount of RAM and CPU power compared to 2 other nodes. This is because the application on Pod C runs database that requires more resource as compared to applications on other Pods. So, it is crucial that Pod C is only scheduled in node 1. 
+### Why do you want a Pod to be assigned to a specific Node
 
-We set a Taint called `db` on Node 1. When scheduler tries to schedule Pod A, it first tries to schedule it on Node 1. As Node 1 has a taint and Pod A is not tolerant to that taint, the Pod cannot be scheduled. Scheduler then schedules that Pod to Node 2 where it is successfully assigned. Scheduler now tries to assign Pod B on Node 1. As Pod B is also not tolerant to taint on Node 1, it cannot be assigned. The scheduler then assigns Pod B to Node 3 as Node 2 already has a Pod. Now its time for Pod C. In Pod C's definition file, we have specified that Pod C was tolerant to a taint called `db`. When Scheduler assigns Pod C on Node 1, it is successfully placed.
+You might have a application that consumes a lot of resource. You have created a Node that has the Resource needed for the application. Using Taints and Tolerations, you can let kubernetes know to assign this application to this Node only.
+
+### Example of Using Taint and Toleration
+
+You have a 3 node cluster. The nodes are:
+
+- Node 1
+- Node 2
+- Node 3 
+
+Node 3 has more resources (CPU, RAM) compared to Node 1 and 2.
+
+You want to assign 3 different applications on this cluster.
+
+- Frontend Application
+- Backend Application
+- Database Application
+
+Database Application consumes more resource than Frontend and Backend Application. So, your requirement is to only assign Database Application to Node 3. You will create a taint called `db` and assign it to Node 3. You will also create toleration for  Database Application to taint `db` . This way only database application can be scheduled on Node 3.
+
+You create 3 pods for these application. Lets call them Pod Frontend, Pod Backend and Pod Database. Scheduler will now try to schedule all 3 Pods. Lets see how this happens. 
+
+- Pod Frontend: When scheduler tries to schedule Pod Frontend, it first tries to schedule it on Node 1. As Node 1 has a taint and Pod A is not tolerant to that taint, the Pod cannot be scheduled. Scheduler then schedules that Pod to Node 2 where it is successfully assigned. Scheduler now tries to assign Pod B on Node 1. As Pod B is also not tolerant to taint on Node 1, it cannot be assigned. The scheduler then assigns Pod B to Node 3 as Node 2 already has a Pod. Now its time for Pod C. In Pod C's definition file, we have specified that Pod C was tolerant to a taint called `db`. When Scheduler assigns Pod C on Node 1, it is successfully placed.
