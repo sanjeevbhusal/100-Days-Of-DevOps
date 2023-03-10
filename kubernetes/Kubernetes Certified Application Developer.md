@@ -495,4 +495,10 @@ You create 3 pods for these application. Lets call them Pod Frontend, Pod Backen
 - Pod Database: Scheduler now tries to assign Pod Database on Node 1. Pod Database on Node 1 is successfully deployed as the pod is tolerant to taint. 
 
 
-### Types of Taints
+### Types of Taints 
+
+There are 3 types of Taints. They define what will happen when a Pod does not have a toleration for a taint on a node.
+
+- No Schedule: If a node has no schedule taint, then new pods with no tolerance will not be assigned to the node. this is the one we have been discussing so far.
+- PreferNoSchedule: If a node has PreferNoSchedule taint, then new pods will no tolerance might or might not be assigned to the node. There is no guarantee.
+- NoExecute: If a node has NoExecute taint, then it has the same behavior as No Schedule taint with a addition. The addition is, all the pods that might be running on the node before taint is applied are also removed.
