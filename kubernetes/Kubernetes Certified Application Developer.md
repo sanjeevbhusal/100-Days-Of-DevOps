@@ -393,7 +393,7 @@ When a container requests certain resources to the underlying docker host, it is
 
 Whenever the scheduler has to assign a pod in the cluster, scheduler takes into consideration the resource request of a container and resources available in each of the nodes. If none of the node have enough resources, then kubernetes will hold the pod in `Pending` state. If you look at the events, you will see a reason with error `Insufficient CPU` ``.
 
-If your application needs more resources than the default, you can assign it explicitly in pod-definition or deployment-definition file.
+If your application needs more resources than the default, you can assign it explicitly in pod-definition or deployment-definition file. Remember, resource requests are set for each containers within the pods, and not pod itself.
 
 
 ### CPU
@@ -433,9 +433,23 @@ When you run a container on kubernetes, kubernetes by default assigns a resource
 
 ### Resource Limits
 
-By default, a container can consume as many resources as it wants in the host. When you as
+By default, when docker runs a container, the container can consume as many resources as it wants in the host. If you want to limit the resource usage of a container, then you need to explicitly assign the resource limit. 
 
-By default, kubernetes assigns 1CPU to the container. This is equivalent to 1 virtual CPU offered by cloud providers. When a container tries to exceed this limit, kubernetes will not allow it. 
+Kubernetes however assigns a default resource limit to the container. 
+
+- The default resource limit set by kubernetes for CPU is 1 vCPU. 
+- The default resource limit set by kubernetes for Memory is 512 Mebibytes (Mi). 
+
+You can change the default limit by modifying pod-definition file. Remember, resource limits are set for each containers within the pods, and not pod itself.
+
+
+#### Exceeding Resource Limit
+
+If a container tries to exceed its resource limit, you might assume that kubthen the behaviour of kubernetes differs for different Resource.
+
+- If container's CPU usage tries to exceed, kubernetes throttles the CPU so that it doesn't exceeds the limit.
+- If container's Memory usage tries to exceed, kubernetes throttles the CPU so that it doesn't exceeds the limit.
+
 
 ### Memory
 
