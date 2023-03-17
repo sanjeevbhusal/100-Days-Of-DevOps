@@ -13,19 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "kubernetes/Kubernetes Certified Application Developer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d3ee4ba4f1d18994",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "kubernetes/ReadMe.md",
+                "file": "linux/Linux Boot Process.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "kubernetes/Kubernetes Certified Application Developer.md",
+                "file": "linux/Linux Boot Process.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "kubernetes/Kubernetes Certified Application Developer.md",
+                "file": "linux/Linux Boot Process.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "kubernetes/Kubernetes Certified Application Developer.md"
+                "file": "linux/Linux Boot Process.md"
               }
             }
           }
@@ -161,9 +149,10 @@
   },
   "active": "8e51d958b7c0b308",
   "lastOpenFiles": [
+    "linux/Linux Kernel.md",
+    "kubernetes/Kubernetes Certified Application Developer.md",
     "Pasted image 20230310122446.png",
     "kubernetes/ReadMe.md",
-    "kubernetes/Kubernetes Certified Application Developer.md",
     "Pasted image 20230309125411.png",
     "file1.txt",
     "Pasted image 20230308161124.png",
@@ -179,7 +168,6 @@
     "Pasted image 20230303141600.png",
     "Pasted image 20230303120914.png",
     "docker/Docker networking.md",
-    "Pasted image 20230302220037.png",
     "docker/Docker Layered Architecture.md",
     "Pasted image 20230302080924.png.md",
     "docker/Docker Storage Drivers.md",
