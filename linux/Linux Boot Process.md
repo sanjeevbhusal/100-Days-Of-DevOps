@@ -6,3 +6,9 @@ When we start a computer, it goes through multiple stages to come to a state tha
 - INIT Process (systemd): Once the kernel is set up, we now need to initialize processes and application specific to a user. This involves running the selected view (Command Line/ Graphical, mounting the right file system, initializing all the system files etc. One of the most famous init process is called systemd. To see the init process in your computer, run ls -l /sbin/init
 
 
+## Run Level
+
+Linux can run in multiple modes, most specifically CLI and GUI mode. When you reach level 4 (INIT Process) in the Boot Process, the init process (systemd) needs to know if you want to run CLI or GUI option. This is defined using something called Run Level. You can define different values in Run Level, each correspond to a specific mode. Run Level 5 corresponds to GUI Mode whereas Run Level 3 corresponds to CLI mode. 
+
+If your run level is set to 5, you need to make sure a display manager service is als
+
