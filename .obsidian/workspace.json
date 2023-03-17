@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "79250468322b7203",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "File Type.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -86,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux/Linux Boot Process.md",
+                "file": "File Type.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux/Linux Boot Process.md",
+                "file": "File Type.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linux/Linux Boot Process.md"
+                "file": "File Type.md"
               }
             }
           }
@@ -147,8 +160,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8e51d958b7c0b308",
+  "active": "79250468322b7203",
   "lastOpenFiles": [
+    "linux/Linux Boot Process.md",
+    "File Type.md",
     "linux/Linux Kernel.md",
     "kubernetes/Kubernetes Certified Application Developer.md",
     "Pasted image 20230310122446.png",
@@ -179,7 +194,6 @@
     "aws/IAM.md",
     "docker-container-isolation",
     "docker/ReadMe.md",
-    "Untitled.md",
     "aws"
   ]
 }
