@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux/File Type.md",
+                "file": "linux/Linux Boot Process.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux/File Type.md",
+                "file": "linux/Linux Boot Process.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux/File Type.md",
+                "file": "linux/Linux Boot Process.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linux/File Type.md"
+                "file": "linux/Linux Boot Process.md"
               }
             }
           }
@@ -161,12 +161,12 @@
   },
   "active": "79250468322b7203",
   "lastOpenFiles": [
-    "linux/Linux Boot Process.md",
     "linux/Linux Kernel.md",
+    "linux/Linux Boot Process.md",
+    "linux/File Type.md",
     "linux/virtualCPU.png",
     "linux/Shell.md",
     "linux/linux-kernel-2.png",
-    "linux/File Type.md",
     "linux/linux-kernel.png",
     "ReadMe.md",
     "Pasted image 20230317125250.png",

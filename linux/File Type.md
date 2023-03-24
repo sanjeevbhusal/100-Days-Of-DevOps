@@ -23,4 +23,8 @@ If you want to install any 3rd party programs, you can put them under /opt.
 extra media devices such as pendrive is mounted under /media
 `df` command (disk file) prints out details about all the file system mounted in the machine. If you have a USB device attached to the system, you will seee in the output, a filesystem mounted under /media.
 /dev contains block device files and character device files.
-basic programs and binaries are
+basic programs and binaries are located under /bin path.
+/etc stores most of the linux configuration file.
+/lib and /lib64 stores files/libraries that are used/imported by other programs. 
+/usr stores all the additional programs of the userland(used by a user).Example: Chrome, vi editor etc
+/var stores all the logs of the system as well as cached data.
