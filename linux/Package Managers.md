@@ -1,11 +1,5 @@
 
-Package Managers are used to manage the package in the system. 2 of the most famous package managers are 
-
-- Debian package managers such as dkpg or apt
-- Red hat package managers such as rpm
- 
- There are various linux distributions available today. Most of these distributions use one of the above two package managers. If a distribution uses Debian package manager, then the distribution can be said as a debian based distribution. If a distribution uses Red Hat package manager, then the distribution is said to be a red hat based distribution.
- Distribution such as Debian, Ubuntu, LinuxMint etc use debian package managers wheras Distributions such as Redhat Enterprise Linux, CentOS etc uses Red hat package manager.
+Package Managers are used to manage the package in the system. 
 
 A package is a archive that contains multiple files which work together to accomplish a goal. In other words, a package contains all the files needed for a software/process to run. For example to install GIMP (GNU Image manipulation), we can install a package called gimp.deb. This package contains all the binary files and configuration files needed to run GIMP. The package also contains metadata files that give information about the GIMP software contained in the package. 
 
@@ -16,11 +10,13 @@ A package manager will follow the steps in the metadata file and makes sure the 
 
 Packages are hosted in software repositories. A package manager contains the information of multiple repositories and all their packages. 
 
+Most of the Linux distributions can be classified into 2 categories. 
 
-containof a package contains 
+- Debian Distributions (Operating System that fall under debian distribution: Debian, Ubuntu, LinuxMint etc)
+- Red hat Distributions (Operating System that fall under red hat distribution: Redhat Enterprise Linux, CentOS etc)
 
-In order to run a software, we must make sure we install the software in a way the distribution expects.
+Both of these distributions vary in terms of system programs, available libraries, underlying linux kernel version etc. Both of the distributions have their own package manager software. 
 
-This means a software might run in some distributions whereas it might not run in other distributions
-
-itself  When installing a package, we need to make sure
+- Debian distributions uses package managers such as dkpg, apt or apt-get.
+- Red hat distributions uses package manager such as rpm, yum or dnf.
+ 
