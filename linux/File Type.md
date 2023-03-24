@@ -15,3 +15,12 @@ You can view file type using command file [filename] or ls -l [filename]
 
 
 ![[Pasted image 20230317125250.png|400]]
+
+
+If you want to install any 3rd party programs, you can put them under /opt.
+/mnt is used to mount file systems temporarily.
+/tmp is used to store temporary data
+extra media devices such as pendrive is mounted under /media
+`df` command (disk file) prints out details about all the file system mounted in the machine. If you have a USB device attached to the system, you will seee in the output, a filesystem mounted under /media.
+/dev contains block device files and character device files.
+basic programs and binaries are

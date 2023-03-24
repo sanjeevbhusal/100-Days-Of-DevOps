@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux/Linux Kernel.md",
+                "file": "linux/File Type.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux/Linux Kernel.md",
+                "file": "linux/File Type.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux/Linux Kernel.md",
+                "file": "linux/File Type.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linux/Linux Kernel.md"
+                "file": "linux/File Type.md"
               }
             }
           }
@@ -161,15 +161,15 @@
   },
   "active": "79250468322b7203",
   "lastOpenFiles": [
+    "linux/Linux Boot Process.md",
+    "linux/Linux Kernel.md",
+    "linux/virtualCPU.png",
+    "linux/Shell.md",
+    "linux/linux-kernel-2.png",
+    "linux/File Type.md",
     "linux/linux-kernel.png",
     "ReadMe.md",
-    "linux/Linux Kernel.md",
-    "linux/linux-kernel-2.png",
-    "linux/Shell.md",
-    "linux/virtualCPU.png",
-    "linux/File Type.md",
     "Pasted image 20230317125250.png",
-    "linux/Linux Boot Process.md",
     "kubernetes/Kubernetes Certified Application Developer.md",
     "Pasted image 20230310122446.png",
     "kubernetes/ReadMe.md",
