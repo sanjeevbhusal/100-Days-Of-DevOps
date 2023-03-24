@@ -8,24 +8,24 @@
         "type": "tabs",
         "children": [
           {
-            "id": "8e51d958b7c0b308",
+            "id": "79250468322b7203",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux/Linux Boot Process.md",
+                "file": "linux/Linux Kernel.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "79250468322b7203",
+            "id": "0958b43e8f1d9660",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux/Linux Boot Process.md",
+                "file": "linux/Package Managers.md",
                 "mode": "source",
                 "source": false
               }
@@ -61,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Service",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux/Linux Boot Process.md",
+                "file": "linux/Package Managers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux/Linux Boot Process.md",
+                "file": "linux/Package Managers.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linux/Linux Boot Process.md"
+                "file": "linux/Package Managers.md"
               }
             }
           }
@@ -159,9 +159,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "79250468322b7203",
+  "active": "0958b43e8f1d9660",
   "lastOpenFiles": [
     "linux/Linux Kernel.md",
+    "linux/Package Managers.md",
     "linux/Linux Boot Process.md",
     "linux/File Type.md",
     "linux/virtualCPU.png",
