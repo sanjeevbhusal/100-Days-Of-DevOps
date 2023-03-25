@@ -30,13 +30,16 @@ Red hat Package Manager manages package with extension .rpm. You can perform 5 m
 
 rpm stores detailed information about all the installed packages in a database located at /var/lib/rpm. It is important to note that RPM on its own does not resolve dependencies. Thats why we use another package manager called Yum. 
 
-Yum is a high level package manager compared to rpm. It also deals with packages with .rpm extension. Under the hood, yum uses rpm to perform above operations on packages. The benefit of using yum is that yum can handle dependency resolution very well.  yum stores information about different packages from different repositories in its own database. Repositories information is located under /etc/yum.repos.d. You can add other repositories as well under /etc/yum.repos.d. 
+Yum is a high level package manager compared to rpm. It also deals with packages with .rpm extension. Under the hood, yum uses rpm to perform above operations on packages. The benefit of using yum is that yum can handle dependency resolution very well.  yum stores information about different packages from different repositories in its own database. Repositories information is located under /etc/yum.repos.d. You can add other repositories as well under /etc/yum.repos.d. `yum repolist` will show you all the repositories configured on the system.
 
 When you try to install any package using yum, these are the steps that happens:
 
 - Yum first checks if the package is already installed on the system. It will check its database where it stores all the information about the installed packages.
 - If the package is available, yum will inform you and terminate the installation operation. If the package is not available, then yum will search for the package in its database. Yum stores information about all the packages available in all software repositories under /etc/yum.repos.d.
-- If the package is not available, yum will inform you and terminate the installation operation. If the package is available, yum will gather all the information about the package mentioned in its metadata. This includes information about all the dependency packages with their appropriate versions.
-- Yum will then check if those dependent packages and their own dependencies are installed on the system, through database mentioned in step 1. 
-- If some of the dependent packages are installed in the system, yum will ignore them. Yum will then figure out how many packages it needs to install and will list the information on the screen for user to confirm. 
-- Upon confirmation, yum will install all the packages. 
+- If the package is not available, yum will inform you and terminate the installation operation. If the package is available, yum will gather all the information about the package mentioned in its metadata. 
+- Yum also gathers information about all the dependency packages with their appropriate versions. These dependency packages might have their own dependency as well. So, yum will gather these information as well.
+- Yum will then check if any of those dependent packages are installed on the system by going through the database mentioned in step 1.  
+- If some of the dependent packages are installed in the system, yum will ignore them. Once Yum knows how many packages it needs to install, it prints the information on the screen, for user to confirm. 
+- If a package was available on the system but with a different version, yum will not print the package information as a new install. It will instead treat the package installation as update. This means yum will delete the installed package and install the same package with different version .
+- Upon confirmation by user, yum will install all the packages. 
+
