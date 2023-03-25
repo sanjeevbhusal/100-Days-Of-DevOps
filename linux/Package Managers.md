@@ -13,10 +13,20 @@ Packages are hosted in software repositories. A package manager contains the inf
 Most of the Linux distributions can be classified into 2 categories. 
 
 - Debian Distributions (Operating System that fall under debian distribution: Debian, Ubuntu, LinuxMint etc)
-- Red hat Distributions (Operating System that fall under red hat distribution: Redhat Enterprise Linux, CentOS etc)
+- Red hat Distributions (Operating System that fall under red hat distribution: Redhat Enterprise Linux, CentOS, Fedora etc)
 
 Both of these distributions vary in terms of system programs, available libraries, underlying linux kernel version etc. Both of the distributions have their own package manager software. 
 
 - Debian distributions uses package managers such as dkpg, apt or apt-get.
 - Red hat distributions uses package manager such as rpm, yum or dnf.
+
+
+Red hat Package Manager manages package with extension .rpm. You can perform 5 main operations using rpm.
+- Installing
+- Uninstalling
+- Quering
+- Upgrading
+- Verifying
+
+rpm stores detailed information about all the installed packages in a database located at /var/lib/rpm.
  
