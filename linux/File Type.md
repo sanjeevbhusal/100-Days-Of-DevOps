@@ -28,3 +28,6 @@ basic programs and binaries are located under /bin path.
 /lib and /lib64 stores files/libraries that are used/imported by other programs. 
 /usr stores all the additional programs of the userland(used by a user).Example: Chrome, vi editor etc
 /var stores all the logs of the system as well as cached data.
+
+
+If you want to search for a file in linux, you can simply run `find [path of the directory] --name [filename]`
