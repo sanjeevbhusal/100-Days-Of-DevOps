@@ -161,10 +161,10 @@
   },
   "active": "0958b43e8f1d9660",
   "lastOpenFiles": [
-    "linux/Linux Kernel.md",
     "linux/Package Managers.md",
-    "linux/Linux Boot Process.md",
     "linux/File Type.md",
+    "linux/Linux Kernel.md",
+    "linux/Linux Boot Process.md",
     "linux/virtualCPU.png",
     "linux/Shell.md",
     "linux/linux-kernel-2.png",
