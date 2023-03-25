@@ -1,1 +1,2 @@
-There is 2 ways of resolving DNS name in linux. The first way is to write the dns name with the IP address in the file /e
+There is 2 ways of resolving DNS name in linux. The first way is to write the dns name with the IP address in the file /etc/hosts. The second way is to query a dns server. The IP address of dns server is present in the file /etc/resolv.conf. Linux first tries to resolve dns name through the mappings in /etc/hosts. If it doesnot  find the host name, then it queries the dns server. this order can however be changed. This order is described in /etc/nsswitch.conf file.
+
