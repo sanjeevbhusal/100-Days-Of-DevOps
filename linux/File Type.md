@@ -38,7 +38,10 @@ There are total of 3 data streams in linux.
 - Output Stream
 - Error Stream
 
-When you input some data to a process, the data flows through input stream. When that process gives the output, the data flows through output stream. If the process gives error, the data flows through error stream. 
 
-We can combine 2 streams together. We can combine the data of output stream of a process to a input stream for another process. You can do it using `>` operator.`echo "hello world" > file1.txt`. "hello world" is a input to echo command. So it flows through input stream. echo command then prints the output in terminal. This output flows through output stream. `>` operator will take this output stream and redirect it to a input stream for file1.txt. Hence, the string "hello world" gets written to file1.txt. To pipe, error stream, use `2>`. If you want to redirect output stream or error stream of a process(so that it is not printed in terminal) but do not want to redirect it to any other process, you can use /dev/null. `cat abc 2> /dev/null`
+You can use redirect command (>) to redirect data in a stream to be written to a file. In this command `echo "hello world" > file1.txt`, the data in output stream of echo command is redirected to be written to a file called file1.txt. If you want to redirect the data in error stream of a command, you can use `2>`. If you want to redirect the output/error stream so that it is printed on terminal but donot want to write to a file, you can redirect data to /dev/null.  
+
+You can use pipe command ( | ) to pass the output of a command as a input to another command. In this command, `ls -l | sort -r ` the data in output stream of ls -l command is passed as a input to sort -r command. If ls -l command errors out and sends data through error stream, pipe command will not send that data as input to sort command. Instead, pipe command will fail and the error is printed to the terminal. You can pipe as many commands as you like.
+
+>
 
