@@ -10,3 +10,4 @@ While resolving a dns name (mail.google.com), their might be multiple dns server
 
 ![[Pasted image 20230325204513.png|600]]
 
+ping might not be the right tool always to query a dns server to find a IP address of a domain name. You can use other utilities such as nslookup to find IP addresses associated with a domain name. nslookup skips looking at /etc/hosts and will always query a dns server listed in /etc/resolv.conf. 
