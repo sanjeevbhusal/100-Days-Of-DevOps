@@ -47,5 +47,10 @@ When you try to install any package using yum, these are the steps that happens:
 As stated above, when you try to install a package, yum looks at its local database to check if the package is present. This local database contains packages that were present in the software repositories at /etc/yum.repos.d. Their might be a case when a package is removed from the software repository. As yum has not updated its database, yum will think that the package is available to install. But when it tries to download the package, it will error out as the package is no longer present in the repository. New packages are also constantly being added to the software repositories. The database should also be updated to contain new packages or newer version of old packages. The conclusion is that you update the database with real time data anytime you want to install / upgrade a package.  
 
 
+Debian package manage (dkpg) manages packages with .deb extension. Similar to rpm, it is also used to install locally downloaded packages. It also cannot install any packages using Internet. For this purpose, we use other package managers like apt or apt-get.
 
+apt (advanced package manager) is used to install packages from software repositories, just like yum does. apt-get is a older version of apt which lacks few features. apt can also resolve dependencies just like yum can. Under the hood, apt also uses dkpg for managing packages on the local system. Software repositories are located in /etc/apt/sources.list file.
+You can use `apt edit-sources` command to edit the repositories.
+
+apt 
 
