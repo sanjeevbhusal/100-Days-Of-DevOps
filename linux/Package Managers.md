@@ -30,7 +30,7 @@ Red hat Package Manager manages package with extension .rpm. You can perform 5 m
 
 In order to install a package with rpm, you first need to download the package. Once the package is downloaded, you can install the package with `rpm -i [package name.deb]`. rpm will automatically place each files in their appropriate directory and make necessary configurations based upon the metadata in the package. rpm stores information about all the installed packages in a database located at /var/lib/rpm. It is important to note that RPM cannot download packages from internet. It can only install packages available locally on the system. To download packages from internet, we have to use other package managers called Yum or dnf. 
 
-Yum is a package manager used in red hat based distributions. It provides features that are not available with rpm such as downloading software from Internet. However, it uses rpm in order to install/upgrade/manage packages on the local system. It also deals with packages with .rpm extension. yum stores all the information about packages it can download in a database. This packages are present in software repositories. Repositories information is located under /etc/yum.repos.d. You can add other repositories as well under /etc/yum.repos.d. `yum repolist` will show you all the repositories configured on the system. Yum can also handle dependency resolution very well.  
+Yum is a package manager used in red hat based distributions. It provides features that are not available with rpm such as downloading software from Internet. However, it uses rpm in order to install/upgrade/manage packages on the local system. It also deals with packages with .rpm extension. yum stores all the information about packages it can download in a database. This packages are present in software repositories. Repositories information is located under /etc/yum.repos.d. You can add other repositories as well under /etc/yum.repos.d. `yum repolist` will show you all the repositories configured on the system. When installing a package, the package might have dependencies on other packages. Yum can easily handle those dependency resolution as well.  
 
 When you try to install any package using yum, these are the steps that happens:
 
@@ -45,5 +45,7 @@ When you try to install any package using yum, these are the steps that happens:
 
 
 As stated above, when you try to install a package, yum looks at its local database to check if the package is present. This local database contains packages that were present in the software repositories at /etc/yum.repos.d. Their might be a case when a package is removed from the software repository. As yum has not updated its database, yum will think that the package is available to install. But when it tries to download the package, it will error out as the package is no longer present in the repository. New packages are also constantly being added to the software repositories. The database should also be updated to contain new packages or newer version of old packages. The conclusion is that you update the database with real time data anytime you want to install / upgrade a package.  
+
+
 
 
