@@ -28,7 +28,7 @@ Red hat Package Manager manages package with extension .rpm. You can perform 5 m
 - Upgrading
 - Verifying
 
-rpm stores detailed information about all the installed packages in a database located at /var/lib/rpm. It is important to note that RPM on its own does not resolve dependencies. Thats why we use another package manager called Yum. 
+In order to install a package with rpm, you first need to download the package. Once the package is downloaded, you can install the package with `rpm -i [package name.deb]`. rpm will automatically place each files in their appropriate directory and  rpm stores detailed information about all the installed packages in a database located at /var/lib/rpm. It is important to note that RPM on its own does not resolve dependencies. Thats why we use another package manager called Yum. 
 
 Yum is a high level package manager compared to rpm. It also deals with packages with .rpm extension. Under the hood, yum uses rpm to perform above operations on packages. The benefit of using yum is that yum can handle dependency resolution very well.  yum stores information about different packages from different repositories in its own database. Repositories information is located under /etc/yum.repos.d. You can add other repositories as well under /etc/yum.repos.d. `yum repolist` will show you all the repositories configured on the system.
 
