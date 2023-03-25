@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linux/Package Managers.md",
+                "file": "linux/Linux Kernel.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linux/Package Managers.md",
+                "file": "linux/Linux Kernel.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linux/Package Managers.md",
+                "file": "linux/Linux Kernel.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linux/Package Managers.md"
+                "file": "linux/Linux Kernel.md"
               }
             }
           }
@@ -161,8 +161,8 @@
   },
   "active": "0958b43e8f1d9660",
   "lastOpenFiles": [
-    "linux/Linux Kernel.md",
     "linux/Package Managers.md",
+    "linux/Linux Kernel.md",
     "linux/Linux Boot Process.md",
     "linux/File Type.md",
     "linux/virtualCPU.png",

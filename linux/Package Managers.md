@@ -52,5 +52,5 @@ Debian package manage (dkpg) manages packages with .deb extension. Similar to rp
 apt (advanced package manager) is used to install packages from software repositories, just like yum does. apt-get is a older version of apt which lacks few features. apt can also resolve dependencies just like yum can. Under the hood, apt also uses dkpg for managing packages on the local system. Software repositories are located in /etc/apt/sources.list file.
 You can use `apt edit-sources` command to edit the repositories.
 
-apt 
+when you install a package using apt or apt-get, the end result remains the same. Both can successfully install the package. But when using apt, you get a better output on the terminal. If you want to search for a package, apt will list the search results in a friendly way compared to apt-get.
 
