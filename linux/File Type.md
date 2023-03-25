@@ -31,3 +31,14 @@ basic programs and binaries are located under /bin path.
 
 
 If you want to search for a file in linux, you can simply run `find [path of the directory] --name [filename]`
+
+There are total of 3 data streams in linux. 
+
+- Input Stream
+- Output Stream
+- Error Stream
+
+When you input some data to a process, the data flows through input stream. When that process gives the output, the data flows through output stream. If the process gives error, the data flows through error stream. 
+
+We can combine 2 streams together. We can combine the data of output stream of a process to a input stream for another process. You can do it using `>` operator.`echo "hello world" > file1.txt`. "hello world" is a input to echo command. So it flows through input stream. echo command then prints the output in terminal. This output flows through output stream. `>` operator will take this output stream and pipe it to a input stream for file1.txt. Hence, the string "hello world" gets written to file1.txt. To pipe, error stream, use `2>`
+
