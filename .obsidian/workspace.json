@@ -171,8 +171,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ca4e3366836c409f",
+  "active": "62e05acd8b913768",
   "lastOpenFiles": [
+    "bash/code/kodekloud-ecommerce-deploy/ecommerce-deploy-script.sh",
+    "bash/code/kodekloud-ecommerce-deploy",
+    "Untitled",
     "Pasted image 20230325204513.png",
     "linux/File Type.md",
     "linux/Networking in Linux.md",
@@ -193,7 +196,6 @@
     "Pasted image 20230308161124.png",
     "Pasted image 20230308160812.png",
     "Pasted image 20230308160709.png",
-    "Pasted image 20230308160342.png",
     "kubernetes/Container Orchestration In a Nutshell.md",
     "Networking/OSI Model.md",
     "Networking/ReadMe.md",
